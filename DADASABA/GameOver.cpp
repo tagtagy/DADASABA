@@ -1,12 +1,12 @@
-﻿# include "Ranking.h"
+﻿#include "GameOver.h"
 
-Ranking::Ranking(const InitData& init)
+GameOver::GameOver(const InitData& init)
 	: IScene{ init }
 {
-	
+
 }
 
-void Ranking::update()
+void GameOver::update()
 {
 	if (KeyEnter.down() || MouseL.down())
 	{
@@ -15,11 +15,9 @@ void Ranking::update()
 	}
 }
 
-void Ranking::draw() const
+void GameOver::draw() const
 {
 	//確認用
-	FontAsset(U"TitleFont")(U"Result&Ranking Scene").drawAt(400, 200);
+	FontAsset(U"TitleFont")(U"GameOver Scene").drawAt(400, 200);
 	FontAsset(U"TitleFont")(U"Crick or Enter → Title").drawAt(400, 300);
-
-	//図鑑的なのを追加するのか否か…
 }
