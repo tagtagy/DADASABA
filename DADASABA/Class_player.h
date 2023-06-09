@@ -15,6 +15,7 @@ enum {
 class Class_player
 {
 public:
+	Class_player();
 	//ボタン
 	void button();
 	//動き
@@ -35,8 +36,8 @@ private:
 	int moveY = 0;
 	//スピード
 	int speed = 10;
-	//プレイヤーの位置
-	Vec2 playerPos;
+	//プレイヤーのマップ上の位置
+	Vec2 playerMapPos;
 	//プレイヤーのサイズ
 	int playerSize = 10;
 };

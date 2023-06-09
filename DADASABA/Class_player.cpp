@@ -1,5 +1,12 @@
 ﻿#include "stdafx.h"
 #include "Class_player.h"
+
+Class_player::Class_player() {
+
+	playerHit = { 400,300 ,playerSize };
+	playerMapPos={ 0,0 };
+}
+
 //ボタン
 void Class_player::button() {
 	//マウスの位置
@@ -17,13 +24,11 @@ void Class_player::button() {
 //動き
 void Class_player::move() {
 	//横移動
-	if (moveX != NoMove) playerPos.x += speed * moveX;
+	if (moveX != NoMove) playerMapPos.x += speed * moveX;
 	//縦移動
-	if (moveY != NoMove) playerPos.y += speed * moveY;
-
+	if (moveY != NoMove) playerMapPos.y += speed * moveY;
 	
-	//座標代入
-	playerHit = { playerPos ,playerSize };
+	Print <<U"マップ上のプレイヤー座標" << playerMapPos;
 }
 //攻撃
 void Class_player::attack() {
