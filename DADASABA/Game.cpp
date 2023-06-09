@@ -19,6 +19,12 @@ void Game::update()
 		changeScene(State::GameOver);
 	}
 	if (KeyC.down())
+	player->button();
+	player->move();
+
+
+	if (KeyEnter.down() || MouseL.down()//||60秒経ったら
+		)
 	{
 		//名前登録ではなくCommon.h内にあるので注意
 		changeScene(State::ResultRanking);
@@ -27,6 +33,7 @@ void Game::update()
 
 void Game::draw() const
 {
+	player->draw();
 	//確認用
 	FontAsset(U"TitleFont")(U"Game Scene").drawAt(400, 200);
 	FontAsset(U"TitleFont")(U"Crick or Enter Next").drawAt(400, 300);

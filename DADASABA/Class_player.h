@@ -1,4 +1,6 @@
 ﻿#pragma once
+# include "Common.h"
+
 class Class_player
 {
 public:
@@ -12,11 +14,26 @@ public:
 	void draw() const;
 
 private:
+
+	enum {
+		NoMove,
+		Right,
+		Left = -1
+		
+	};
+	enum {
+		Down = 1,
+		Up = -1
+		
+	};
+
 	//プレイヤーの当たり判定
 	Circle playerHit;
 	//移動するかどうか
-	bool moveX=false;
-	bool moveY=false;
+	int moveX = 0;
+	int moveY = 0;
+	//スピード
+	int speed = 10;
 	//プレイヤーの位置
 	Vec2 playerPos;
 	//プレイヤーのサイズ

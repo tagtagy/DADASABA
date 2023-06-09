@@ -7,10 +7,12 @@ enum class State
 	Title,
 	Tutorial,
 	Game,
-	Bos,
 	GameOver,
 	ResultRanking,
 };
+
+
+
 
 // 共有するデータ
 struct GameData
