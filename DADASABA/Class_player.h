@@ -29,6 +29,8 @@ private:
 	//マウス座標
 	Vec2 mousePos;
 
+	//プレイヤーテクスチャ
+	const Texture playerTexture{ U"仮素材/Playerdebug.png" };
 	//プレイヤーの当たり判定
 	Circle playerHit;
 	//移動するかどうか
@@ -39,7 +41,7 @@ private:
 	//プレイヤーのマップ上の位置
 	Vec2 playerMapPos;
 	//プレイヤーのサイズ
-	int playerSize = 10;
+	int playerSize = 30;
 };
 
 

@@ -39,6 +39,6 @@ void Class_player::attack() {
 //描画
 void Class_player::draw() const {
 
-	playerHit.draw(ColorF{ 1, 1, 1, 1 });
+	playerHit(playerTexture).draw(ColorF{ 1});
 
 }
