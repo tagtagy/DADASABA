@@ -14,6 +14,10 @@ Game::Game(const InitData& init)
 
 void Game::update()
 {
+	player->button();
+	player->move();
+
+
 	if (KeyEnter.down() || MouseL.down()//||60秒経ったら
 		)
 	{
@@ -24,6 +28,7 @@ void Game::update()
 
 void Game::draw() const
 {
+	player->draw();
 	//確認用
 	FontAsset(U"TitleFont")(U"Game Scene").drawAt(400, 200);
 	FontAsset(U"TitleFont")(U"Crick or Enter Next").drawAt(400, 300);

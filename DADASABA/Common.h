@@ -12,6 +12,9 @@ enum class State
 	ResultRanking,
 };
 
+
+
+
 // 共有するデータ
 struct GameData
 {
