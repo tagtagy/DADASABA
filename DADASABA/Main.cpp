@@ -2,7 +2,6 @@
 # include "Title.h"
 #include"Tutorial.h"
 # include "Game.h"
-#include"Bos.h"
 #include"GameOver.h"
 # include "Ranking.h"
 
@@ -19,7 +18,6 @@ void Main()
 	manager.add<Title>(State::Title);
 	manager.add<Tutorial>(State::Tutorial);
 	manager.add<Game>(State::Game);
-	manager.add<Bos>(State::Bos);
 	manager.add<GameOver>(State::GameOver);
 	manager.add<Ranking>(State::ResultRanking);
 

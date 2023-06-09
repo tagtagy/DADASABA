@@ -159,9 +159,6 @@
     <ClCompile Include="Tutorial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Bos.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameOver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -813,9 +810,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Tutorial.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Bos.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameOver.h">
