@@ -2,6 +2,9 @@
 #include "Class_player.h"
 //ボタン
 void Class_player::button() {
+	//マウスの位置
+	mousePos = Cursor::Pos();
+
 	//X移動
 	if (KeyLeft.pressed()|| KeyA.pressed()) moveX = Left;
 	else if (KeyRight.pressed()|| KeyD.pressed()) moveX = Right;

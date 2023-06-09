@@ -1,5 +1,16 @@
 ﻿#pragma once
 # include "Common.h"
+enum {
+	NoMove,
+	Right,
+	Left = -1
+
+};
+enum {
+	Down = 1,
+	Up = -1
+
+};
 
 class Class_player
 {
@@ -14,18 +25,8 @@ public:
 	void draw() const;
 
 private:
-
-	enum {
-		NoMove,
-		Right,
-		Left = -1
-		
-	};
-	enum {
-		Down = 1,
-		Up = -1
-		
-	};
+	//マウス座標
+	Vec2 mousePos;
 
 	//プレイヤーの当たり判定
 	Circle playerHit;
@@ -39,4 +40,5 @@ private:
 	//プレイヤーのサイズ
 	int playerSize = 10;
 };
+
 
