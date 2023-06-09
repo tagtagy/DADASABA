@@ -17,5 +17,8 @@ public:
 
 private:
 	Class_player* player = nullptr;
+
+	double CountDown = 60;
+	double downPrint;
 	
 };
