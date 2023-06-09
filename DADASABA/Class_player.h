@@ -20,6 +20,8 @@ public:
 	void button();
 	//動き
 	void move();
+	//攻撃の狙い
+	void attack_aim();
 	//攻撃
 	void attack();
 	//描画
@@ -42,6 +44,8 @@ private:
 	Vec2 playerMapPos;
 	//プレイヤーのサイズ
 	int playerSize = 30;
+
+	double a=10_deg;
 };
 
 

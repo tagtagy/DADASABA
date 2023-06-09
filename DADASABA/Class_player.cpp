@@ -1,6 +1,6 @@
 ﻿#include "stdafx.h"
 #include "Class_player.h"
-
+# include <cmath>
 Class_player::Class_player() {
 
 	playerHit = { 400,300 ,playerSize };
@@ -27,8 +27,28 @@ void Class_player::move() {
 	if (moveX != NoMove) playerMapPos.x += speed * moveX;
 	//縦移動
 	if (moveY != NoMove) playerMapPos.y += speed * moveY;
-	
+	Print<<a;
 	Print <<U"マップ上のプレイヤー座標" << playerMapPos;
+}
+//攻撃の狙い
+void Class_player::attack_aim() {
+	//底辺の計算
+	double base = mousePos.x - 400;
+	//高さの計算
+	double tall = mousePos.y - 300;
+	//角度の計算
+	a = Atan(tall / base) * (180 / 3.14);
+	//補正
+	if (base < 0) a -= 90;
+	else a -= 270;
+	//ラジアン化
+	a *= (3.14 / 180);
+
+
+
+	Print << base;
+	Print << tall;
+	Print << a;
 }
 //攻撃
 void Class_player::attack() {
@@ -39,6 +59,6 @@ void Class_player::attack() {
 //描画
 void Class_player::draw() const {
 
-	playerHit(playerTexture).draw(ColorF{ 1});
-
+	playerHit.draw(ColorF{ 1 });
+	playerTexture.resized(100).rotated(a).drawAt(playerHit.x, playerHit.y);
 }
