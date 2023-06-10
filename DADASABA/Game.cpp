@@ -45,7 +45,7 @@ void Game::update()
 void Game::draw() const
 {
 	player->draw();
-	//確認用
+	/*//確認用
 	FontAsset(U"TitleFont")(U"Game Scene").drawAt(400, 200);
 	FontAsset(U"TitleFont")(U"Crick or Enter Next").drawAt(400, 300);
 	FontAsset(U"TitleFont")(U"GameOver→[E]:GameClear→[C]").drawAt(400, 500);
@@ -56,6 +56,6 @@ void Game::draw() const
 	else
 	{
 		FontAsset(U"TitleFont")(downPrint, U"秒後にボス戦移動").drawAt(400, 400);
-	}
+	}*/
 }
 

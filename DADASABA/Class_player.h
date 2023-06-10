@@ -1,5 +1,6 @@
 ﻿#pragma once
 # include "Common.h"
+# include <cmath>
 enum {
 	NoMove,
 	Right,
@@ -28,9 +29,26 @@ public:
 	void draw() const;
 
 private:
+	//角度の計算
+	//底辺,高さ
+	double angle_calculate(double base, double tall);
+	//正規化の計算
+	//底辺,高さ,中心座標,回転の半径
+	Vec2 normalization_calculate(double base, double tall,Vec2 centerPos,double range);
+private:
+
 	//マウス座標
 	Vec2 mousePos;
+	//攻撃関連////////////////////////////////////////////////////////////
 
+	//プレイヤーの攻撃標準テクスチャ
+	const Texture player_attack_mark_Texture{ U"仮素材/Sword.png" };
+	//プレイヤーの攻撃位置
+	Circle player_attack_mark {0,0,10};
+	Vec2 player_attack_markPos { 0,0 };
+
+	//自機関連////////////////////////////////////////////////////////////
+	
 	//プレイヤーテクスチャ
 	const Texture playerTexture{ U"仮素材/Playerdebug.png" };
 	//プレイヤーの当たり判定
@@ -40,12 +58,13 @@ private:
 	int moveY = 0;
 	//スピード
 	int speed = 10;
+	//攻撃マーカーの角度の数値
+	double angle_attack_mark = 10_deg;
 	//プレイヤーのマップ上の位置
-	Vec2 playerMapPos;
+	Vec2 playerMapPos{0,0};
 	//プレイヤーのサイズ
 	int playerSize = 30;
-
-	double a=10_deg;
+	
 };
 
 
