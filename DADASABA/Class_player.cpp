@@ -4,7 +4,7 @@
 Class_player::Class_player() {
 
 	playerHit = { 400,300 ,playerSize };
-	playerMapPos={ 0,0 };
+	playerMapPos= { 400,300 };
 }
 
 //ボタン
@@ -41,9 +41,13 @@ void Class_player::attack_aim() {
 
 	player_attack_mark = { player_attack_markPos ,10 };
 
-	//player_attack_mark.x = base_Normalization*100 + 400;
-	//player_attack_mark.y = tall_Normalization*100 + 300;
 	Print <<U"攻撃マーカー座標" << player_attack_markPos;
+}
+//プレイヤーの位置
+Vec2 Class_player::playerPos() {
+
+	return playerMapPos;
+
 }
 //攻撃
 void Class_player::attack() {

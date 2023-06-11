@@ -113,6 +113,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Class_Enemy.cpp" />
     <ClCompile Include="Class_player.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameOver.cpp" />
@@ -319,6 +320,7 @@
     <Xml Include="App\example\xml\test.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Class_Enemy.h" />
     <ClInclude Include="Class_player.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Game.h" />

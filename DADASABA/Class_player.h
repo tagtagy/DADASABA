@@ -23,6 +23,8 @@ public:
 	void move();
 	//攻撃の狙い
 	void attack_aim();
+	//プレイヤーの位置
+	Vec2 playerPos();
 	//攻撃
 	void attack();
 	//描画
@@ -61,7 +63,9 @@ private:
 	//攻撃マーカーの角度の数値
 	double angle_attack_mark = 10_deg;
 	//プレイヤーのマップ上の位置
-	Vec2 playerMapPos{0,0};
+	Vec2 playerMapPos;
+	//プレイヤーのスクリーン上の位置
+	Vec2 ScreenPos;
 	//プレイヤーのサイズ
 	int playerSize = 30;
 	
