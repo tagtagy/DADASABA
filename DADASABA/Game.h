@@ -2,6 +2,7 @@
 # include "Common.h"
 #include "Class_player.h"
 #include "Class_Enemy.h"
+#include "Class_Item.h"
 // ゲームシーン
 class Game : public App::Scene
 {
@@ -20,6 +21,8 @@ private:
 	Class_player* player = nullptr;
 	//敵
 	Class_Enemy* enemy = nullptr;
+	//アイテム
+	Class_Item* item = nullptr;
 
 	double CountDown = 60;
 	double downPrint;

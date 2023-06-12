@@ -7,6 +7,9 @@ Game::~Game() {
 	if (enemy != nullptr) {
 		delete enemy;
 	}
+	if (item != nullptr) {
+		delete item;
+	}
 }
 
 Game::Game(const InitData& init)
@@ -14,6 +17,9 @@ Game::Game(const InitData& init)
 {
 	player = new Class_player();
 	enemy = new Class_Enemy();
+	item = new Class_Item();
+	//初期位置を設定（playerの位置を足して調整）
+	item->init({ 0, 0 }, player->playerPos());
 }
 
 void Game::update()
@@ -44,6 +50,9 @@ void Game::update()
 	//プレイヤーのエイム
 	player->attack_aim();
 
+	item->MapPos(player->playerPos());
+	item->hitPlayerHit(player->getPlayerHit());
+
 	//敵の動き
 
 
@@ -59,6 +68,7 @@ void Game::draw() const
 {
 	player->draw();
 	enemy->Draw();
+	item->draw();
 	//確認用
 	FontAsset(U"TitleFont")(U"Game Scene").drawAt(400, 200);
 	FontAsset(U"TitleFont")(U"Crick or Enter Next").drawAt(400, 300);

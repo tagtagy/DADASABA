@@ -30,6 +30,8 @@ public:
 	//描画
 	void draw() const;
 
+	Circle getPlayerHit() { return playerHit; };
+
 private:
 	//角度の計算
 	//底辺,高さ
