@@ -24,9 +24,9 @@ void Class_player::button() {
 //動き
 void Class_player::move() {
 	//横移動
-	if (moveX != NoMove) playerMapPos.x += speed * moveX;
+	if (moveX != NoMove) playerMapPos.x += speed * moveX* Scene::DeltaTime();
 	//縦移動
-	if (moveY != NoMove) playerMapPos.y += speed * moveY;
+	if (moveY != NoMove) playerMapPos.y += speed * moveY* Scene::DeltaTime();
 	
 	Print <<U"マップ上のプレイヤー座標" << playerMapPos;
 	Print << U"角度(ベクトル値)" << angle_attack_mark;

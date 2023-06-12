@@ -61,7 +61,7 @@ private:
 	int moveX = 0;
 	int moveY = 0;
 	//スピード
-	int speed = 10;
+	int speed = 300;
 	//攻撃マーカーの角度の数値
 	double angle_attack_mark = 10_deg;
 	//プレイヤーのマップ上の位置
