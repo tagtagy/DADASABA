@@ -20,17 +20,32 @@ void Class_player::button() {
 	if (KeyUp.pressed()|| KeyW.pressed())moveY = Up;
 	else if (KeyDown.pressed()|| KeyS.pressed())moveY = Down;
 	else moveY = NoMove;
+
+	//回避
+	if (MouseR.down())avoid = true;
+
 }
 //動き
 void Class_player::move() {
-	//横移動
-	if (moveX != NoMove) playerMapPos.x += speed * moveX* Scene::DeltaTime();
-	//縦移動
-	if (moveY != NoMove) playerMapPos.y += speed * moveY* Scene::DeltaTime();
-	
+	//回避移動
+	if (avoid)avoid_move();
+	//通常移動
+	else normal_move();
+
 	Print <<U"マップ上のプレイヤー座標" << playerMapPos;
 	Print << U"角度(ベクトル値)" << angle_attack_mark;
 	
+}
+//通常移動
+void Class_player::normal_move() {
+	//横移動
+	if (moveX != NoMove) playerMapPos.x += speed * moveX * Scene::DeltaTime();
+	//縦移動
+	if (moveY != NoMove) playerMapPos.y += speed * moveY * Scene::DeltaTime();
+}
+//回避移動
+void Class_player::avoid_move() {
+
 }
 //攻撃の狙い
 void Class_player::attack_aim() {

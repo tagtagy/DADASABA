@@ -33,6 +33,11 @@ public:
 	Circle getPlayerHit() { return playerHit; };
 
 private:
+	//通常移動
+	void normal_move();
+	//回避移動
+	void avoid_move();
+
 	//角度の計算
 	//底辺,高さ
 	double angle_calculate(double base, double tall);
@@ -61,7 +66,9 @@ private:
 	int moveX = 0;
 	int moveY = 0;
 	//スピード
-	int speed = 300;
+	const int speed = 300;
+	//回避
+	bool avoid = false;
 	//攻撃マーカーの角度の数値
 	double angle_attack_mark = 10_deg;
 	//プレイヤーのマップ上の位置
