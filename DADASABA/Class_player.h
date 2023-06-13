@@ -48,6 +48,8 @@ private:
 
 	//マウス座標
 	Vec2 mousePos;
+	//デルタタイム
+	double delta_time;
 	//攻撃関連////////////////////////////////////////////////////////////
 
 	//プレイヤーの攻撃標準テクスチャ
@@ -67,8 +69,14 @@ private:
 	int moveY = 0;
 	//スピード
 	const int speed = 300;
-	//回避
-	bool avoid = false;
+
+	//回避経過時間
+	double avoid_count = false;
+	//最大回避時間
+	const double avoid_time = 0.5;
+	//回避スピード
+	Vec2 avoid_speed = { 0,0 };
+
 	//攻撃マーカーの角度の数値
 	double angle_attack_mark = 10_deg;
 	//プレイヤーのマップ上の位置
