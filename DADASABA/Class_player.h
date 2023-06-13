@@ -53,7 +53,7 @@ private:
 	//攻撃関連////////////////////////////////////////////////////////////
 
 	//プレイヤーの攻撃標準テクスチャ
-	const Texture player_attack_mark_Texture{ U"仮素材/Sword.png" };
+	const Texture player_attack_mark_Texture{ U"SOZAI/プレイヤー/P_JapaneseBlade.png" };
 	//プレイヤーの攻撃位置
 	Circle player_attack_mark {0,0,10};
 	Vec2 player_attack_markPos { 0,0 };
@@ -61,7 +61,7 @@ private:
 	//自機関連////////////////////////////////////////////////////////////
 	
 	//プレイヤーテクスチャ
-	const Texture playerTexture{ U"仮素材/Playerdebug.png" };
+	const Texture playerTexture{ U"SOZAI/プレイヤー/Player_pokomaru_Ver2.png" };
 	//プレイヤーの当たり判定
 	Circle playerHit;
 	//移動するかどうか

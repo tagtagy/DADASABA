@@ -22,8 +22,11 @@ void Class_player::button() {
 	else moveY = NoMove;
 
 	//回避
-	if (MouseR.down())avoid_count = avoid_time;
-
+	if (MouseR.down()) {
+		avoid_count = avoid_time;
+		//正規化
+		avoid_speed = normalization_calculate(mousePos.x - 400, mousePos.y - 300, { 0,0 }, (speed + 800) * delta_time);
+	}
 	delta_time = Scene::DeltaTime();
 }
 //動き
@@ -48,8 +51,7 @@ void Class_player::normal_move() {
 //回避移動
 void Class_player::avoid_move() {
 	
-	//正規化
-	avoid_speed = normalization_calculate(mousePos.x - 400, mousePos.y - 300, { 0,0 }, (speed+800)* delta_time);
+	
 	playerMapPos += avoid_speed;
 
 	avoid_count-= delta_time;
@@ -80,7 +82,7 @@ void Class_player::draw() const {
 	//プレイヤーの当たり判定
 	playerHit.draw(ColorF{ 1 });
 	//プレイヤーのテクスチャ
-	playerTexture.resized(100).drawAt(playerHit.x, playerHit.y);
+	playerTexture(0,0,1200,1200).resized(100).drawAt(playerHit.x, playerHit.y);
 	//プレイヤーの攻撃マーカー
 	player_attack_mark.draw(ColorF{ 1 });
 
