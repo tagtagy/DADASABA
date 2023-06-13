@@ -68,12 +68,7 @@ void Class_player::attack_aim() {
 
 	Print <<U"攻撃マーカー座標" << player_attack_markPos;
 }
-//プレイヤーの位置
-Vec2 Class_player::playerPos() {
 
-	return playerMapPos;
-
-}
 //攻撃
 void Class_player::attack() {
 

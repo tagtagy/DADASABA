@@ -24,7 +24,7 @@ public:
 	//攻撃の狙い
 	void attack_aim();
 	//プレイヤーの位置
-	Vec2 playerPos();
+	Vec2 playerPos() { return playerMapPos; };
 	//攻撃
 	void attack();
 	//描画
