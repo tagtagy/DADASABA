@@ -53,7 +53,7 @@ private:
 	//攻撃関連////////////////////////////////////////////////////////////
 
 	//プレイヤーの攻撃標準テクスチャ
-	const Texture player_attack_mark_Texture{ U"SOZAI/プレイヤー/P_JapaneseBlade.png" };
+	const Texture player_attack_mark_Texture{ U"SOZAI/プレイヤー/PlayerArrow.png" };
 	//プレイヤーの攻撃位置
 	Circle player_attack_mark {0,0,10};
 	Vec2 player_attack_markPos { 0,0 };

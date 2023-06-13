@@ -64,7 +64,7 @@ void Class_player::attack_aim() {
 	//角度の計算
 	angle_attack_mark = angle_calculate(mousePos.x - 400, mousePos.y - 300);
 	//正規化
-	player_attack_markPos = normalization_calculate(mousePos.x - 400, mousePos.y - 300,{400,300},100);
+	player_attack_markPos = normalization_calculate(mousePos.x - 400, mousePos.y - 300,{400,300},50);
 
 	player_attack_mark = { player_attack_markPos ,10 };
 
@@ -86,7 +86,7 @@ void Class_player::draw() const {
 	//プレイヤーの攻撃マーカー
 	player_attack_mark.draw(ColorF{ 1 });
 
-	player_attack_mark_Texture.resized(100).rotated(angle_attack_mark).drawAt(player_attack_markPos);
+	player_attack_mark_Texture.resized(50).rotated(angle_attack_mark).drawAt(player_attack_markPos);
 }
 
 //角度の計算
