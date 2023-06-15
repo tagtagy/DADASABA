@@ -43,6 +43,7 @@ void Game::update()
 	player->button();
 	//プレイヤーの動き
 	player->move();
+
 	//敵のターゲットの座標取得
 	enemy->Target_input(player->playerPos());
 	//敵の動き

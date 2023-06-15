@@ -51,6 +51,26 @@ private:
 	//デルタタイム
 	double delta_time;
 	//攻撃関連////////////////////////////////////////////////////////////
+	//攻撃ボタン
+	bool attack_button=false;
+	//攻撃時間
+	double attack_count = 0;
+	//攻撃の有効時間
+	double attack_time = 0.1;
+	//斬撃
+	const Texture ZANGEKI[3]{
+		Texture{U"仮素材/ZANGEKI1.png"},
+		Texture{U"仮素材/ZANGEKI2.png"},
+		Texture{U"仮素材/ZANGEKI3.png"},
+	};
+	//攻撃のアニメーション
+	int attack_animation = 0;
+	//攻撃の角度
+	double attack_avoid = 0;
+	//攻撃の方向
+	Vec2 attack_direction = { 0,0 };
+	//攻撃マーカーの角度の数値
+	double angle_attack_mark = 10_deg;
 
 	//プレイヤーの攻撃標準テクスチャ
 	const Texture player_attack_mark_Texture{ U"SOZAI/プレイヤー/PlayerArrow.png" };
@@ -77,8 +97,7 @@ private:
 	//回避スピード
 	Vec2 avoid_speed = { 0,0 };
 
-	//攻撃マーカーの角度の数値
-	double angle_attack_mark = 10_deg;
+	
 	//プレイヤーのマップ上の位置
 	Vec2 playerMapPos;
 	//プレイヤーのスクリーン上の位置

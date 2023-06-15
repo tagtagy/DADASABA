@@ -21,12 +21,25 @@ void Class_player::button() {
 	else if (KeyDown.pressed()|| KeyS.pressed())moveY = Down;
 	else moveY = NoMove;
 
+	//攻撃
+	//回避中でない時
+	//攻撃中でない時
+	if (MouseL.down() && !avoid_count && !attack_button) {
+		attack_count = attack_time;
+		attack_button = true;
+		attack_avoid= angle_calculate(mousePos.x - 400, mousePos.y - 300);
+		attack_direction= normalization_calculate(mousePos.x - 400, mousePos.y - 300, { 400,300 }, 50);
+	}
+
 	//回避
-	if (MouseR.down()) {
+	//攻撃中でない時
+	//回避中でない時
+	if (MouseR.down()&& !attack_button && !avoid_count) {
 		avoid_count = avoid_time;
 		//正規化
 		avoid_speed = normalization_calculate(mousePos.x - 400, mousePos.y - 300, { 0,0 }, (speed + 800) * delta_time);
 	}
+	//共有のデルタタイム
 	delta_time = Scene::DeltaTime();
 }
 //動き
@@ -36,8 +49,12 @@ void Class_player::move() {
 	//通常移動
 	else normal_move();
 
+	//攻撃行動
+	if (attack_button)attack();
+
 	Print <<U"マップ上のプレイヤー座標" << playerMapPos;
-	Print << U"角度(ベクトル値)" << angle_attack_mark;
+	Print << U"プレイヤーからのマウスの角度" << int(angle_attack_mark * (180/3.14))<<U"°";
+	Print << U"攻撃マーカー座標" << player_attack_markPos;
 	Print << U"回避の方角" << avoid_speed;
 	Print << U"回避の時間" << avoid_count;
 }
@@ -68,14 +85,25 @@ void Class_player::attack_aim() {
 
 	player_attack_mark = { player_attack_markPos ,10 };
 
-	Print <<U"攻撃マーカー座標" << player_attack_markPos;
+	
 }
 
 //攻撃
 void Class_player::attack() {
+	attack_count -= delta_time;
 
+	//アニメーションの更新
+	if (attack_count < 0) {
+		attack_count += attack_time;
+		attack_animation++;
+	}
 
-
+	//アニメーションの終わり
+	if (attack_animation > 3) {
+		attack_count = 0;
+		attack_animation = 0;
+		attack_button = false;
+	}
 }
 //描画
 void Class_player::draw() const {
@@ -85,8 +113,10 @@ void Class_player::draw() const {
 	playerTexture(0,0,1200,1200).resized(100).drawAt(playerHit.x, playerHit.y);
 	//プレイヤーの攻撃マーカー
 	player_attack_mark.draw(ColorF{ 1 });
-
 	player_attack_mark_Texture.resized(50).rotated(angle_attack_mark).drawAt(player_attack_markPos);
+
+	//攻撃アニメーション
+	if(attack_button)
 }
 
 //角度の計算
