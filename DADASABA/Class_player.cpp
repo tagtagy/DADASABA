@@ -4,7 +4,8 @@
 Class_player::Class_player() {
 
 	playerHit = { 400,300 ,playerSize };
-	playerMapPos= { 400,300 };
+	playerMapPos= {0,0 };
+	for (int i = 0; i < 5; i++)afterimagePos[i]={0,0};
 }
 
 //ボタン
@@ -28,7 +29,7 @@ void Class_player::button() {
 		attack_count = attack_time;
 		attack_button = true;
 		attack_avoid= angle_calculate(mousePos.x - 400, mousePos.y - 300);
-		attack_direction= normalization_calculate(mousePos.x - 400, mousePos.y - 300, { 400,300 }, 50);
+		attack_direction= normalization_calculate(mousePos.x - 400, mousePos.y - 300, { 400,300 }, 40);
 	}
 
 	//回避
@@ -57,6 +58,7 @@ void Class_player::move() {
 	Print << U"攻撃マーカー座標" << player_attack_markPos;
 	Print << U"回避の方角" << avoid_speed;
 	Print << U"回避の時間" << avoid_count;
+	for (int i = 0; i < 5; i++)Print << U"残像[" << i << U"]の位置" << afterimagePos[i];
 }
 //通常移動
 void Class_player::normal_move() {
@@ -68,13 +70,24 @@ void Class_player::normal_move() {
 //回避移動
 void Class_player::avoid_move() {
 	
-	
-	playerMapPos += avoid_speed;
 
+	playerMapPos += avoid_speed;
+	//残像
+	for (int i = 4; i >= 0; i--) {
+
+		if (i - 1 == -1) afterimagePos[i] = playerMapPos;
+		else afterimagePos[i] = afterimagePos[i - 1];
+	}
+
+	for (int i = 4; i >= 0; i--) {
+
+		if (i - 1 == -1)afterimagePos[i] -= playerMapPos;
+		//afterimagePos[i] += { 400, 300 };
+
+	}
+	
 	avoid_count-= delta_time;
 	if (avoid_count < 0)avoid_count = 0;
-
-	
 }
 //攻撃の狙い
 void Class_player::attack_aim() {
@@ -99,7 +112,7 @@ void Class_player::attack() {
 	}
 
 	//アニメーションの終わり
-	if (attack_animation > 3) {
+	if (attack_animation >= 3) {
 		attack_count = 0;
 		attack_animation = 0;
 		attack_button = false;
@@ -109,6 +122,12 @@ void Class_player::attack() {
 void Class_player::draw() const {
 	//プレイヤーの当たり判定
 	playerHit.draw(ColorF{ 1 });
+
+	for (int i = 4; i >= 0; i--) {
+		//残像の描画
+		//if (avoid_count != false)
+			playerTexture(0, 0, 1200, 1200).resized(100).drawAt(afterimagePos[i]);
+	}
 	//プレイヤーのテクスチャ
 	playerTexture(0,0,1200,1200).resized(100).drawAt(playerHit.x, playerHit.y);
 	//プレイヤーの攻撃マーカー
@@ -116,7 +135,7 @@ void Class_player::draw() const {
 	player_attack_mark_Texture.resized(50).rotated(angle_attack_mark).drawAt(player_attack_markPos);
 
 	//攻撃アニメーション
-	if(attack_button)
+	if(attack_button)ZANGEKI[attack_animation].resized(100).rotated(attack_avoid).drawAt(attack_direction);
 }
 
 //角度の計算
