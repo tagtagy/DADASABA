@@ -5,7 +5,7 @@ Class_player::Class_player() {
 
 	playerHit = { 400,300 ,playerSize };
 	playerMapPos= {0,0 };
-	for (int i = 0; i < 5; i++)afterimagePos[i]={0,0};
+	for (int i = 0; i < 5; i++)afterimageMapPos[i]={0,0};
 }
 
 //ボタン
@@ -37,6 +37,7 @@ void Class_player::button() {
 	//回避中でない時
 	if (MouseR.down()&& !attack_button && !avoid_count) {
 		avoid_count = avoid_time;
+		afterimage_emergence = 0;
 		//正規化
 		avoid_speed = normalization_calculate(mousePos.x - 400, mousePos.y - 300, { 0,0 }, (speed + 800) * delta_time);
 	}
@@ -47,9 +48,24 @@ void Class_player::button() {
 void Class_player::move() {
 	//回避移動
 	if (avoid_count!=false)avoid_move();
-	//通常移動
-	else normal_move();
+	else {
+		//通常移動
+		normal_move();
 
+		if (afterimage_emergence >= 0.1) {
+			afterimage_emergence -= 0.1;
+			//残像を描画するか？
+			for (int i = 0; i < 5; i++) {
+				if (Isafterimage[i]) {
+					Isafterimage[i] = false;
+					i = 5;
+				}
+			}
+		}
+
+		afterimage_emergence += delta_time;
+
+	}
 	//攻撃行動
 	if (attack_button)attack();
 
@@ -58,7 +74,7 @@ void Class_player::move() {
 	Print << U"攻撃マーカー座標" << player_attack_markPos;
 	Print << U"回避の方角" << avoid_speed;
 	Print << U"回避の時間" << avoid_count;
-	for (int i = 0; i < 5; i++)Print << U"残像[" << i << U"]の位置" << afterimagePos[i];
+	for (int i = 0; i < 5; i++)Print << U"残像[" << i << U"]の位置" << afterimageMapPos[i];
 }
 //通常移動
 void Class_player::normal_move() {
@@ -70,22 +86,28 @@ void Class_player::normal_move() {
 //回避移動
 void Class_player::avoid_move() {
 	
-
 	playerMapPos += avoid_speed;
+
 	//残像
-	for (int i = 4; i >= 0; i--) {
+	if (afterimage_emergence >= 0.1) {
+		afterimage_emergence -= 0.1;
 
-		if (i - 1 == -1) afterimagePos[i] = playerMapPos;
-		else afterimagePos[i] = afterimagePos[i - 1];
+		for (int i = 0; i < 5; i++) {
+			//残像が描画されていない時
+			if (!Isafterimage[i]) {
+
+				afterimageMapPos[i] = playerMapPos;
+
+				Isafterimage[i] = true;
+
+				i = 5;
+			}
+		}
 	}
 
-	for (int i = 4; i >= 0; i--) {
-
-		if (i - 1 == -1)afterimagePos[i] -= playerMapPos;
-		//afterimagePos[i] += { 400, 300 };
-
-	}
+	for (int i = 0; i < 5; i++)afterimageScreenPos[i] = afterimageMapPos[i] - playerMapPos+Vec2{400,300};
 	
+	afterimage_emergence += delta_time;
 	avoid_count-= delta_time;
 	if (avoid_count < 0)avoid_count = 0;
 }
@@ -123,10 +145,10 @@ void Class_player::draw() const {
 	//プレイヤーの当たり判定
 	playerHit.draw(ColorF{ 1 });
 
-	for (int i = 4; i >= 0; i--) {
+	for (int i = 4; i >=0; i--) {
 		//残像の描画
-		//if (avoid_count != false)
-			playerTexture(0, 0, 1200, 1200).resized(100).drawAt(afterimagePos[i]);
+		if (Isafterimage[i])
+			playerTexture(0, 0, 1200, 1200).resized(100).drawAt(afterimageScreenPos[i]);
 	}
 	//プレイヤーのテクスチャ
 	playerTexture(0,0,1200,1200).resized(100).drawAt(playerHit.x, playerHit.y);

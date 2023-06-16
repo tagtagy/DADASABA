@@ -96,8 +96,14 @@ private:
 	const double avoid_time = 0.5;
 	//回避スピード
 	Vec2 avoid_speed = { 0,0 };
-	//残像の位置
-	Vec2 afterimagePos[5];
+	//残像の出現管理
+	double afterimage_emergence=0;
+	//残像の描画管理
+	bool Isafterimage[5]{ 0,0,0,0,0 };
+	//残像のマップ上の位置
+	Vec2 afterimageMapPos[5];
+	//残像のスクリーン上の位置
+	Vec2 afterimageScreenPos[5];
 
 	//プレイヤーのマップ上の位置
 	Vec2 playerMapPos;
