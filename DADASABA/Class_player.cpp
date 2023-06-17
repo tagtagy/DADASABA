@@ -48,26 +48,14 @@ void Class_player::button() {
 void Class_player::move() {
 	//回避移動
 	if (avoid_count!=false)avoid_move();
-	else {
-		//通常移動
-		normal_move();
+	//通常移動
+	else normal_move();
 
-		if (afterimage_emergence >= 0.1) {
-			afterimage_emergence -= 0.1;
-			//残像を描画するか？
-			for (int i = 0; i < 5; i++) {
-				if (Isafterimage[i]) {
-					Isafterimage[i] = false;
-					i = 5;
-				}
-			}
-		}
-
-		afterimage_emergence += delta_time;
-
-	}
+	
 	//攻撃行動
 	if (attack_button)attack();
+	//残像
+	afterimage();
 
 	Print <<U"マップ上のプレイヤー座標" << playerMapPos;
 	Print << U"プレイヤーからのマウスの角度" << int(angle_attack_mark * (180/3.14))<<U"°";
@@ -88,28 +76,50 @@ void Class_player::avoid_move() {
 	
 	playerMapPos += avoid_speed;
 
-	//残像
-	if (afterimage_emergence >= 0.1) {
-		afterimage_emergence -= 0.1;
-
-		for (int i = 0; i < 5; i++) {
+	//残像の描画
+	if (afterimage_emergence >= afterimage_update) {
+		for (int i = 0; i < afterimageMax; i++) {
 			//残像が描画されていない時
 			if (!Isafterimage[i]) {
-
+				//座標を更新する
 				afterimageMapPos[i] = playerMapPos;
 
 				Isafterimage[i] = true;
 
-				i = 5;
+				i = afterimageMax;
 			}
 		}
 	}
 
-	for (int i = 0; i < 5; i++)afterimageScreenPos[i] = afterimageMapPos[i] - playerMapPos+Vec2{400,300};
+	for (int i = 0; i < afterimageMax; i++)afterimageScreenPos[i] = afterimageMapPos[i] - playerMapPos+Vec2{400,300};
 	
-	afterimage_emergence += delta_time;
+	
 	avoid_count-= delta_time;
 	if (avoid_count < 0)avoid_count = 0;
+}
+//残像
+void Class_player::afterimage() {
+	//残像
+	if (afterimage_emergence >= afterimage_update) {
+		afterimage_emergence -= afterimage_update;
+
+		for (int i = 0; i < afterimageMax; i++) {
+			//残像が描画されている時
+			if (Isafterimage[i]) {
+				//透明度を下げる
+				afterimage_clear[i] -= delta_time * 10;
+				//完全に透明になったら描画を切る
+				if (afterimage_clear[i] < 0) Isafterimage[i] = false;
+			}
+			if (!Isafterimage[i]) {
+				//透明度を元に戻す
+				afterimage_clear[i] = 1;
+			}
+		}
+
+		
+	}
+	afterimage_emergence += delta_time;
 }
 //攻撃の狙い
 void Class_player::attack_aim() {
@@ -145,10 +155,10 @@ void Class_player::draw() const {
 	//プレイヤーの当たり判定
 	playerHit.draw(ColorF{ 1 });
 
-	for (int i = 4; i >=0; i--) {
+	for (int i = afterimageMax-1; i >=0; i--) {
 		//残像の描画
 		if (Isafterimage[i])
-			playerTexture(0, 0, 1200, 1200).resized(100).drawAt(afterimageScreenPos[i]);
+			playerTexture(0, 0, 1200, 1200).resized(100).drawAt(afterimageScreenPos[i],ColorF(1,0.5,0.5, afterimage_clear[i]));
 	}
 	//プレイヤーのテクスチャ
 	playerTexture(0,0,1200,1200).resized(100).drawAt(playerHit.x, playerHit.y);

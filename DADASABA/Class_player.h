@@ -2,15 +2,14 @@
 # include "Common.h"
 # include <cmath>
 enum {
+	//移動
 	NoMove,
-	Right,
-	Left = -1
-
-};
-enum {
+	Right = 1,
 	Down = 1,
-	Up = -1
-
+	Left = -1,
+	Up = -1,
+	//残像の数
+	afterimageMax = 10,
 };
 
 class Class_player
@@ -37,6 +36,8 @@ private:
 	void normal_move();
 	//回避移動
 	void avoid_move();
+	//残像
+	void afterimage();
 
 	//角度の計算
 	//底辺,高さ
@@ -96,14 +97,19 @@ private:
 	const double avoid_time = 0.5;
 	//回避スピード
 	Vec2 avoid_speed = { 0,0 };
+
+	//残像の透明度
+	double afterimage_clear[afterimageMax];
+	//残像の更新時間
+	const double afterimage_update=0.05;
 	//残像の出現管理
 	double afterimage_emergence=0;
 	//残像の描画管理
-	bool Isafterimage[5]{ 0,0,0,0,0 };
+	bool Isafterimage[afterimageMax];
 	//残像のマップ上の位置
-	Vec2 afterimageMapPos[5];
+	Vec2 afterimageMapPos[afterimageMax];
 	//残像のスクリーン上の位置
-	Vec2 afterimageScreenPos[5];
+	Vec2 afterimageScreenPos[afterimageMax];
 
 	//プレイヤーのマップ上の位置
 	Vec2 playerMapPos;
