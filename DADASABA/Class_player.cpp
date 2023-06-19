@@ -197,3 +197,24 @@ Vec2 Class_player::normalization_calculate(double base, double tall, Vec2 center
 	
 	return  { base_Normalization * range + centerPos.x, tall_Normalization * range + centerPos.y };
 }
+
+void Class_player::addItemCount() {
+	getItemCount++;
+	if (getItemCount % 5 == 0) {
+		//効果
+		buffFlag = true;
+	}
+}
+
+void Class_player::itemBuff() {
+	Print << U"アイテム獲得数" << getItemCount;
+	Print << U"バフのフラグ" << buffFlag;
+	if (buffFlag) {
+		// 経過時間を加算
+		t += Scene::DeltaTime();
+		if (t > 5) {
+			buffFlag = false;
+			t = 0;
+		}
+	}
+}

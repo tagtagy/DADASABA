@@ -7,8 +7,10 @@ Game::~Game() {
 	if (enemy != nullptr) {
 		delete enemy;
 	}
-	if (item != nullptr) {
-		delete item;
+	for (int i = 0; i < maxItemNum; i++) {
+		if (item[i] != nullptr) {
+			delete item[i];
+		}
 	}
 }
 
@@ -17,9 +19,7 @@ Game::Game(const InitData& init)
 {
 	player = new Class_player();
 	enemy = new Class_Enemy();
-	item = new Class_Item();
-	//初期位置を設定（playerの位置を足して調整）
-	item->init({ 0, 0 }, player->playerPos());
+	SpawnItem({ 0,0 });
 }
 
 void Game::update()
@@ -51,8 +51,28 @@ void Game::update()
 	//プレイヤーのエイム
 	player->attack_aim();
 
-	item->MapPos(player->playerPos());
-	item->hitPlayerHit(player->getPlayerHit());
+	//デバッグ用
+	if (KeyI.down()) {
+		//SpawnItemに位置を渡すとそこにスポーン(画面の表示位置に出るので改良が必要かも)
+		SpawnItem({ 100,100 });
+	}
+
+	//全ての要素にアクセス
+	for (int i = 0; i < maxItemNum; i++) {
+		if (item[i] != nullptr) {
+			//描画一の更新
+			item[i]->MapPos(player->playerPos());
+			//当たり判定
+			item[i]->hitPlayerHit(player->getPlayerHit());
+			if (item[i]->getIsDestroy()) {//当たっていたら要素をnullにする
+				//獲得アイテム数を加算
+				player->addItemCount();
+				item[i] = nullptr;
+			}
+		}
+	}
+
+	player->itemBuff();
 
 	//敵の動き
 
@@ -69,7 +89,11 @@ void Game::draw() const
 {
 	player->draw();
 	enemy->Draw();
-	item->draw();
+	for (int i = 0; i < maxItemNum; i++) {
+		if (item[i] != nullptr) {
+			item[i]->draw();
+		}
+	}
 	//確認用
 	FontAsset(U"TitleFont")(U"Game Scene").drawAt(400, 200);
 	FontAsset(U"TitleFont")(U"Crick or Enter Next").drawAt(400, 300);
@@ -84,3 +108,12 @@ void Game::draw() const
 	}
 }
 
+void Game::SpawnItem(Vec2 _enemyPos) {
+	item[itemSpawnNum] = new Class_Item();
+	//初期位置を設定（playerの位置を足して調整）
+	item[itemSpawnNum]->init(_enemyPos, player->playerPos());
+	itemSpawnNum++;
+	if (itemSpawnNum > maxItemNum) {
+		itemSpawnNum = 0;
+	}
+}

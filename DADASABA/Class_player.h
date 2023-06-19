@@ -28,9 +28,12 @@ public:
 	void attack();
 	//描画
 	void draw() const;
-
+	//プレイヤーの当たり判定を取得
 	Circle getPlayerHit() { return playerHit; };
-
+	//獲得したアイテム数を加算
+	void addItemCount();
+	//アイテムの効果
+	void itemBuff();
 private:
 	//通常移動
 	void normal_move();
@@ -117,7 +120,13 @@ private:
 	Vec2 ScreenPos;
 	//プレイヤーのサイズ
 	int playerSize = 30;
-	
+
+
+	//バフの経過時間を保存
+	double t = 0;
+	//現在のアイテム獲得数
+	int getItemCount = 0;
+	bool buffFlag = false;
 };
 
 

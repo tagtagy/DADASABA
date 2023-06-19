@@ -11,7 +11,7 @@ void Class_Item::init(Vec2 _itemPos, Vec2 _playerPos) {
 	itemPos = _itemPos + _playerPos;
 }
 
-void Class_Item::draw() {
+void Class_Item::draw() const{
 	itemHit(itemRedTexture).draw();
 }
 
@@ -21,6 +21,9 @@ void Class_Item::MapPos(Vec2 _playerPos) {
 
 void Class_Item::hitPlayerHit(Circle _playerHit) {
 	if (itemHit.intersects(_playerHit)) {
-		Print << U"hit";
+		isDestroy = true;
+	}
+	else {
+		isDestroy = false;
 	}
 }
