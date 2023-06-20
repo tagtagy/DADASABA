@@ -51,21 +51,17 @@ void Class_player::move() {
 	//通常移動
 	else normal_move();
 
-	//残像の位置更新
-	for (int i = 0; i < afterimageMax; i++)afterimageScreenPos[i] = afterimageMapPos[i] - playerMapPos + Vec2{ 400,300 };
+	//残像の消去
+	afterimage_delete();
 
-	
 	//攻撃行動
 	if (attack_button)attack();
-	//残像
-	afterimage();
-
+	
 	Print <<U"マップ上のプレイヤー座標" << playerMapPos;
 	Print << U"プレイヤーからのマウスの角度" << int(angle_attack_mark * (180/3.14))<<U"°";
 	Print << U"攻撃マーカー座標" << player_attack_markPos;
 	Print << U"回避の方角" << avoid_speed;
 	Print << U"回避の時間" << avoid_count;
-	for (int i = 0; i < 5; i++)Print << U"残像[" << i << U"]の位置" << afterimageMapPos[i];
 }
 //通常移動
 void Class_player::normal_move() {
@@ -80,6 +76,13 @@ void Class_player::avoid_move() {
 	playerMapPos += avoid_speed;
 
 	//残像の描画
+	afterimage_generate();
+
+	avoid_count-= delta_time;
+	if (avoid_count < 0)avoid_count = 0;
+}
+//残像の生成
+void Class_player::afterimage_generate() {
 	if (afterimage_emergence >= afterimage_update) {
 		for (int i = 0; i < afterimageMax; i++) {
 			//残像が描画されていない時
@@ -93,13 +96,10 @@ void Class_player::avoid_move() {
 			}
 		}
 	}
-
-	avoid_count-= delta_time;
-	if (avoid_count < 0)avoid_count = 0;
 }
-//残像
-void Class_player::afterimage() {
-	//残像
+//残像の消去
+void Class_player::afterimage_delete() {
+
 	if (afterimage_emergence >= afterimage_update) {
 		afterimage_emergence -= afterimage_update;
 
@@ -116,10 +116,11 @@ void Class_player::afterimage() {
 				afterimage_clear[i] = 1;
 			}
 		}
-
-		
 	}
 	afterimage_emergence += delta_time;
+	//残像の位置更新
+	for (int i = 0; i < afterimageMax; i++)afterimageScreenPos[i] = afterimageMapPos[i] - playerMapPos + Vec2{ 400,300 };
+
 }
 //攻撃の狙い
 void Class_player::attack_aim() {
@@ -169,6 +170,28 @@ void Class_player::draw() const {
 	//攻撃アニメーション
 	if(attack_button)ZANGEKI[attack_animation].resized(100).rotated(attack_avoid).drawAt(attack_direction);
 }
+//獲得したアイテム数を加算
+void Class_player::addItemCount() {
+	getItemCount++;
+	if (getItemCount % 5 == 0) {
+		//効果
+		buffFlag = true;
+	}
+}
+//アイテムの効果
+void Class_player::itemBuff() {
+	Print << U"アイテム獲得数" << getItemCount;
+	Print << U"バフのフラグ" << buffFlag;
+	if (buffFlag) {
+		// 経過時間を加算
+		t += Scene::DeltaTime();
+		if (t > 5) {
+			buffFlag = false;
+			t = 0;
+		}
+	}
+}
+
 
 //角度の計算
 //底辺,高さ
@@ -196,25 +219,4 @@ Vec2 Class_player::normalization_calculate(double base, double tall, Vec2 center
 	double tall_Normalization = tall / hypotenuse;
 	
 	return  { base_Normalization * range + centerPos.x, tall_Normalization * range + centerPos.y };
-}
-
-void Class_player::addItemCount() {
-	getItemCount++;
-	if (getItemCount % 5 == 0) {
-		//効果
-		buffFlag = true;
-	}
-}
-
-void Class_player::itemBuff() {
-	Print << U"アイテム獲得数" << getItemCount;
-	Print << U"バフのフラグ" << buffFlag;
-	if (buffFlag) {
-		// 経過時間を加算
-		t += Scene::DeltaTime();
-		if (t > 5) {
-			buffFlag = false;
-			t = 0;
-		}
-	}
 }

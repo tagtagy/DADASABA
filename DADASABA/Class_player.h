@@ -39,8 +39,10 @@ private:
 	void normal_move();
 	//回避移動
 	void avoid_move();
-	//残像
-	void afterimage();
+	//残像の生成
+	void afterimage_generate();
+	//残像の消去
+	void afterimage_delete();
 
 	//角度の計算
 	//底辺,高さ
