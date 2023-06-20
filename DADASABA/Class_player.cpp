@@ -25,9 +25,12 @@ void Class_player::button() {
 	//攻撃
 	//回避中でない時
 	//攻撃中でない時
-	if (MouseL.down() && !avoid_count && !attack_button) {
+	if (MouseL.down()&& !attack_button) {
 		attack_count = attack_time;
 		attack_button = true;
+
+		avoid_count = false;
+		//攻撃場所の決定
 		attack_avoid= angle_calculate(mousePos.x - 400, mousePos.y - 300);
 		attack_direction= normalization_calculate(mousePos.x - 400, mousePos.y - 300, { 400,300 }, 40);
 	}
