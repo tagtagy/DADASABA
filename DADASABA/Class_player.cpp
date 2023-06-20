@@ -51,6 +51,9 @@ void Class_player::move() {
 	//通常移動
 	else normal_move();
 
+	//残像の位置更新
+	for (int i = 0; i < afterimageMax; i++)afterimageScreenPos[i] = afterimageMapPos[i] - playerMapPos + Vec2{ 400,300 };
+
 	
 	//攻撃行動
 	if (attack_button)attack();
@@ -91,9 +94,6 @@ void Class_player::avoid_move() {
 		}
 	}
 
-	for (int i = 0; i < afterimageMax; i++)afterimageScreenPos[i] = afterimageMapPos[i] - playerMapPos+Vec2{400,300};
-	
-	
 	avoid_count-= delta_time;
 	if (avoid_count < 0)avoid_count = 0;
 }

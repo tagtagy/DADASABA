@@ -87,6 +87,10 @@ void Game::update()
 
 void Game::draw() const
 {
+	// 背景色を 黄緑 に設定
+	Scene::SetBackground(ColorF{ 0, 1, 0 });
+
+
 	player->draw();
 	enemy->Draw();
 	for (int i = 0; i < maxItemNum; i++) {

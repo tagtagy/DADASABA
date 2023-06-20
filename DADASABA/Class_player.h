@@ -9,7 +9,7 @@ enum {
 	Left = -1,
 	Up = -1,
 	//残像の数
-	afterimageMax = 10,
+	afterimageMax = 15,
 };
 
 class Class_player
