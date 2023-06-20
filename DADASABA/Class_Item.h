@@ -5,7 +5,7 @@ public:
 	//初期化
 	Class_Item();
 	//スポーンしたときの初期値を設定
-	void init(Vec2 _itemPos, Vec2 _playerPos);
+	void init(Vec2 _itemPos);
 	//マップの座標を更新
 	void MapPos(Vec2 _playerPos);
 	//描画

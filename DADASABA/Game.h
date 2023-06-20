@@ -24,8 +24,10 @@ private:
 	//敵
 	Class_Enemy* enemy = nullptr;
 	//アイテム
+	//スポーンできる最大数
 	const static int maxItemNum = 1000;
 	Class_Item* item[maxItemNum] = { nullptr };
+	//現在スポーンしているアイテムの数
 	int itemSpawnNum = 0;
 
 	double CountDown = 60;

@@ -7,8 +7,9 @@ Class_Item::Class_Item() {
 	itemSize = 15;
 }
 
-void Class_Item::init(Vec2 _itemPos, Vec2 _playerPos) {
-	itemPos = _itemPos + _playerPos;
+void Class_Item::init(Vec2 _itemPos) {
+	itemPos.x = _itemPos.x + 400;
+	itemPos.y = _itemPos.y + 300;
 }
 
 void Class_Item::draw() const{

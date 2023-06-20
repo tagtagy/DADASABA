@@ -53,7 +53,7 @@ void Game::update()
 
 	//デバッグ用
 	if (KeyI.down()) {
-		//SpawnItemに位置を渡すとそこにスポーン(画面の表示位置に出るので改良が必要かも)
+		//マップ上の座標に出るように変更しました
 		SpawnItem({ 100,100 });
 	}
 
@@ -113,11 +113,12 @@ void Game::draw() const
 }
 
 void Game::SpawnItem(Vec2 _enemyPos) {
-	item[itemSpawnNum] = new Class_Item();
-	//初期位置を設定（playerの位置を足して調整）
-	item[itemSpawnNum]->init(_enemyPos, player->playerPos());
-	itemSpawnNum++;
-	if (itemSpawnNum > maxItemNum) {
-		itemSpawnNum = 0;
+	for (int i = 0; i < maxItemNum; i++) {
+		if (item[i] == nullptr) {
+			item[i] = new Class_Item();
+			//初期位置を設定（playerの位置を足して調整）
+			item[i]->init(_enemyPos);
+			break;
+		}
 	}
 }
