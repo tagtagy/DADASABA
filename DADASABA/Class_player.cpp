@@ -134,7 +134,12 @@ void Class_player::attack_aim() {
 
 	player_attack_mark = { player_attack_markPos ,10 };
 
-	
+	//斬撃の当たり判定
+	Slashing[0] = { int(player_attack_markPos.x) - 25 ,int(player_attack_markPos.y) ,10,10 };
+	Slashing[1] = { int(player_attack_markPos.x) - 15 ,int(player_attack_markPos.y) ,10,30 };
+	Slashing[2] = { int(player_attack_markPos.x) - 5 ,int(player_attack_markPos.y) ,10,50 };
+	Slashing[3] = { int(player_attack_markPos.x) + 5 ,int(player_attack_markPos.y) ,10,30 };
+	Slashing[4] = { int(player_attack_markPos.x) + 15 ,int(player_attack_markPos.y) ,10,10 };
 }
 
 //攻撃
@@ -172,6 +177,9 @@ void Class_player::draw() const {
 
 	//攻撃アニメーション
 	if(attack_button)ZANGEKI[attack_animation].resized(100).rotated(attack_avoid).drawAt(attack_direction);
+
+	for (int i = 0; i < 5; i++)Slashing[i].rotatedAt(Slashing[i].pos, angle_attack_mark).draw();
+
 }
 //獲得したアイテム数を加算
 void Class_player::addItemCount() {
