@@ -30,6 +30,8 @@ public:
 	void draw() const;
 	//プレイヤーの当たり判定を取得
 	Circle getPlayerHit() { return playerHit; };
+	//プレイヤーの当たり判定アイテム用を取得
+	Circle getPlayerHit_Item() { return playerHit_Item; };
 	//攻撃しているかの受け渡し
 	bool IsAttack_during() { return SlashingHit; }
 	Rect *AttackHitPos() { return Slashing; }
@@ -93,6 +95,8 @@ private:
 	const Texture playerTexture{ U"SOZAI/プレイヤー/Player_pokomaru_Ver2.png" };
 	//プレイヤーの当たり判定
 	Circle playerHit;
+	//プレイヤーの当たり判定アイテム用
+	Circle playerHit_Item;
 	//移動するかどうか
 	int moveX = 0;
 	int moveY = 0;

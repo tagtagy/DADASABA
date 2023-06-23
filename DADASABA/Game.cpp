@@ -67,7 +67,7 @@ void Game::update()
 			//描画一の更新
 			item[i]->MapPos(player->playerPos());
 			//当たり判定
-			item[i]->hitPlayerHit(player->getPlayerHit());
+			item[i]->hitPlayerHit(player->getPlayerHit_Item());
 			if (item[i]->getIsDestroy()) {//当たっていたら要素をnullにする
 				//獲得アイテム数を加算
 				player->addItemCount();

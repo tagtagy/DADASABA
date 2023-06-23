@@ -6,6 +6,7 @@ Class_player::Class_player() {
 	playerHit = { 400,300 ,playerSize };
 	playerMapPos= {0,0 };
 	for (int i = 0; i < 5; i++)afterimageMapPos[i]={0,0};
+	playerHit_Item = { 400,300,playerSize };
 }
 
 //ボタン
@@ -165,6 +166,8 @@ void Class_player::attack() {
 }
 //描画
 void Class_player::draw() const {
+	//プレイヤーの当たり判定アイテム用
+	playerHit_Item.draw(ColorF{ 0 });
 	//プレイヤーの当たり判定
 	playerHit.draw(ColorF{ 1 });
 
@@ -205,11 +208,11 @@ void Class_player::itemBuff() {
 		t += Scene::DeltaTime();
 
 		//効果
-		playerHit = { 400,300,50 };
+		playerHit_Item = { 400,300,50 };
 		if (t > 5) {
 			buffFlag = false;
 			t = 0;
-			playerHit = { 400,300,playerSize };
+			playerHit_Item = { 400,300,playerSize };
 		}
 	}
 }
