@@ -51,6 +51,8 @@ void Game::update()
 	//プレイヤーのエイム
 	player->attack_aim();
 
+	enemy->Knockback(player->IsAttack_during(), player->AttackHitPos());
+
 	//デバッグ用
 	if (KeyI.down()) {
 		//マップ上の座標に出るように変更しました
@@ -71,7 +73,7 @@ void Game::update()
 			}
 		}
 	}
-
+	//アイテム
 	player->itemBuff();
 
 	//敵の動き

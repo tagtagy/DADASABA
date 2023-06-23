@@ -32,6 +32,7 @@ public:
 	Circle getPlayerHit() { return playerHit; };
 	//攻撃しているかの受け渡し
 	bool IsAttack_during() { return SlashingHit; }
+	Rect *AttackHitPos() { return Slashing; }
 	//獲得したアイテム数を加算
 	void addItemCount();
 	//アイテムの効果

@@ -1,5 +1,6 @@
 ﻿#pragma once
-#include "Class_player.h"
+# include "Common.h"
+# include <cmath>
 
 class Class_Enemy
 {
@@ -9,7 +10,7 @@ public:
 	void Move();
 	void Attack();
 	//ノックバック
-	void Knockback();
+	void Knockback(bool _IsAttack, Rect *_AttackHitPos);
 	void Draw()const;
 
 private:
@@ -27,5 +28,8 @@ private:
 	double speed;
 	//当たり判定
 	Circle Ene_Hit;
+	//攻撃が当たったか
+	bool IsAttackHit = false;
+
 };
 
