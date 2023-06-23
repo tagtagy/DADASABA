@@ -14,5 +14,5 @@ public:
 
 private:
 
-	
+	const Texture playerTexture{ U"SOZAI/プレイヤー/Player_pokomaru_Ver2.png" };
 };

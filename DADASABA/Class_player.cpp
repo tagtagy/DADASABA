@@ -186,8 +186,8 @@ void Class_player::draw() const {
 	if(attack_button)ZANGEKI[attack_animation].resized(100).rotated(attack_avoid).drawAt(attack_direction);
 
 	//攻撃の当たり判定
-	if(SlashingHit)
-	for (int i = 0; i < 5; i++) Slashing[i].rotatedAt(Slashing[2].x+10, Slashing[2].y+25, angle_attack_mark).draw();
+	//if(SlashingHit)
+	//for (int i = 0; i < 5; i++) Slashing[i].rotatedAt(Slashing[2].x+10, Slashing[2].y+25, angle_attack_mark).draw();
 	
 
 }

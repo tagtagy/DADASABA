@@ -45,6 +45,8 @@ void Class_Enemy::Move() {
 
 void Class_Enemy::Attack() {
 
+
+
 }
 
 void Class_Enemy::Knockback(bool _IsAttack, Rect* _AttackHitPos) {

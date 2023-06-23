@@ -1,13 +1,27 @@
 ﻿#pragma once
 # include "Common.h"
 # include <cmath>
+struct EnemyBullet {
+private:
+	//座標
+	Vec2 position;
+	//弾丸のスピード
+	const double spped = 10;
+	//当たり判定
+	Circle BulletHit;
+	//有効か？
+	bool IsValid;
+
+};
 
 class Class_Enemy
 {
 public:
 	Class_Enemy();
 	void Target_input(Vec2 TargetPos);
+	//動き
 	void Move();
+	//攻撃
 	void Attack();
 	//ノックバック
 	void Knockback(bool _IsAttack, Rect *_AttackHitPos);
@@ -31,5 +45,8 @@ private:
 	//攻撃が当たったか
 	bool IsAttackHit = false;
 
+	const int MaxBullets = 100;
+	//弾丸
+	Array<EnemyBullet> bullets();
 };
 
