@@ -23,12 +23,13 @@ void Class_player::button() {
 	else moveY = NoMove;
 
 	//攻撃
-	//回避中でない時
 	//攻撃中でない時
 	if (MouseL.down()&& !attack_button) {
 		attack_count = attack_time;
 		attack_button = true;
-
+		//攻撃（今は斬撃）の当たり判定の有効化
+		SlashingHit = true;
+		//回避のキャンセル
 		avoid_count = false;
 		//攻撃場所の決定
 		attack_avoid= angle_calculate(mousePos.x - 400, mousePos.y - 300);
@@ -134,12 +135,13 @@ void Class_player::attack_aim() {
 
 	player_attack_mark = { player_attack_markPos ,10 };
 
+	SlashingPos = normalization_calculate(mousePos.x - 400, mousePos.y - 300, { 395,300-25 }, 50);
 	//斬撃の当たり判定
-	Slashing[0] = { int(player_attack_markPos.x) - 25 ,int(player_attack_markPos.y) ,10,10 };
-	Slashing[1] = { int(player_attack_markPos.x) - 15 ,int(player_attack_markPos.y) ,10,30 };
-	Slashing[2] = { int(player_attack_markPos.x) - 5 ,int(player_attack_markPos.y) ,10,50 };
-	Slashing[3] = { int(player_attack_markPos.x) + 5 ,int(player_attack_markPos.y) ,10,30 };
-	Slashing[4] = { int(player_attack_markPos.x) + 15 ,int(player_attack_markPos.y) ,10,10 };
+	Slashing[0] = { int(SlashingPos.x)+40  ,int(SlashingPos.y)+25 ,20,30 };
+	Slashing[1] = { int(SlashingPos.x)+20  ,int(SlashingPos.y)+15 ,20,40 };
+	Slashing[2] = { int(SlashingPos.x)  ,int(SlashingPos.y )+8 ,20,50 };
+	Slashing[3] = { int(SlashingPos.x)-20  ,int(SlashingPos.y)+15 ,20,40 };
+	Slashing[4] = { int(SlashingPos.x)-40  ,int(SlashingPos.y)+25 ,20,30 };
 }
 
 //攻撃
@@ -157,6 +159,8 @@ void Class_player::attack() {
 		attack_count = 0;
 		attack_animation = 0;
 		attack_button = false;
+		//攻撃の当たり判定の無効化
+		SlashingHit = false;
 	}
 }
 //描画
@@ -178,7 +182,10 @@ void Class_player::draw() const {
 	//攻撃アニメーション
 	if(attack_button)ZANGEKI[attack_animation].resized(100).rotated(attack_avoid).drawAt(attack_direction);
 
-	for (int i = 0; i < 5; i++)Slashing[i].rotatedAt(Slashing[i].pos, angle_attack_mark).draw();
+	//攻撃の当たり判定
+	if(SlashingHit)
+	for (int i = 0; i < 5; i++) Slashing[i].rotatedAt(Slashing[2].x+10, Slashing[2].y+25, angle_attack_mark).draw();
+	
 
 }
 //獲得したアイテム数を加算

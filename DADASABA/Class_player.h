@@ -30,6 +30,8 @@ public:
 	void draw() const;
 	//プレイヤーの当たり判定を取得
 	Circle getPlayerHit() { return playerHit; };
+	//攻撃しているかの受け渡し
+	bool IsAttack_during() { return SlashingHit; }
 	//獲得したアイテム数を加算
 	void addItemCount();
 	//アイテムの効果
@@ -127,7 +129,8 @@ private:
 	//斬撃
 	Rect Slashing[5];
 	Vec2 SlashingPos;
-	double SlashingAngle;
+	bool SlashingHit=false;
+
 
 	//アイテム//////////////////////////////////////////
 	//バフの経過時間を保存
