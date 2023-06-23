@@ -55,8 +55,10 @@ void Game::update()
 
 	//デバッグ用
 	if (KeyI.down()) {
+		int rX = Random(-1000, 1000);
+		int rY = Random(-1000, 1000);
 		//マップ上の座標に出るように変更しました
-		SpawnItem({ 100,100 });
+		SpawnItem({ rX,rY });
 	}
 
 	//全ての要素にアクセス

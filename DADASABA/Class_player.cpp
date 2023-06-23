@@ -188,11 +188,11 @@ void Class_player::draw() const {
 	
 
 }
+
 //獲得したアイテム数を加算
 void Class_player::addItemCount() {
 	getItemCount++;
 	if (getItemCount % 5 == 0) {
-		//効果
 		buffFlag = true;
 	}
 }
@@ -203,9 +203,13 @@ void Class_player::itemBuff() {
 	if (buffFlag) {
 		// 経過時間を加算
 		t += Scene::DeltaTime();
+
+		//効果
+		playerHit = { 400,300,50 };
 		if (t > 5) {
 			buffFlag = false;
 			t = 0;
+			playerHit = { 400,300,playerSize };
 		}
 	}
 }
