@@ -45,12 +45,12 @@ void Game::update()
 	player->move();
 
 	//敵のターゲットの座標取得
-	enemy->Target_input(player->playerPos());
+	enemy->Target_input(player->playerPos(), player->getPlayerHit_Item());
 	//敵の動き
 	enemy->Move();
 	//プレイヤーのエイム
 	player->attack_aim();
-
+	//敵がプレイヤーの斬撃に当たった時
 	enemy->Knockback(player->IsAttack_during(), player->AttackHitPos());
 
 	//デバッグ用

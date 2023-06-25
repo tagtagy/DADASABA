@@ -4,59 +4,81 @@ Class_Enemy::Class_Enemy() {
 
 	MapPos = { 0,0 };
 	ScreenPos = { 0,0 };
-	target = { 0,0 };
-
+	targetHit = { 0,0,0 };
+	for (int i=0; i < 10; i++) bullet[i]=new Class_Bullet;
+	
 }
-void Class_Enemy::Target_input(Vec2 TargetPos) {
+void Class_Enemy::Target_input(Vec2 TargetPos, Circle TargetHit) {
 
-	target = TargetPos;
-
+	targetPos = TargetPos;
+	targetHit = TargetHit;
 }
 void Class_Enemy::Move() {
 	speed = Scene::DeltaTime() * 30;
 
-	if (MapPos.x > target.x)
+	Attack();
+
+	if (MapPos.x > targetPos.x)
 	{
 		MapPos.x -= speed;
 	}
 
-	if (MapPos.x < target.x)
+	if (MapPos.x < targetPos.x)
 	{
 		MapPos.x += speed;
 	}
 
-	if (MapPos.y > target.y)
+	if (MapPos.y > targetPos.y)
 	{
 		MapPos.y -= speed;
 	}
 
-	if (MapPos.y < target.y)
+	if (MapPos.y < targetPos.y)
 	{
 		MapPos.y += speed;
 	}
+	//弾丸の移動
+	for (int i=0; i < 10; i++) {
+		bullet[i]->Move(MapPos, { targetPos.x ,targetPos.y });
+		if (bullet[i]->valid()) {
+			bullet[i]->Disable(targetHit);
+		}
+	}
 
-	ScreenPos = MapPos - target;
+	ScreenPos.x = MapPos.x - targetPos.x;
+	ScreenPos.y = MapPos.y - targetPos.y;
 
 	//座標更新
 	Ene_Hit = { ScreenPos.x+400,ScreenPos.y + 300, 10 };
 
 	Print <<U"敵の座標" << ScreenPos;
+	Print << U"敵の攻撃カウント" << shootCount;
 }
 
 void Class_Enemy::Attack() {
 
-
+	if (shootCount >= shootTime) {
+		shootCount -= shootTime;
+		for (int i=0; i < 10; i++) {
+			if (!bullet[i]->valid()) {
+				bullet[i]->set(MapPos, { targetPos.x ,targetPos.y });
+				i = 10;
+			}
+		}
+	}
+	//射撃間隔のカウント
+	shootCount += Scene::DeltaTime();
 
 }
-
+//ノックバック
 void Class_Enemy::Knockback(bool _IsAttack, Rect* _AttackHitPos) {
 
-
+	//斬撃に当たったか
 	if(_IsAttack)
 		for(int i=0;i<sizeof _AttackHitPos;i++)
 			if (Ene_Hit.intersects(_AttackHitPos[i]))IsAttackHit = true;
-			
-	if(IsAttackHit)MapPos += normalization_calculate(target.x - MapPos.x, target.y - MapPos.y, { 0,0 }, 4) * -1;
+	//ノックバックの方向計算
+	if(IsAttackHit)MapPos += normalization_calculate(targetPos.x - MapPos.x, targetPos.y - MapPos.y, { 0,0 }, 4) * -1;
 
 	IsAttackHit = false;
 }
@@ -64,6 +86,10 @@ void Class_Enemy::Knockback(bool _IsAttack, Rect* _AttackHitPos) {
 void Class_Enemy::Draw() const{
 	
 	Ene_Hit.draw(ColorF{ 1,0,0,1 });
+
+	for (int i=0; i < 10; i++) {
+		bullet[i]->Draw();
+	}
 }
 
 //正規化の計算
