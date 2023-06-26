@@ -41,7 +41,7 @@ void Class_Enemy::Move() {
 	for (int i=0; i < 10; i++) {
 		bullet[i]->Move(MapPos, { targetPos.x ,targetPos.y });
 		if (bullet[i]->valid()) {
-			bullet[i]->Disable(targetHit);
+			bullet[i]->BulletHiter(targetHit);
 		}
 	}
 

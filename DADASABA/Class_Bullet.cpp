@@ -1,6 +1,12 @@
 ﻿#include "stdafx.h"
 #include "Class_Bullet.h"
 
+Class_Bullet::Class_Bullet() {
+
+	BulletHit.r = BulletSize;
+
+}
+
 void Class_Bullet::set(Vec2 MyPos, Vec2 TargetPos) {
 	//出現位置の設定
 	BulletPos = MyPos;
@@ -9,6 +15,7 @@ void Class_Bullet::set(Vec2 MyPos, Vec2 TargetPos) {
 	directionPos = normalization_calculate(a.x , a.y, { 0,0 }, spped );
 	//出現
 	IsValid = true;
+	BulletValidCount = 0;
 }
 //動き
 void Class_Bullet::Move(Vec2 MyPos, Vec2 TargetPos) {
@@ -18,18 +25,25 @@ void Class_Bullet::Move(Vec2 MyPos, Vec2 TargetPos) {
 	enemyPos = TargetPos;
 
 	if (IsValid)BulletPos += directionPos * Scene::DeltaTime();
-	
-	BulletScreenPos.x = BulletPos.x - enemyPos.x+400;
-	BulletScreenPos.y = BulletPos.y - enemyPos.y+300;
+
 	//出現位置の設定
-	BulletHit = { BulletScreenPos ,BulletSize };
+	BulletHit.x = BulletPos.x - enemyPos.x+400;
+	BulletHit.y = BulletPos.y - enemyPos.y+300;
+	
+	ValidTimer();
+}
+//有効時間のカウント
+void Class_Bullet::ValidTimer() {
+
+	if (BulletValidCount > BulletValidTime) Disable();
+		
+	BulletValidCount+= Scene::DeltaTime();
 }
 //弾の無効化
-void Class_Bullet::Disable(Circle TargetHit) {
+void Class_Bullet::Disable() {
 
-	if (BulletHit.intersects(TargetHit)) {
-		IsValid = false;
-	}
+	IsValid = false;
+	
 }
 void Class_Bullet::Draw()const {
 
