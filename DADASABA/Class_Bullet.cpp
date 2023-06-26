@@ -2,7 +2,7 @@
 #include "Class_Bullet.h"
 
 Class_Bullet::Class_Bullet() {
-
+	//弾のサイズ設定
 	BulletHit.r = BulletSize;
 
 }
@@ -15,22 +15,25 @@ void Class_Bullet::set(Vec2 MyPos, Vec2 TargetPos) {
 	directionPos = normalization_calculate(a.x , a.y, { 0,0 }, spped );
 	//出現
 	IsValid = true;
+	//有効時間の初期化
 	BulletValidCount = 0;
 }
 //動き
 void Class_Bullet::Move(Vec2 MyPos, Vec2 TargetPos) {
+	//有効な時だけ動かす
+	if (IsValid) {
+		//プレイヤーの座標
+		enemyPos = TargetPos;
 
-	
-	//敵の座標
-	enemyPos = TargetPos;
+		//移動
+		BulletPos += directionPos * Scene::DeltaTime();
 
-	if (IsValid)BulletPos += directionPos * Scene::DeltaTime();
+		//スクリーン上位置の設定
+		BulletHit.x = BulletPos.x - enemyPos.x + 400;
+		BulletHit.y = BulletPos.y - enemyPos.y + 300;
 
-	//出現位置の設定
-	BulletHit.x = BulletPos.x - enemyPos.x+400;
-	BulletHit.y = BulletPos.y - enemyPos.y+300;
-	
-	ValidTimer();
+		ValidTimer();
+	}
 }
 //有効時間のカウント
 void Class_Bullet::ValidTimer() {

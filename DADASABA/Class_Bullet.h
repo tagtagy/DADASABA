@@ -4,6 +4,7 @@ class Class_Bullet
 {
 public:
 	Class_Bullet();
+	//初期化
 	void set(Vec2 MyPos, Vec2 TargetPos);
 	//動き
 	void Move(Vec2 MyPos, Vec2 TargetPos);
@@ -30,7 +31,7 @@ private:
 	const double spped = 100;
 	//当たり判定サイズ
 	const int BulletSize = 10;
-	//敵の座標
+	//プレイヤーの座標
 	Vec2 enemyPos;
 	//マップ上の座標
 	Vec2 BulletPos;
