@@ -25,6 +25,15 @@ Game::Game(const InitData& init)
 void Game::update()
 {
 	ClearPrint();
+	//Yで縮小、Uでフルサイズ
+	if (KeyY.pressed())
+	{
+		Window::SetFullscreen(false);
+	}
+	if (KeyU.pressed())
+	{
+		Window::SetFullscreen(true);
+	}
 
 	//カウントダウン
 	CountDown -= Scene::DeltaTime();
