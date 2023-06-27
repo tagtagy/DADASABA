@@ -1,11 +1,19 @@
 ﻿#pragma once
-# include "Common.h"
 #include "Class_Enemy.h"
+enum {
+
+	enemyMax = 10
+
+};
 class Class_EnemyCanon
 {
 public:
+	Class_EnemyCanon();
 	//出現
-	void appearance();
+	void appearance(Vec2 _TargetPos, Circle _TargetHit,
+					bool _IsAttack, Rect* _AttackHitPos);
+
+	void Draw()const;
 private:
 	//ランダム出現
 	void random_appearance();
@@ -15,9 +23,12 @@ private:
 	void circle_appearance();
 private:
 
+	Vec2 TargetPos;
+
+	//出現タイミングのカウント
 	const double appearanceTime = 1;
 	double appearanceCount = 0;
 
-	Class_Enemy Class_Enemy[10];
+	Class_Enemy* enemy[enemyMax];
 };
 

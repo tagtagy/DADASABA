@@ -2,6 +2,7 @@
 # include "Common.h"
 #include "Class_player.h"
 #include "Class_Enemy.h"
+#include "Class_EnemyCanon.h"
 #include "Class_Item.h"
 // ゲームシーン
 class Game : public App::Scene
@@ -22,7 +23,9 @@ private:
 	//プレイヤー
 	Class_player* player = nullptr;
 	//敵
-	Class_Enemy* enemy = nullptr;
+	//Class_Enemy* enemy = nullptr;
+	//敵のキャノン
+	Class_EnemyCanon* enemyCanon = nullptr;
 	//アイテム
 	//スポーンできる最大数
 	const static int maxItemNum = 1000;

@@ -7,6 +7,9 @@ class Class_Enemy
 {
 public:
 	Class_Enemy();
+	//セット
+	void set(Vec2 pos);
+	//ターゲットの設定
 	void Target_input(Vec2 TargetPos, Circle TargetHit);
 	//動き
 	void Move();
@@ -17,6 +20,8 @@ public:
 
 	void Draw()const;
 
+	//有効かどうかの提示
+	bool valid() { return IsValid; };
 private:
 	//正規化の計算
 	//底辺,高さ,中心座標,回転の半径
@@ -37,6 +42,8 @@ private:
 	//攻撃が当たったか
 	bool IsAttackHit = false;
 
+	//有効か？
+	bool IsValid = false;
 	//弾丸/////////////////////////////////////////////
 	Class_Bullet* bullet[10];
 	//発射するタイミング

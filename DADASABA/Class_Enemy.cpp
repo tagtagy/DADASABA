@@ -8,6 +8,13 @@ Class_Enemy::Class_Enemy() {
 	for (int i=0; i < 10; i++) bullet[i]=new Class_Bullet;
 	
 }
+//セット
+void Class_Enemy::set(Vec2 pos) {
+	//座標の設定
+	MapPos = pos;
+	IsValid = true;
+}
+//ターゲットの設定
 void Class_Enemy::Target_input(Vec2 TargetPos, Circle TargetHit) {
 
 	targetPos = TargetPos;

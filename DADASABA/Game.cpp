@@ -1,24 +1,22 @@
 ﻿# include "Game.h"
 
 Game::~Game() {
-	if (player != nullptr) {
-		delete player;
-	}
-	if (enemy != nullptr) {
-		delete enemy;
-	}
+	if (player != nullptr)delete player;
+
+	//if (enemy != nullptr)delete enemy;
+
+	if (enemyCanon != nullptr)delete enemyCanon;
+
 	for (int i = 0; i < maxItemNum; i++) {
-		if (item[i] != nullptr) {
-			delete item[i];
-		}
+		if (item[i] != nullptr) delete item[i];
 	}
 }
 
 Game::Game(const InitData& init)
 	: IScene{ init }
 {
-	player = new Class_player();
-	enemy = new Class_Enemy();
+	player = new Class_player;
+	enemyCanon = new Class_EnemyCanon;
 	SpawnItem({ 0,0 });
 }
 
@@ -39,19 +37,18 @@ void Game::update()
 		changeScene(State::GameOver);
 	}
 	if (KeyC.down());
+
 	//プレイヤーのボタン感知
 	player->button();
 	//プレイヤーの動き
 	player->move();
 
-	//敵のターゲットの座標取得
-	enemy->Target_input(player->playerPos(), player->getPlayerHit_Item());
-	//敵の動き
-	enemy->Move();
+	//敵の出現
+	enemyCanon->appearance(player->playerPos(), player->getPlayerHit_Item(),
+		                   player->IsAttack_during(), player->AttackHitPos());
+
 	//プレイヤーのエイム
 	player->attack_aim();
-	//敵がプレイヤーの斬撃に当たった時
-	enemy->Knockback(player->IsAttack_during(), player->AttackHitPos());
 
 	//デバッグ用
 	if (KeyI.down()) {
@@ -78,7 +75,6 @@ void Game::update()
 	//アイテム
 	player->itemBuff();
 
-	//敵の動き
 
 
 	/*if (KeyEnter.down() || MouseL.down()//||60秒経ったら
@@ -96,12 +92,15 @@ void Game::draw() const
 
 
 	player->draw();
-	enemy->Draw();
+	
 	for (int i = 0; i < maxItemNum; i++) {
 		if (item[i] != nullptr) {
 			item[i]->draw();
 		}
 	}
+	//敵の描画
+	enemyCanon->Draw();
+
 	//確認用
 	//FontAsset(U"TitleFont")(U"Game Scene").drawAt(400, 200);
 	//FontAsset(U"TitleFont")(U"Crick or Enter Next").drawAt(400, 300);
