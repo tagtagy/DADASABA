@@ -15,6 +15,9 @@ Game::~Game() {
 Game::Game(const InitData& init)
 	: IScene{ init }
 {
+	//画面"サイズ"の補正
+	Scene::SetResizeMode(ResizeMode::Keep);
+
 	player = new Class_player;
 	enemyCanon = new Class_EnemyCanon;
 	SpawnItem({ 0,0 });
@@ -26,7 +29,10 @@ void Game::update()
 	//Yで縮小、Uでフルサイズ
 	if (KeyY.pressed())
 	{
+		
 		Window::SetFullscreen(false);
+		// ウィンドウを中心に移動
+		Window::Centering();
 	}
 	if (KeyU.pressed())
 	{
