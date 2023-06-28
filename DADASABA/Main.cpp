@@ -8,7 +8,7 @@
 void Main()
 {
 	//画面サイズ変更(フル)
-	Window::SetFullscreen(true);
+	//Window::SetFullscreen(true);
 
 	FontAsset::Register(U"TitleFont", FontMethod::MSDF, 50, U"example/font/RocknRoll/RocknRollOne-Regular.ttf");
 	FontAsset(U"TitleFont").setBufferThickness(4);
