@@ -15,6 +15,8 @@ Game::~Game() {
 Game::Game(const InitData& init)
 	: IScene{ init }
 {
+	
+	
 	player = new Class_player;
 	enemyCanon = new Class_EnemyCanon;
 	SpawnItem({ 0,0 });
