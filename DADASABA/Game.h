@@ -20,10 +20,11 @@ public:
 	void SpawnItem(Vec2 _enemyPos);
 
 private:
+	// 接続されているモニタの情報一覧を取得
+	const Array<MonitorInfo> monitors = System::EnumerateMonitors();
+
 	//プレイヤー
 	Class_player* player = nullptr;
-	//敵
-	//Class_Enemy* enemy = nullptr;
 	//敵のキャノン
 	Class_EnemyCanon* enemyCanon = nullptr;
 	//アイテム

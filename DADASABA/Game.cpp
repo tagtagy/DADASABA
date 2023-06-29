@@ -15,9 +15,6 @@ Game::~Game() {
 Game::Game(const InitData& init)
 	: IScene{ init }
 {
-	//画面"サイズ"の補正
-	Scene::SetResizeMode(ResizeMode::Keep);
-
 	player = new Class_player;
 	enemyCanon = new Class_EnemyCanon;
 	SpawnItem({ 0,0 });
@@ -26,6 +23,7 @@ Game::Game(const InitData& init)
 void Game::update()
 {
 	ClearPrint();
+	
 	//Yで縮小、Uでフルサイズ
 	if (KeyY.pressed())
 	{
@@ -102,6 +100,7 @@ void Game::update()
 
 void Game::draw() const
 {
+	
 	// 背景色を 黄緑 に設定
 	Scene::SetBackground(ColorF{ 0, 1, 0 });
 
