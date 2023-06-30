@@ -53,6 +53,14 @@ void Game::update()
 	}
 	if (KeyC.down());
 
+	//円形のカウントダウン
+	angle -= countDown * Scene::DeltaTime();
+	if (angle <= 0)
+	{
+		angle = 0;
+	}
+
+
 	//プレイヤーのボタン感知
 	player->button();
 	//プレイヤーの動き
@@ -106,6 +114,10 @@ void Game::draw() const
 	// 背景色を 黄緑 に設定
 	Scene::SetBackground(ColorF{ 0, 1, 0 });
 
+	Circle{ countDCircleX,countDCircleY,countDCircleSize + 1 }
+	.drawPie(0_deg, -angle, ColorF{ 0, 0, 1 });
+	Circle{ countDCircleX,countDCircleY,countDCircleSize }.drawFrame(0, countDCircleFrame);
+		
 
 	player->draw();
 	
