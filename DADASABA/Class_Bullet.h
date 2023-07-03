@@ -12,7 +12,7 @@ public:
 	void BulletHiter(Circle TargetHit){if (BulletHit.intersects(TargetHit))Disable();};
 	
 	//有効かどうかの提示
-	bool valid() { return IsValid; };
+	bool valid() { return isvalid; };
 
 	void Draw()const;
 private:
@@ -26,21 +26,21 @@ private:
 	Vec2 normalization_calculate(double base, double tall, Vec2 centerPos, double range);
 private:
 	//移動方向座標
-	Vec2 directionPos;
+	Vec2 directionPos={0,0};
 	//弾丸のスピード
 	const double spped = 100;
 	//当たり判定サイズ
 	const int BulletSize = 10;
 	//プレイヤーの座標
-	Vec2 enemyPos;
+	Vec2 enemyPos={0,0};
 	//マップ上の座標
-	Vec2 BulletPos;
+	Vec2 BulletPos={0,0};
 	//有効時間
 	const double BulletValidTime = 1;
-	double BulletValidCount;
+	double BulletValidCount=0;
 	//当たり判定
-	Circle BulletHit;
+	Circle BulletHit{0,0,0};
 	//有効か？
-	bool IsValid=false;
+	bool isvalid =false;
 };
 

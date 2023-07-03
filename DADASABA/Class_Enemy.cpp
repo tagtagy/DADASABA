@@ -1,18 +1,25 @@
 ﻿#include "stdafx.h"
 #include "Class_Enemy.h"
+Class_Enemy::~Class_Enemy() {
+
+	for (int i = 0; i < bulletMax; i++)
+		if (bullet[i] != nullptr)delete bullet[i];
+
+}
+
 Class_Enemy::Class_Enemy() {
 
 	MapPos = { 0,0 };
 	ScreenPos = { 0,0 };
 	targetHit = { 0,0,0 };
-	for (int i=0; i < 10; i++) bullet[i]=new Class_Bullet;
+	for (int i=0; i < bulletMax; i++) bullet[i]=new Class_Bullet;
 	
 }
 //セット
 void Class_Enemy::set(Vec2 pos) {
 	//座標の設定
 	MapPos = pos;
-	IsValid = true;
+	isValid = true;
 }
 //ターゲットの設定
 void Class_Enemy::Target_input(Vec2 TargetPos, Circle TargetHit) {
@@ -45,7 +52,7 @@ void Class_Enemy::Move() {
 		MapPos.y += speed;
 	}
 	//弾丸の移動
-	for (int i=0; i < 10; i++) {
+	for (int i=0; i < bulletMax; i++) {
 		bullet[i]->Move(MapPos, { targetPos.x ,targetPos.y });
 		if (bullet[i]->valid()) {
 			bullet[i]->BulletHiter(targetHit);
@@ -66,10 +73,10 @@ void Class_Enemy::Attack() {
 
 	if (shootCount >= shootTime) {
 		shootCount -= shootTime;
-		for (int i=0; i < 10; i++) {
+		for (int i=0; i < bulletMax; i++) {
 			if (!bullet[i]->valid()) {
 				bullet[i]->set(MapPos, { targetPos.x ,targetPos.y });
-				i = 10;
+				i = bulletMax;
 			}
 		}
 	}
@@ -94,7 +101,7 @@ void Class_Enemy::Draw() const{
 	
 	Ene_Hit.draw(ColorF{ 1,0,0,1 });
 
-	for (int i=0; i < 10; i++) {
+	for (int i=0; i < bulletMax; i++) {
 		bullet[i]->Draw();
 	}
 }

@@ -22,7 +22,7 @@ void Main()
 	manager.add<Tutorial>(State::Tutorial);
 	manager.add<Game>(State::Game);
 	manager.add<GameOver>(State::GameOver);
-	manager.add<Ranking>(State::ResultRanking);
+	manager.add<Ranking>(State::Ranking);
 
 	// ゲームシーンから開始したい場合はこのコメントを外す
 	manager.init(State::Game);

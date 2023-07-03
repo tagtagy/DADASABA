@@ -8,6 +8,7 @@ enum {
 class Class_EnemyCanon
 {
 public:
+	~Class_EnemyCanon();
 	Class_EnemyCanon();
 	//出現
 	void appearance(Vec2 _TargetPos, Circle _TargetHit,

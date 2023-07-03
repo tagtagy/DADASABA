@@ -14,14 +14,14 @@ void Class_Bullet::set(Vec2 MyPos, Vec2 TargetPos) {
 	Vec2 a= { TargetPos - MyPos };
 	directionPos = normalization_calculate(a.x , a.y, { 0,0 }, spped );
 	//出現
-	IsValid = true;
+	isvalid = true;
 	//有効時間の初期化
 	BulletValidCount = 0;
 }
 //動き
 void Class_Bullet::Move(Vec2 MyPos, Vec2 TargetPos) {
 	//有効な時だけ動かす
-	if (IsValid) {
+	if (isvalid) {
 		//プレイヤーの座標
 		enemyPos = TargetPos;
 
@@ -45,12 +45,12 @@ void Class_Bullet::ValidTimer() {
 //弾の無効化
 void Class_Bullet::Disable() {
 
-	IsValid = false;
+	isvalid = false;
 	
 }
 void Class_Bullet::Draw()const {
 
-	if(IsValid)BulletHit.draw();
+	if(isvalid)BulletHit.draw();
 
 }
 

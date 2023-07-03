@@ -22,23 +22,26 @@ public:
 	void move();
 	//攻撃の狙い
 	void attack_aim();
-	//プレイヤーの位置
-	Vec2 playerPos() { return playerMapPos; };
 	//攻撃
 	void attack();
 	//描画
 	void draw() const;
+	//獲得したアイテム数を加算
+	void addItemCount();
+	//アイテムの効果
+	void itemBuff();
+
+
+	//情報の提示
+	//プレイヤーの位置
+	Vec2 playerPos() { return playerMapPos; };
 	//プレイヤーの当たり判定を取得
 	Circle getPlayerHit() { return playerHit; };
 	//プレイヤーの当たり判定アイテム用を取得
 	Circle getPlayerHit_Item() { return playerHit_Item; };
 	//攻撃しているかの受け渡し
 	bool IsAttack_during() { return SlashingHit; }
-	Rect *AttackHitPos() { return Slashing; }
-	//獲得したアイテム数を加算
-	void addItemCount();
-	//アイテムの効果
-	void itemBuff();
+	Rect* AttackHitPos() { return Slashing; }
 private:
 	//通常移動
 	void normal_move();
@@ -70,9 +73,9 @@ private:
 	double attack_time = 0.1;
 	//斬撃
 	const Texture ZANGEKI[3]{
-		Texture{U"仮素材/ZANGEKI1.png"},
-		Texture{U"仮素材/ZANGEKI2.png"},
-		Texture{U"仮素材/ZANGEKI3.png"},
+		Texture{U"KARISOZAI/ZANGEKI1.png"},
+		Texture{U"KARISOZAI/ZANGEKI2.png"},
+		Texture{U"KARISOZAI/ZANGEKI3.png"},
 	};
 	//攻撃のアニメーション
 	int attack_animation = 0;
@@ -84,7 +87,7 @@ private:
 	double angle_attack_mark = 10_deg;
 
 	//プレイヤーの攻撃標準テクスチャ
-	const Texture player_attack_mark_Texture{ U"SOZAI/プレイヤー/PlayerArrow.png" };
+	const Texture player_attack_mark_Texture{ U"SOZAI/player/PlayerArrow.png" };
 	//プレイヤーの攻撃位置
 	Circle player_attack_mark {0,0,10};
 	Vec2 player_attack_markPos { 0,0 };
@@ -92,7 +95,7 @@ private:
 	//自機関連////////////////////////////////////////////////////////////
 	
 	//プレイヤーテクスチャ
-	const Texture playerTexture{ U"SOZAI/プレイヤー/Player_pokomaru_Ver2.png" };
+	const Texture playerTexture{ U"SOZAI/player/Player_pokomaru_Ver2.png" };
 	//プレイヤーの当たり判定
 	Circle playerHit;
 	//プレイヤーの当たり判定アイテム用

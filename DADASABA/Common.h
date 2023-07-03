@@ -8,7 +8,7 @@ enum class State
 	Tutorial,
 	Game,
 	GameOver,
-	ResultRanking,
+	Ranking,
 };
 
 

@@ -1,11 +1,6 @@
 ﻿#include "stdafx.h"
 #include "Class_Item.h"
 
-Class_Item::Class_Item() {
-	itemPos = { 0,0 };
-	itemHit = { 0,0,0 };
-	itemSize = 15;
-}
 
 void Class_Item::init(Vec2 _itemPos) {
 	itemPos.x = _itemPos.x + 400;

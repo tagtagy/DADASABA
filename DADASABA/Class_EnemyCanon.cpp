@@ -1,6 +1,12 @@
 ﻿#include "stdafx.h"
 #include "Class_EnemyCanon.h"
 
+Class_EnemyCanon::~Class_EnemyCanon() {
+
+	for (int i = 0; i < enemyMax; i++)
+		if (enemy[i] != nullptr)delete enemy[i];
+
+}
 Class_EnemyCanon::Class_EnemyCanon() {
 	for (int i = 0; i < enemyMax; i++)enemy[i] = new Class_Enemy;
 }

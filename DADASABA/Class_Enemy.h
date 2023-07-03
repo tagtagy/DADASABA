@@ -2,10 +2,15 @@
 # include "Common.h"
 #include "Class_Bullet.h"
 # include <cmath>
+enum {
 
+	bulletMax=4
+
+};
 class Class_Enemy
 {
 public:
+	~Class_Enemy();
 	Class_Enemy();
 	//セット
 	void set(Vec2 pos);
@@ -21,7 +26,7 @@ public:
 	void Draw()const;
 
 	//有効かどうかの提示
-	bool valid() { return IsValid; };
+	bool valid() { return isValid; };
 private:
 	//正規化の計算
 	//底辺,高さ,中心座標,回転の半径
@@ -43,9 +48,9 @@ private:
 	bool IsAttackHit = false;
 
 	//有効か？
-	bool IsValid = false;
+	bool isValid = false;
 	//弾丸/////////////////////////////////////////////
-	Class_Bullet* bullet[10];
+	Class_Bullet* bullet[bulletMax];
 	//発射するタイミング
 	const double shootTime = 2;
 	double shootCount = 0;
