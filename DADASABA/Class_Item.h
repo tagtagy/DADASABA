@@ -14,6 +14,8 @@ public:
 	void hitPlayerHit(Circle _playerHit);
 
 	bool getIsValid() { return IsValid; }
+	void setIsValid(bool _isVaild) { IsValid = _isVaild; }
+	bool getIsDestroy() { return isDestroy; }
 private:
 	//アイテムの位置
 	Vec2 itemPos;

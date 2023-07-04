@@ -34,9 +34,6 @@ private:
 	Class_EnemyCanon* enemyCanon = nullptr;
 	//アイテム
 	Class_Item* item[maxItemNum] = { nullptr };
-	//現在スポーンしているアイテムの数
-	int itemSpawnNum = 0;
-
 
 	//円形のカウントダウン
 	double angle = 360_deg;

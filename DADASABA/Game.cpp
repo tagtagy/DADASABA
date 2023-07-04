@@ -63,7 +63,7 @@ void Game::update()
 	player->move();
 
 	//敵の出現
-	enemyCanon->appearance(player->playerPos(), player->getPlayerHit_Item(),
+	enemyCanon->appearance(player->playerPos(), player->getPlayerHit(),
 		                   player->IsAttack_during(), player->AttackHitPos());
 
 	//プレイヤーのエイム
@@ -85,6 +85,10 @@ void Game::update()
 			item[i]->MapPos(player->playerPos());
 			//当たり判定
 			item[i]->hitPlayerHit(player->getPlayerHit_Item());
+			if (item[i]->getIsDestroy()) {
+				player->addItemCount();
+				item[i]->setIsValid(false);
+			}
 		}
 	}
 	//アイテム
@@ -124,6 +128,7 @@ void Game::SpawnItem(Vec2 _enemyPos) {
 		if (!item[i]->getIsValid()) {
 			//初期位置を設定（playerの位置を足して調整）
 			item[i]->init(_enemyPos);
+			item[i]->setIsValid(true);
 			i = maxItemNum;
 		}
 	}
