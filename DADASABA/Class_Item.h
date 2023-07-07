@@ -26,6 +26,7 @@ private:
 		Texture{U"SOZAI/item/item1_1.png"},
 		Texture{U"SOZAI/item/item2_1.png"},
 	};
+	//アイテムの使う種類
 	int itemRedTextureNo = 0;
 	//サイズ
 	int itemSize=15;

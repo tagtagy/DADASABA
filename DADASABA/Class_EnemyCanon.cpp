@@ -12,11 +12,12 @@ Class_EnemyCanon::Class_EnemyCanon() {
 }
 
 //出現
+//プレイヤーが斬撃の攻撃しているか、攻撃の当たり判定
 void Class_EnemyCanon::appearance(Vec2 _TargetPos, Circle _TargetHit,
 					              bool _IsAttack, Circle* _AttackHitPos) {
-
+	//ターゲットの設定
 	TargetPos = _TargetPos;
-
+	//敵の動き
 	for (int i = 0; i < enemyMax; i++) {
 		if (enemy[i]->valid()) {
 			//敵のターゲットの座標取得
@@ -26,12 +27,13 @@ void Class_EnemyCanon::appearance(Vec2 _TargetPos, Circle _TargetHit,
 			enemy[i]->Knockback(_IsAttack, _AttackHitPos);
 		}
 	}
+	//ランダム出現
 	random_appearance();
 
 }
 
 void Class_EnemyCanon::Draw()const {
-
+	//敵の描画
 	for (int i = 0; i < enemyMax; i++)
 		if (enemy[i]->valid())enemy[i]->Draw();
 
@@ -48,17 +50,19 @@ void Class_EnemyCanon::random_appearance() {
 			if (enemy[i]->valid() == false) {
 				int a = Random(1);
 				int b = Random(1);
-
+				if (b == 0)b = -1;
+				//縦方向から来る敵
 				if (a) {
-					double r = Random(0, 800);
-					enemy[i]->set({ r - TargetPos.x,-50 + 650 * b - TargetPos.y });
+					double r = Random(800);
+					enemy[i]->set({ r + TargetPos.x, 600 * b + TargetPos.y });
 				}
+				//横方向から来る敵
 				else{
-					double r = Random(0, 800);
-					enemy[i]->set({ -50 + 850 * b - TargetPos.x,r - TargetPos.y });
+					double r = Random(800);
+					enemy[i]->set({ 800 * b + TargetPos.x,r + TargetPos.y });
 				}
 
-				i = 10;
+				i = enemyMax;
 			}
 		}
 

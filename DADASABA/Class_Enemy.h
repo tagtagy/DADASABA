@@ -2,10 +2,9 @@
 # include "Common.h"
 #include "Class_Bullet.h"
 # include <cmath>
+//最大の弾丸量
 enum {
-
 	bulletMax=4
-
 };
 class Class_Enemy
 {
@@ -22,7 +21,7 @@ public:
 	void Attack();
 	//ノックバック
 	void Knockback(bool _IsAttack, Circle*_AttackHitPos);
-
+	//描画
 	void Draw()const;
 
 	//有効かどうかの提示
@@ -38,6 +37,7 @@ private:
 		Texture{U"SOZAI/enemy/Jam_2023_No2_enemy_nekomaru_9.png"},
 		Texture{U"SOZAI/enemy/Jam_2023_tino.png"},
 	};
+	//描画する敵のナンバー
 	int EnemyTextureNo = 0;
 	//スクリーン上の座標
 	Vec2 ScreenPos;

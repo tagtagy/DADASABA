@@ -77,12 +77,12 @@ void Class_player::normal_move() {
 }
 //回避移動
 void Class_player::avoid_move() {
-	
+	//回避方向に進む
 	playerMapPos += avoid_speed;
 
 	//残像の描画
 	afterimage_generate();
-
+	//回避の時間制限
 	avoid_count-= delta_time;
 	if (avoid_count < 0)avoid_count = 0;
 }
@@ -94,7 +94,7 @@ void Class_player::afterimage_generate() {
 			if (!Isafterimage[i]) {
 				//座標を更新する
 				afterimageMapPos[i] = playerMapPos;
-
+				//残像の描画
 				Isafterimage[i] = true;
 
 				i = afterimageMax;

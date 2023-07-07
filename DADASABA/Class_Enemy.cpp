@@ -20,6 +20,7 @@ Class_Enemy::Class_Enemy() {
 void Class_Enemy::set(Vec2 pos) {
 	//座標の設定
 	MapPos = pos;
+	//有効化
 	isValid = true;
 	//出現する時に何の敵になるか決める
 	int a = Random(2);
@@ -33,9 +34,9 @@ void Class_Enemy::Target_input(Vec2 TargetPos, Circle TargetHit) {
 }
 void Class_Enemy::Move() {
 	speed = Scene::DeltaTime() * 30;
-
+	//射撃
 	Attack();
-
+	//移動
 	if (MapPos.x > targetPos.x)
 	{
 		MapPos.x -= speed;
@@ -62,9 +63,8 @@ void Class_Enemy::Move() {
 			bullet[i]->BulletHiter(targetHit);
 		}
 	}
-
-	ScreenPos.x = MapPos.x - targetPos.x;
-	ScreenPos.y = MapPos.y - targetPos.y;
+	//画面上の座標に変換
+	ScreenPos = MapPos - targetPos;
 
 	//座標更新
 	Ene_Hit = { ScreenPos.x+400,ScreenPos.y + 300, 50 };
@@ -74,7 +74,7 @@ void Class_Enemy::Move() {
 }
 
 void Class_Enemy::Attack() {
-
+	//射撃
 	if (shootCount >= shootTime) {
 		shootCount -= shootTime;
 		for (int i=0; i < bulletMax; i++) {
@@ -99,7 +99,7 @@ void Class_Enemy::Knockback(bool _IsAttack, Circle* _AttackHitPos) {
 			double lengthX= _AttackHitPos[i].x - ScreenPos.x-400;
 			double lengthY = _AttackHitPos[i].y - ScreenPos.y-300;
 			double hypotenuse = hypot(lengthX, lengthY);
-			//Print <<U"斜辺["<<i<<U"]" << hypotenuse;
+			//斬撃に当たった時
 			if (hypotenuse <= _AttackHitPos[i].r + Ene_Hit.r)IsAttackHit = true;
 		}
 	}
@@ -110,9 +110,9 @@ void Class_Enemy::Knockback(bool _IsAttack, Circle* _AttackHitPos) {
 }
 
 void Class_Enemy::Draw() const{
-	
+	//敵の描画
 	Ene_Hit(EnemyTexture[EnemyTextureNo]).draw(ColorF{1,0,0,1});
-
+	//弾丸の描画
 	for (int i=0; i < bulletMax; i++) {
 		bullet[i]->Draw();
 	}
