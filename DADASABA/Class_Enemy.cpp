@@ -65,8 +65,8 @@ void Class_Enemy::Move() {
 	//座標更新
 	Ene_Hit = { ScreenPos.x+400,ScreenPos.y + 300, 10 };
 
-	Print <<U"敵の座標" << ScreenPos;
-	Print << U"敵の攻撃カウント" << shootCount;
+	//Print <<U"敵の座標" << ScreenPos;
+	//Print << U"敵の攻撃カウント" << shootCount;
 }
 
 void Class_Enemy::Attack() {
@@ -85,12 +85,20 @@ void Class_Enemy::Attack() {
 
 }
 //ノックバック
-void Class_Enemy::Knockback(bool _IsAttack, Rect* _AttackHitPos) {
+void Class_Enemy::Knockback(bool _IsAttack, Circle* _AttackHitPos) {
 
 	//斬撃に当たったか
-	if(_IsAttack)
-		for(int i=0;i<sizeof _AttackHitPos;i++)
-			if (Ene_Hit.intersects(_AttackHitPos[i]))IsAttackHit = true;
+	if (_IsAttack) {
+		
+		for (int i = 0; i < 5; i++) {
+			//斜辺の計算
+			double lengthX= _AttackHitPos[i].x - ScreenPos.x-400;
+			double lengthY = _AttackHitPos[i].y - ScreenPos.y-300;
+			double hypotenuse = hypot(lengthX, lengthY);
+			//Print <<U"斜辺["<<i<<U"]" << hypotenuse;
+			if (hypotenuse <= _AttackHitPos[i].r + Ene_Hit.r)IsAttackHit = true;
+		}
+	}
 	//ノックバックの方向計算
 	if(IsAttackHit)MapPos += normalization_calculate(targetPos.x - MapPos.x, targetPos.y - MapPos.y, { 0,0 }, 4) * -1;
 

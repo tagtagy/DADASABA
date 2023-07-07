@@ -33,7 +33,7 @@ void Class_player::button() {
 		//回避のキャンセル
 		avoid_count = false;
 		//攻撃場所の決定
-		attack_avoid= angle_calculate(mousePos.x - 400, mousePos.y - 300);
+		attack_avoid= angle_calculate(mousePos.x - 400, mousePos.y - 300,true);
 		attack_direction= normalization_calculate(mousePos.x - 400, mousePos.y - 300, { 400,300 }, 40);
 	}
 
@@ -130,19 +130,32 @@ void Class_player::afterimage_delete() {
 //攻撃の狙い
 void Class_player::attack_aim() {
 	//角度の計算
-	angle_attack_mark = angle_calculate(mousePos.x - 400, mousePos.y - 300);
+	angle_attack_mark = angle_calculate(mousePos.x - 400, mousePos.y - 300,true);
+	Print<< angle_calculate(mousePos.x - 400, mousePos.y - 300,false);
+	Print<< normalization_calculate(mousePos.x - 400, mousePos.y - 300, { 0,0 }, 1);
 	//正規化
 	player_attack_markPos = normalization_calculate(mousePos.x - 400, mousePos.y - 300,{400,300},50);
 
 	player_attack_mark = { player_attack_markPos ,10 };
 
-	SlashingPos = normalization_calculate(mousePos.x - 400, mousePos.y - 300, { 395,300-25 }, 50);
 	//斬撃の当たり判定
-	Slashing[0] = { int(SlashingPos.x)+40  ,int(SlashingPos.y)+25 ,20,30 };
-	Slashing[1] = { int(SlashingPos.x)+20  ,int(SlashingPos.y)+15 ,20,40 };
-	Slashing[2] = { int(SlashingPos.x)  ,int(SlashingPos.y )+8 ,20,50 };
-	Slashing[3] = { int(SlashingPos.x)-20  ,int(SlashingPos.y)+15 ,20,40 };
-	Slashing[4] = { int(SlashingPos.x)-40  ,int(SlashingPos.y)+25 ,20,30 };
+	//中心
+	SlashingPos = normalization_calculate(mousePos.x - 400, mousePos.y - 300, { 400,300 }, 50);
+	Slashing[2] = { SlashingPos.x  ,SlashingPos.y,25 };
+
+	//中心に追従
+	//右端
+	SlashingPos=angle_vector_transformation(mousePos.x - 400, mousePos.y - 300, -50);
+	Slashing[0] = { SlashingPos.x *50 + 400  ,SlashingPos.y *50 + 300 ,15 };
+	//右中
+	SlashingPos = angle_vector_transformation(mousePos.x - 400, mousePos.y - 300, -25);
+	Slashing[1] = { SlashingPos.x * 50 + 400  ,SlashingPos.y * 50 + 300 ,20 };
+	//左中
+	SlashingPos = angle_vector_transformation(mousePos.x - 400, mousePos.y - 300, 25);
+	Slashing[3] = { SlashingPos.x * 50 + 400  ,SlashingPos.y * 50 + 300 ,20 };
+	//左端
+	SlashingPos = angle_vector_transformation(mousePos.x - 400, mousePos.y - 300, 50);
+	Slashing[4] = { SlashingPos.x * 50 + 400  ,SlashingPos.y * 50 + 300 ,15 };
 }
 
 //攻撃
@@ -187,7 +200,7 @@ void Class_player::draw() const {
 
 	//攻撃の当たり判定
 	//if(SlashingHit)
-	//for (int i = 0; i < 5; i++) Slashing[i].rotatedAt(Slashing[2].x+10, Slashing[2].y+25, angle_attack_mark).draw();
+	for (int i = 0; i < 5; i++) Slashing[i].draw();
 	
 
 }
@@ -220,17 +233,38 @@ void Class_player::itemBuff() {
 
 //角度の計算
 //底辺,高さ
-double Class_player::angle_calculate(double base, double tall) {
+double Class_player::angle_calculate(double base, double tall, bool isRadian) {
 
 	//角度の計算
 	double angle = Atan(tall / base) * (180 / 3.14);
 	//補正
 	if (base < 0) angle -= 90;
 	else angle -= 270;
-	//ラジアン化
-	angle *= (3.14 / 180);
 
-	return angle;
+	if (isRadian) {
+		//ラジアン化
+		angle *= (3.14 / 180);
+
+		return angle;
+	}
+	else return angle;
+}
+//特定のものを中心にずらした角度からベクトルへの変換
+//中心にする座標、ずらす角度
+Vec2 Class_player::angle_vector_transformation(double base, double tall, double avoid) {
+
+
+	double Angle = angle_calculate(base, tall, false);
+	Angle -= 90+ avoid;
+
+	if (Angle > 360)Angle -= 360;
+	else if (Angle < 0)Angle += 360;
+
+	double rad = Angle * Math::PiF / 180;
+
+	double radY = sin(rad);
+	double radX = cos(rad);
+	return { radX,radY };
 }
 //正規化の計算
 //底辺,高さ,中心座標,回転の半径

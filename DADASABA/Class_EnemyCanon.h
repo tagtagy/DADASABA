@@ -12,7 +12,7 @@ public:
 	Class_EnemyCanon();
 	//出現
 	void appearance(Vec2 _TargetPos, Circle _TargetHit,
-					bool _IsAttack, Rect* _AttackHitPos);
+					bool _IsAttack, Circle* _AttackHitPos);
 
 	void Draw()const;
 private:

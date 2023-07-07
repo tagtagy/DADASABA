@@ -21,7 +21,7 @@ public:
 	//攻撃
 	void Attack();
 	//ノックバック
-	void Knockback(bool _IsAttack, Rect *_AttackHitPos);
+	void Knockback(bool _IsAttack, Circle*_AttackHitPos);
 
 	void Draw()const;
 

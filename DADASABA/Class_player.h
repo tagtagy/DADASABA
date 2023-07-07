@@ -1,6 +1,7 @@
 ﻿#pragma once
 # include "Common.h"
 # include <cmath>
+#include <math.h>
 enum {
 	//移動
 	NoMove,
@@ -41,7 +42,7 @@ public:
 	Circle getPlayerHit_Item() { return playerHit_Item; };
 	//攻撃しているかの受け渡し
 	bool IsAttack_during() { return SlashingHit; }
-	Rect* AttackHitPos() { return Slashing; }
+	Circle* AttackHitPos() { return Slashing; }
 private:
 	//通常移動
 	void normal_move();
@@ -54,7 +55,11 @@ private:
 
 	//角度の計算
 	//底辺,高さ
-	double angle_calculate(double base, double tall);
+	double angle_calculate(double base, double tall,bool isRadian);
+	//特定のものを中心にずらした角度からベクトルへの変換
+	//中心にする座標、ずらす角度
+	Vec2 angle_vector_transformation(double base, double tall, double avoid);
+
 	//正規化の計算
 	//底辺,高さ,中心座標,回転の半径
 	Vec2 normalization_calculate(double base, double tall,Vec2 centerPos,double range);
@@ -135,7 +140,7 @@ private:
 
 	//攻撃の当たり判定//////////////////////////////////
 	//斬撃
-	Rect Slashing[5];
+	Circle Slashing[5];
 	Vec2 SlashingPos;
 	bool SlashingHit=false;
 

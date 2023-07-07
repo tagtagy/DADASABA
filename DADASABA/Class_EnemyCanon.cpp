@@ -13,7 +13,7 @@ Class_EnemyCanon::Class_EnemyCanon() {
 
 //出現
 void Class_EnemyCanon::appearance(Vec2 _TargetPos, Circle _TargetHit,
-					              bool _IsAttack, Rect* _AttackHitPos) {
+					              bool _IsAttack, Circle* _AttackHitPos) {
 
 	TargetPos = _TargetPos;
 
