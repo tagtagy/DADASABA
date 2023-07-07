@@ -25,6 +25,11 @@ private:
 	//底辺,高さ,中心座標,回転の半径
 	Vec2 normalization_calculate(double base, double tall, Vec2 centerPos, double range);
 private:
+	//弾のテクスチャ
+	const Texture BulletTexture[2]{
+		Texture{U"SOZAI/UI/INUNIKUCHUU1.png"},
+		Texture{U"SOZAI/UI/INUNIKUCHUU2.png"},
+	};
 	//移動方向座標
 	Vec2 directionPos={0,0};
 	//弾丸のスピード

@@ -50,8 +50,10 @@ void Class_Bullet::Disable() {
 }
 void Class_Bullet::Draw()const {
 
-	if(isvalid)BulletHit.draw();
-
+	if (isvalid) {
+		//BulletHit.draw();
+		BulletTexture[0].resized(40).rotated(Scene::Time() * 90_deg).drawAt(BulletHit.x, BulletHit.y);
+	}
 }
 
 //正規化の計算
