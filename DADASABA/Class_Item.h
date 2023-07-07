@@ -22,7 +22,11 @@ private:
 	//アイテムの当たり判定
 	Circle itemHit;
 	//画像
-	const Texture itemRedTexture{ U"KARISOZAI/DropItemRed.png" };
+	const Texture itemRedTexture[2]{
+		Texture{U"SOZAI/item/item1_1.png"},
+		Texture{U"SOZAI/item/item2_1.png"},
+	};
+	int itemRedTextureNo = 0;
 	//サイズ
 	int itemSize=15;
 	//プレイヤーと当たったら消えるフラグ

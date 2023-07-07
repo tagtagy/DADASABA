@@ -33,8 +33,8 @@ void Class_player::button() {
 		//回避のキャンセル
 		avoid_count = false;
 		//攻撃場所の決定
-		attack_avoid= angle_calculate(mousePos.x - 400, mousePos.y - 300,true);
-		attack_direction= normalization_calculate(mousePos.x - 400, mousePos.y - 300, { 400,300 }, 40);
+		W_AttackM_Pos = mousePos;
+		
 	}
 
 	//回避
@@ -129,32 +129,37 @@ void Class_player::afterimage_delete() {
 }
 //攻撃の狙い
 void Class_player::attack_aim() {
+	//アニメーションの位置
+	attack_avoid = angle_calculate(W_AttackM_Pos.x - 400, W_AttackM_Pos.y - 300, true);
+	attack_avoid *= (180 / 3.14);
+	attack_avoid += 130;
+	attack_avoid *= (3.14 / 180);
+	attack_direction = normalization_calculate(W_AttackM_Pos.x - 400, W_AttackM_Pos.y - 300, { 400,300 }, 40);
+
 	//角度の計算
 	angle_attack_mark = angle_calculate(mousePos.x - 400, mousePos.y - 300,true);
-	Print<< angle_calculate(mousePos.x - 400, mousePos.y - 300,false);
-	Print<< normalization_calculate(mousePos.x - 400, mousePos.y - 300, { 0,0 }, 1);
 	//正規化
 	player_attack_markPos = normalization_calculate(mousePos.x - 400, mousePos.y - 300,{400,300},50);
-
+	//攻撃のマーカー位置
 	player_attack_mark = { player_attack_markPos ,10 };
 
 	//斬撃の当たり判定
 	//中心
-	SlashingPos = normalization_calculate(mousePos.x - 400, mousePos.y - 300, { 400,300 }, 50);
+	SlashingPos = normalization_calculate(W_AttackM_Pos.x - 400, W_AttackM_Pos.y - 300, { 400,300 }, 50);
 	Slashing[2] = { SlashingPos.x  ,SlashingPos.y,25 };
 
 	//中心に追従
 	//右端
-	SlashingPos=angle_vector_transformation(mousePos.x - 400, mousePos.y - 300, -50);
+	SlashingPos=angle_vector_transformation(W_AttackM_Pos.x - 400, W_AttackM_Pos.y - 300, -50);
 	Slashing[0] = { SlashingPos.x *50 + 400  ,SlashingPos.y *50 + 300 ,15 };
 	//右中
-	SlashingPos = angle_vector_transformation(mousePos.x - 400, mousePos.y - 300, -25);
+	SlashingPos = angle_vector_transformation(W_AttackM_Pos.x - 400, W_AttackM_Pos.y - 300, -25);
 	Slashing[1] = { SlashingPos.x * 50 + 400  ,SlashingPos.y * 50 + 300 ,20 };
 	//左中
-	SlashingPos = angle_vector_transformation(mousePos.x - 400, mousePos.y - 300, 25);
+	SlashingPos = angle_vector_transformation(W_AttackM_Pos.x - 400, W_AttackM_Pos.y - 300, 25);
 	Slashing[3] = { SlashingPos.x * 50 + 400  ,SlashingPos.y * 50 + 300 ,20 };
 	//左端
-	SlashingPos = angle_vector_transformation(mousePos.x - 400, mousePos.y - 300, 50);
+	SlashingPos = angle_vector_transformation(W_AttackM_Pos.x - 400, W_AttackM_Pos.y - 300, 50);
 	Slashing[4] = { SlashingPos.x * 50 + 400  ,SlashingPos.y * 50 + 300 ,15 };
 }
 
@@ -169,13 +174,19 @@ void Class_player::attack() {
 	}
 
 	//アニメーションの終わり
-	if (attack_animation >= 3) {
+	if (attack_animation >= 4) {
 		attack_count = 0;
 		attack_animation = 0;
 		attack_button = false;
 		//攻撃の当たり判定の無効化
 		SlashingHit = false;
 	}
+}
+//アニメーション
+void Class_player::animation() {
+
+
+
 }
 //描画
 void Class_player::draw() const {
@@ -187,20 +198,20 @@ void Class_player::draw() const {
 	for (int i = afterimageMax-1; i >=0; i--) {
 		//残像の描画
 		if (Isafterimage[i])
-			playerTexture(0, 0, 1200, 1200).resized(100).drawAt(afterimageScreenPos[i],ColorF(1,0.5,0.5, afterimage_clear[i]));
+			playerTexture_ZANGEKI1(0, 0, 1200, 1200).resized(100).drawAt(afterimageScreenPos[i],ColorF(1,0.5,0.5, afterimage_clear[i]));
 	}
 	//プレイヤーのテクスチャ
-	playerTexture(0,0,1200,1200).resized(100).drawAt(playerHit.x, playerHit.y);
+	playerTexture_ZANGEKI1(1200*animCount,0,1200,1200).resized(100).drawAt(playerHit.x, playerHit.y);
 	//プレイヤーの攻撃マーカー
 	player_attack_mark.draw(ColorF{ 1 });
 	player_attack_mark_Texture.resized(50).rotated(angle_attack_mark).drawAt(player_attack_markPos);
 
 	//攻撃アニメーション
-	if(attack_button)ZANGEKI[attack_animation].resized(100).rotated(attack_avoid).drawAt(attack_direction);
+	if(attack_button)ZANGEKI(1000* attack_animation,0,1000,1000).resized(200).rotated(attack_avoid).drawAt(attack_direction);
 
 	//攻撃の当たり判定
 	//if(SlashingHit)
-	for (int i = 0; i < 5; i++) Slashing[i].draw();
+	//for (int i = 0; i < 5; i++) Slashing[i].draw();
 	
 
 }

@@ -25,6 +25,8 @@ public:
 	void attack_aim();
 	//攻撃
 	void attack();
+	//アニメーション
+	void animation();
 	//描画
 	void draw() const;
 	//獲得したアイテム数を加算
@@ -67,6 +69,8 @@ private:
 
 	//マウス座標
 	Vec2 mousePos;
+	//攻撃したときのマウス座標
+	Vec2 W_AttackM_Pos;
 	//デルタタイム
 	double delta_time;
 	//攻撃関連////////////////////////////////////////////////////////////
@@ -75,13 +79,10 @@ private:
 	//攻撃時間
 	double attack_count = 0;
 	//攻撃の有効時間
-	double attack_time = 0.1;
+	double attack_time = 0.03;
 	//斬撃
-	const Texture ZANGEKI[3]{
-		Texture{U"KARISOZAI/ZANGEKI1.png"},
-		Texture{U"KARISOZAI/ZANGEKI2.png"},
-		Texture{U"KARISOZAI/ZANGEKI3.png"},
-	};
+	const Texture ZANGEKI{ U"SOZAI/attack/effect_Slashing_black.png" };
+	
 	//攻撃のアニメーション
 	int attack_animation = 0;
 	//攻撃の角度
@@ -98,9 +99,14 @@ private:
 	Vec2 player_attack_markPos { 0,0 };
 
 	//自機関連////////////////////////////////////////////////////////////
-	
-	//プレイヤーテクスチャ
-	const Texture playerTexture{ U"SOZAI/player/Player_pokomaru_Ver2.png" };
+
+	//プレイヤーテクスチャ(武器無し)
+	const Texture playerTexture_BUKINASI{ U"SOZAI/player/Player_pokomaru_Ver2.png" };
+	//プレイヤーテクスチャ(射撃)
+	const Texture playerTexture_GUN{ U"SOZAI/player/Jam_2023_No2_PlayerGanner_.png" };
+	//プレイヤーテクスチャ(斬撃)
+	const Texture playerTexture_ZANGEKI1{ U"SOZAI/player/Player_pokomaru.png" };//灰色
+	const Texture playerTexture_ZANGEKI2{ U"SOZAI/player/Jam_2023_No2_Fencer.png" };//茶色
 	//プレイヤーの当たり判定
 	Circle playerHit;
 	//プレイヤーの当たり判定アイテム用
@@ -137,6 +143,12 @@ private:
 	Vec2 ScreenPos;
 	//プレイヤーのサイズ
 	int playerSize = 30;
+
+	//プレイヤーのアニメーション
+	int animCount = 0;
+	//プレイヤーのアニメーションタイム
+	double animTime = 0;
+	const double animTimeMax = 0.4;
 
 	//攻撃の当たり判定//////////////////////////////////
 	//斬撃

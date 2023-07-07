@@ -32,6 +32,13 @@ private:
 	//底辺,高さ,中心座標,回転の半径
 	Vec2 normalization_calculate(double base, double tall, Vec2 centerPos, double range);
 private:
+	//敵テクスチャ
+	const Texture EnemyTexture[3]{
+		Texture{U"SOZAI/enemy/Jam_2023_No2_enemy_kokekiti_4.png"},
+		Texture{U"SOZAI/enemy/Jam_2023_No2_enemy_nekomaru_9.png"},
+		Texture{U"SOZAI/enemy/Jam_2023_tino.png"},
+	};
+	int EnemyTextureNo = 0;
 	//スクリーン上の座標
 	Vec2 ScreenPos;
 	//マップ上の座標

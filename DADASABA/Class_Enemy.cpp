@@ -12,6 +12,7 @@ Class_Enemy::Class_Enemy() {
 	MapPos = { 0,0 };
 	ScreenPos = { 0,0 };
 	targetHit = { 0,0,0 };
+	
 	for (int i=0; i < bulletMax; i++) bullet[i]=new Class_Bullet;
 	
 }
@@ -20,6 +21,9 @@ void Class_Enemy::set(Vec2 pos) {
 	//座標の設定
 	MapPos = pos;
 	isValid = true;
+	//出現する時に何の敵になるか決める
+	int a = Random(2);
+	EnemyTextureNo = a;
 }
 //ターゲットの設定
 void Class_Enemy::Target_input(Vec2 TargetPos, Circle TargetHit) {
@@ -63,7 +67,7 @@ void Class_Enemy::Move() {
 	ScreenPos.y = MapPos.y - targetPos.y;
 
 	//座標更新
-	Ene_Hit = { ScreenPos.x+400,ScreenPos.y + 300, 10 };
+	Ene_Hit = { ScreenPos.x+400,ScreenPos.y + 300, 50 };
 
 	//Print <<U"敵の座標" << ScreenPos;
 	//Print << U"敵の攻撃カウント" << shootCount;
@@ -107,7 +111,7 @@ void Class_Enemy::Knockback(bool _IsAttack, Circle* _AttackHitPos) {
 
 void Class_Enemy::Draw() const{
 	
-	Ene_Hit.draw(ColorF{ 1,0,0,1 });
+	Ene_Hit(EnemyTexture[EnemyTextureNo]).draw(ColorF{1,0,0,1});
 
 	for (int i=0; i < bulletMax; i++) {
 		bullet[i]->Draw();
