@@ -1,4 +1,7 @@
 ﻿#pragma once
+# include <cmath>
+#include <math.h>
+
 class Class_Item
 {
 public:
@@ -7,7 +10,7 @@ public:
 	//スポーンしたときの初期値を設定
 	void init(Vec2 _itemPos);
 	//マップの座標を更新
-	void MapPos(Vec2 _playerPos);
+	void MapPos(Vec2 _playerPos, Circle _playerHit);
 	//描画
 	void draw() const;
 	//プレイヤーとの当たり判定
@@ -32,7 +35,11 @@ private:
 	int itemSize=15;
 	//プレイヤーと当たったら消えるフラグ
 	bool isDestroy=false;
+	//プレイヤーの方に向かうかどうか
+	bool toPlayer = false;
 	//有効かどうか
 	bool IsValid = false;
+
+	int count = 0;
 };
 

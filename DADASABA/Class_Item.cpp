@@ -9,6 +9,9 @@ void Class_Item::init(Vec2 _itemPos) {
 	//出現する時に何のアイテムになるか決める
 	int a = Random(1);
 	itemRedTextureNo = a;
+
+	toPlayer = false;
+	isDestroy = false;
 }
 
 void Class_Item::draw() const{
@@ -16,17 +19,39 @@ void Class_Item::draw() const{
 	itemHit(itemRedTexture[itemRedTextureNo]).draw();
 }
 
-void Class_Item::MapPos(Vec2 _playerPos) {
+void Class_Item::MapPos(Vec2 _playerPos, Circle _playerHit) {
 	//アイテムの座標更新
 	itemHit = { itemPos.x - _playerPos.x, itemPos.y - _playerPos.y,itemSize };
+
+	if (toPlayer) {
+		count++;
+		Vec2 pos = { _playerPos.x + 400 - itemPos.x , _playerPos.y + 300 - itemPos.y };
+		float length = sqrt(pos.x * pos.x + pos.y * pos.y);
+		float normalX = pos.x / length;
+		float normalY = pos.y / length;
+		if (count < 50) {
+			itemPos.x -= normalX * 3;
+			itemPos.y -= normalY * 3;
+		}
+		else {
+			itemPos.x += normalX * 3;
+			itemPos.y += normalY * 3;
+			if (itemHit.intersects(_playerHit)) {
+				isDestroy = true;
+				toPlayer = false;
+			}
+		}
+	}
+	else {
+		isDestroy = false;
+		count = 0;
+	}
 }
 
 void Class_Item::hitPlayerHit(Circle _playerHit) {
 	//プレイヤーに当たった時
 	if (itemHit.intersects(_playerHit)) {
-		isDestroy = true;
-	}
-	else {
-		isDestroy = false;
+		toPlayer = true;
+		count = 0;
 	}
 }

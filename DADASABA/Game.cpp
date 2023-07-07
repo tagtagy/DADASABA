@@ -82,7 +82,7 @@ void Game::update()
 		//有効な時
 		if (item[i]->getIsValid()) {
 			//描画位置の更新
-			item[i]->MapPos(player->playerPos());
+			item[i]->MapPos(player->playerPos(), player->getPlayerHit_Item());
 			//当たり判定
 			item[i]->hitPlayerHit(player->getPlayerHit_Item());
 			if (item[i]->getIsDestroy()) {
@@ -91,6 +91,7 @@ void Game::update()
 			}
 		}
 	}
+
 	//アイテム
 	player->itemBuff();
 
