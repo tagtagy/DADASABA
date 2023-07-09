@@ -49,13 +49,21 @@ private:
 	Circle targetHit;
 	//スピード
 	double speed;
+	//動けるか
+	bool ismove = true;
 	//当たり判定
 	Circle Ene_Hit;
 	//攻撃が当たったか
 	bool IsAttackHit = false;
-
+	//無敵時間
+	double InvincibleCount = 0;
+	const double InvincibleTime = 1;
 	//有効か？
 	bool isValid = false;
+	//ステータス/////////////////////////////////////////
+	//HP
+	int MaxHP[3] = {10,10,10};
+	int HP = 0;
 	//弾丸/////////////////////////////////////////////
 	Class_Bullet* bullet[bulletMax];
 	//発射するタイミング

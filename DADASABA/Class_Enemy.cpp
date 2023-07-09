@@ -25,6 +25,7 @@ void Class_Enemy::set(Vec2 pos) {
 	//出現する時に何の敵になるか決める
 	int a = Random(2);
 	EnemyTextureNo = a;
+	HP = MaxHP[a];
 }
 //ターゲットの設定
 void Class_Enemy::Target_input(Vec2 TargetPos, Circle TargetHit) {
@@ -34,27 +35,29 @@ void Class_Enemy::Target_input(Vec2 TargetPos, Circle TargetHit) {
 }
 void Class_Enemy::Move() {
 	speed = Scene::DeltaTime() * 30;
-	//射撃
-	Attack();
-	//移動
-	if (MapPos.x > targetPos.x)
-	{
-		MapPos.x -= speed;
-	}
+	if (ismove) {
+		//射撃
+		Attack();
+		//移動
+		if (MapPos.x > targetPos.x)
+		{
+			MapPos.x -= speed;
+		}
 
-	if (MapPos.x < targetPos.x)
-	{
-		MapPos.x += speed;
-	}
+		if (MapPos.x < targetPos.x)
+		{
+			MapPos.x += speed;
+		}
 
-	if (MapPos.y > targetPos.y)
-	{
-		MapPos.y -= speed;
-	}
+		if (MapPos.y > targetPos.y)
+		{
+			MapPos.y -= speed;
+		}
 
-	if (MapPos.y < targetPos.y)
-	{
-		MapPos.y += speed;
+		if (MapPos.y < targetPos.y)
+		{
+			MapPos.y += speed;
+		}
 	}
 	//弾丸の移動
 	for (int i=0; i < bulletMax; i++) {
@@ -100,13 +103,28 @@ void Class_Enemy::Knockback(bool _IsAttack, Circle* _AttackHitPos) {
 			double lengthY = _AttackHitPos[i].y - ScreenPos.y-300;
 			double hypotenuse = hypot(lengthX, lengthY);
 			//斬撃に当たった時
-			if (hypotenuse <= _AttackHitPos[i].r + Ene_Hit.r)IsAttackHit = true;
+			if (hypotenuse <= _AttackHitPos[i].r + Ene_Hit.r&& InvincibleCount==0) {
+				//無敵でなければダメージを食らう
+				HP -= 5;
+				//HPが0以下なら死亡
+				if (HP <= 0)isValid = false;
+				//ノックバックの方向計算
+				MapPos += normalization_calculate(targetPos.x - MapPos.x, targetPos.y - MapPos.y, { 0,0 }, 100) * -1;
+				InvincibleCount = InvincibleTime;
+			}
 		}
 	}
-	//ノックバックの方向計算
-	if(IsAttackHit)MapPos += normalization_calculate(targetPos.x - MapPos.x, targetPos.y - MapPos.y, { 0,0 }, 4) * -1;
+	//無敵時間の処理
+	if (InvincibleCount > 0) {
+		InvincibleCount -= Scene::DeltaTime();
+		ismove = false;
+	}
+	else {
+		InvincibleCount = 0;
+		ismove = true;
 
-	IsAttackHit = false;
+	}
+	
 }
 
 void Class_Enemy::Draw() const{
