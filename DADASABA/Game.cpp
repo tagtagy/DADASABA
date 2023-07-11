@@ -40,7 +40,7 @@ void Game::update()
 	}
 	else if (CameraTarget == fullScreen) {
 
-		MainCamera = { -1920 / 2,-1080 / 2 };
+		MainCamera = { -1537 / 2,-865 / 2 };
 
 	}
 	//カメラの自由移動(デバック用)
@@ -143,7 +143,7 @@ void Game::draw() const
 	Scene::SetBackground(ColorF{ 0, 1, 0 });
 
 	//背景
-	Back_ground.drawAt(ScreenPos);
+	Back_ground.resized(1537).drawAt(ScreenPos);
 
 	Circle{ countDCircleX,countDCircleY,countDCircleSize + 1 }
 	.drawPie(0_deg, -angle, ColorF{ 0, 0, 1 });

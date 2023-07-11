@@ -81,18 +81,18 @@ void Class_player::move() {
 void Class_player::normal_move() {
 	double x= speed * moveX * delta_time;
 	//横移動
-	if (-1920 / 2 < playerMapPos.x + x && playerMapPos.x + x < 1920 / 2) playerMapPos.x += x;
+	if (-1537 / 2 < playerMapPos.x + x && playerMapPos.x + x < 1537 / 2) playerMapPos.x += x;
 
 	double y = speed * moveY * delta_time;
 	//縦移動
-	if (-1080 /2 < playerMapPos.y + y && playerMapPos.y + y < 1080 / 2) playerMapPos.y += y;
+	if (-865 /2 < playerMapPos.y + y && playerMapPos.y + y < 865 / 2) playerMapPos.y += y;
 }
 //回避移動
 void Class_player::avoid_move() {
 	//回避横移動
-	if (-1920 / 2 < playerMapPos.x + avoid_speed.x && playerMapPos.x + avoid_speed.x < 1920 / 2)playerMapPos.x += avoid_speed.x;
+	if (-1537 / 2 < playerMapPos.x + avoid_speed.x && playerMapPos.x + avoid_speed.x < 1537 / 2)playerMapPos.x += avoid_speed.x;
 	//回避横移動
-	if (-1080 / 2 < playerMapPos.y + avoid_speed.y && playerMapPos.y + avoid_speed.y < 1080 / 2)playerMapPos.y += avoid_speed.y;
+	if (-865 / 2 < playerMapPos.y + avoid_speed.y && playerMapPos.y + avoid_speed.y < 865 / 2)playerMapPos.y += avoid_speed.y;
 	
 	//残像の描画
 	afterimage_generate();
