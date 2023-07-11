@@ -28,14 +28,20 @@ void Game::update()
 {
 	ClearPrint();
 
-	Print << U"カメラの座標"<< MainCamera;
-
-	deltatime=Scene::DeltaTime();
+	Print << U"カメラの座標" << MainCamera;
+	for (const auto& monitor : monitors)
+		Print << monitor.displayRect;
+	deltatime = Scene::DeltaTime();
 
 	//カメラターゲットがプレイヤーだった時
 	if (CameraTarget == Player) {
 		//ターゲット位置+描画したいスクリーン上の位置
 		MainCamera = player->playerPos() - Vec2{ 400,300 };
+	}
+	else if (CameraTarget == fullScreen) {
+
+		MainCamera = { -1920 / 2,-1080 / 2 };
+
 	}
 	//カメラの自由移動(デバック用)
 	else if (CameraTarget == freeCanon) {
@@ -47,17 +53,8 @@ void Game::update()
 	}
 
 	//背景
-	for (int i = 0; i < 9; i++) {
-		int x = i % 3;
-		int y = i / 3;
+	ScreenPos = BackMapPos - MainCamera;
 
-		int Posx = MainCamera.x / 800;
-		int Posy = MainCamera.y / 600;
-
-		BackMapPos[i] = { 800 * Posx + 800 * x - 800,600 * Posy + 600 * y - 600 };
-		ScreenPos[i]= BackMapPos[i]- MainCamera;
-		Back_groundRect[i] = { ScreenPos[i],800,600 };
-	}
 
 	//Yで縮小、Uでフルサイズ
 	if (KeyY.pressed())
@@ -66,10 +63,14 @@ void Game::update()
 		Window::SetFullscreen(false);
 		// ウィンドウを中心に移動
 		Window::Centering();
+		//カメラをプレイヤーに追従させる
+		CameraTarget = Player;
 	}
 	if (KeyU.pressed())
 	{
 		Window::SetFullscreen(true);
+		//カメラをフルスクリーンモードに
+		CameraTarget = fullScreen;
 	}
 
 	
@@ -141,8 +142,8 @@ void Game::draw() const
 	// 背景色を 黄緑 に設定
 	Scene::SetBackground(ColorF{ 0, 1, 0 });
 
-	for (int i = 0; i < 9; i++)
-		Back_groundRect[i](Back_ground).draw();
+	//背景
+	Back_ground.drawAt(ScreenPos);
 
 	Circle{ countDCircleX,countDCircleY,countDCircleSize + 1 }
 	.drawPie(0_deg, -angle, ColorF{ 0, 0, 1 });

@@ -7,8 +7,8 @@
 
 void Main()
 {
-
-	Scene::SetResizeMode(ResizeMode::Keep);
+	
+	//Scene::SetResizeMode(ResizeMode::Keep);
 
 	//画面サイズ変更(フル)
 	//Window::SetFullscreen(true);
@@ -30,8 +30,10 @@ void Main()
 	// ゲームシーンから開始したい場合はこのコメントを外す
 	manager.init(State::Game);
 
+	
 	while (System::Update())
 	{
+		
 		if (not manager.update())
 		{
 			break;

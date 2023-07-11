@@ -79,16 +79,21 @@ void Class_player::move() {
 }
 //通常移動
 void Class_player::normal_move() {
+	double x= speed * moveX * delta_time;
 	//横移動
-	if (moveX != NoMove) playerMapPos.x += speed * moveX * delta_time;
+	if (-1920 / 2 < playerMapPos.x + x && playerMapPos.x + x < 1920 / 2) playerMapPos.x += x;
+
+	double y = speed * moveY * delta_time;
 	//縦移動
-	if (moveY != NoMove) playerMapPos.y += speed * moveY * delta_time;
+	if (-1080 /2 < playerMapPos.y + y && playerMapPos.y + y < 1080 / 2) playerMapPos.y += y;
 }
 //回避移動
 void Class_player::avoid_move() {
-	//回避方向に進む
-	playerMapPos += avoid_speed;
-
+	//回避横移動
+	if (-1920 / 2 < playerMapPos.x + avoid_speed.x && playerMapPos.x + avoid_speed.x < 1920 / 2)playerMapPos.x += avoid_speed.x;
+	//回避横移動
+	if (-1080 / 2 < playerMapPos.y + avoid_speed.y && playerMapPos.y + avoid_speed.y < 1080 / 2)playerMapPos.y += avoid_speed.y;
+	
 	//残像の描画
 	afterimage_generate();
 	//回避の時間制限

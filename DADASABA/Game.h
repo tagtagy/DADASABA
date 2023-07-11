@@ -7,6 +7,7 @@
 
 enum {
 	freeCanon,
+	fullScreen,
 	Player,
 	Boss,
 	maxItemNum = 100,//アイテムの最大数
@@ -33,13 +34,11 @@ private:
 	const Array<MonitorInfo> monitors = System::EnumerateMonitors();
 
 	//背景
-	const Texture Back_ground{ U"SOZAI/background/haikei_rokugoukann_11.png" };
-	//背景貼り付け用ブロック
-	RectF Back_groundRect[9];
+	const Texture Back_ground{ U"SOZAI/background/haikei_rokugoukann_12.png" };
 	//背景のマップ上の位置
-	Vec2 BackMapPos[9];
+	Vec2 BackMapPos{0,0};
 	//背景のスクリーン上の位置
-	Vec2 ScreenPos[9];
+	Vec2 ScreenPos;
 
 	//プレイヤー
 	Class_player* player = nullptr;
@@ -51,7 +50,7 @@ private:
 	//カメラ位置
 	Vec2 MainCamera{ 0,0 };
 	//カメラの追従するモード
-	int CameraTarget = freeCanon;
+	int CameraTarget = Player;
 
 	//デルタタイム
 	double deltatime=0;
