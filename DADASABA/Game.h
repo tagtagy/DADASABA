@@ -6,7 +6,11 @@
 #include "Class_Item.h"
 
 enum {
-	maxItemNum = 100
+	freeCanon,
+	Player,
+	Boss,
+	maxItemNum = 100,//アイテムの最大数
+
 };
 
 // ゲームシーン
@@ -28,6 +32,15 @@ private:
 	// 接続されているモニタの情報一覧を取得
 	const Array<MonitorInfo> monitors = System::EnumerateMonitors();
 
+	//背景
+	const Texture Back_ground{ U"SOZAI/background/haikei_rokugoukann_11.png" };
+	//背景貼り付け用ブロック
+	RectF Back_groundRect[9];
+	//背景のマップ上の位置
+	Vec2 BackMapPos[9];
+	//背景のスクリーン上の位置
+	Vec2 ScreenPos[9];
+
 	//プレイヤー
 	Class_player* player = nullptr;
 	//敵のキャノン
@@ -35,6 +48,13 @@ private:
 	//アイテム
 	Class_Item* item[maxItemNum] = { nullptr };
 
+	//カメラ位置
+	Vec2 MainCamera{ 0,0 };
+	//カメラの追従するモード
+	int CameraTarget = freeCanon;
+
+	//デルタタイム
+	double deltatime=0;
 	//円形のカウントダウン
 	double angle = 360_deg;
 	double countDCircleX = 100;

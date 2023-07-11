@@ -16,7 +16,7 @@ public:
 	//ターゲットの設定
 	void Target_input(Vec2 TargetPos, Circle TargetHit);
 	//動き
-	void Move();
+	void Move(Vec2 _MainCamera, double deltatime);
 	//攻撃
 	void Attack();
 	//ノックバック
@@ -58,6 +58,8 @@ private:
 	//無敵時間
 	double InvincibleCount = 0;
 	const double InvincibleTime = 1;
+	//デルタタイム
+	double delta_time = 0;
 	//有効か？
 	bool isValid = false;
 	//ステータス/////////////////////////////////////////

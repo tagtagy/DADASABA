@@ -18,7 +18,7 @@ class Class_player
 public:
 	Class_player();
 	//ボタン
-	void button();
+	void button(double deltatime);
 	//動き
 	void move();
 	//攻撃の狙い
@@ -34,8 +34,10 @@ public:
 	//アイテムの効果
 	void itemBuff();
 
+	//セッター
+	void SetMainCamera(Vec2 _MainCamera) { Camera = _MainCamera; };
 
-	//情報の提示
+	//ゲッター
 	//プレイヤーの位置
 	Vec2 playerPos() { return playerMapPos; };
 	//プレイヤーの当たり判定を取得
@@ -71,6 +73,8 @@ private:
 	Vec2 mousePos;
 	//攻撃したときのマウス座標
 	Vec2 W_AttackM_Pos;
+	//カメラの位置
+	Vec2 Camera;
 	//デルタタイム
 	double delta_time;
 	//攻撃関連////////////////////////////////////////////////////////////
@@ -116,14 +120,14 @@ private:
 	int moveY = 0;
 	//スピード
 	const int speed = 300;
-
+	//回避関連//////////////////////////////////////////
 	//回避経過時間
 	double avoid_count = false;
 	//最大回避時間
 	const double avoid_time = 0.5;
 	//回避スピード
 	Vec2 avoid_speed = { 0,0 };
-
+	//残像関連//////////////////////////////////////////
 	//残像の透明度
 	double afterimage_clear[afterimageMax];
 	//残像の更新時間
@@ -136,7 +140,7 @@ private:
 	Vec2 afterimageMapPos[afterimageMax];
 	//残像のスクリーン上の位置
 	Vec2 afterimageScreenPos[afterimageMax];
-
+	//プレイヤーの位置関連/////////////////////////////////
 	//プレイヤーのマップ上の位置
 	Vec2 playerMapPos;
 	//プレイヤーのスクリーン上の位置

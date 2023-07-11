@@ -14,21 +14,23 @@ Class_EnemyCanon::Class_EnemyCanon() {
 //出現
 //プレイヤーが斬撃の攻撃しているか、攻撃の当たり判定
 void Class_EnemyCanon::appearance(Vec2 _TargetPos, Circle _TargetHit,
-					              bool _IsAttack, Circle* _AttackHitPos) {
+					              bool _IsAttack, Circle* _AttackHitPos,
+					              Vec2 _MainCamera, double deltatime) {
 	//ターゲットの設定
 	TargetPos = _TargetPos;
+	delta_time = deltatime;
+	//ランダム出現
+	random_appearance();
 	//敵の動き
 	for (int i = 0; i < enemyMax; i++) {
 		if (enemy[i]->valid()) {
 			//敵のターゲットの座標取得
 			enemy[i]->Target_input(_TargetPos, _TargetHit);
-			enemy[i]->Move();
+			enemy[i]->Move(_MainCamera, deltatime);
 			//敵がプレイヤーの斬撃に当たった時
 			enemy[i]->Knockback(_IsAttack, _AttackHitPos);
 		}
 	}
-	//ランダム出現
-	random_appearance();
 
 }
 
@@ -68,7 +70,7 @@ void Class_EnemyCanon::random_appearance() {
 
 	}
 
-	appearanceCount += Scene::DeltaTime();
+	appearanceCount += delta_time;
 }
 //籠目出現
 void Class_EnemyCanon::ghost_appearance() {

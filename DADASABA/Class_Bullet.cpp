@@ -19,28 +19,28 @@ void Class_Bullet::set(Vec2 MyPos, Vec2 TargetPos) {
 	BulletValidCount = 0;
 }
 //動き
-void Class_Bullet::Move(Vec2 MyPos, Vec2 TargetPos) {
-	//有効な時だけ動かす
-	if (isvalid) {
-		//プレイヤーの座標
-		enemyPos = TargetPos;
+void Class_Bullet::Move(Vec2 _MainCamera,double deltatime) {
+
+	//デルタタイム
+	delta_time = deltatime;
 
 		//移動
-		BulletPos += directionPos * Scene::DeltaTime();
+	BulletPos += directionPos * delta_time;
 
-		//スクリーン上位置の設定
-		BulletHit.x = BulletPos.x - enemyPos.x + 400;
-		BulletHit.y = BulletPos.y - enemyPos.y + 300;
 
-		ValidTimer();
-	}
+	//スクリーン上位置の設定
+	BulletHit.x = BulletPos.x - _MainCamera.x;
+	BulletHit.y = BulletPos.y - _MainCamera.y;
+
+	ValidTimer();
+
 }
 //有効時間のカウント
 void Class_Bullet::ValidTimer() {
 
 	if (BulletValidCount > BulletValidTime) Disable();
 		
-	BulletValidCount+= Scene::DeltaTime();
+	BulletValidCount+= delta_time;
 }
 //弾の無効化
 void Class_Bullet::Disable() {

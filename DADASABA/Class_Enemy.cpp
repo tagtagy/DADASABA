@@ -33,7 +33,7 @@ void Class_Enemy::Target_input(Vec2 TargetPos, Circle TargetHit) {
 	targetPos = TargetPos;
 	targetHit = TargetHit;
 }
-void Class_Enemy::Move() {
+void Class_Enemy::Move(Vec2 _MainCamera, double deltatime) {
 	speed = Scene::DeltaTime() * 30;
 	if (ismove) {
 		//射撃
@@ -61,19 +61,19 @@ void Class_Enemy::Move() {
 	}
 	//弾丸の移動
 	for (int i=0; i < bulletMax; i++) {
-		bullet[i]->Move(MapPos, { targetPos.x ,targetPos.y });
 		if (bullet[i]->valid()) {
+			bullet[i]->Move(_MainCamera, deltatime);
 			bullet[i]->BulletHiter(targetHit);
 		}
 	}
 	//画面上の座標に変換
-	ScreenPos = MapPos - targetPos;
-
+	ScreenPos =   MapPos- _MainCamera;
 	//座標更新
-	Ene_Hit = { ScreenPos.x+400,ScreenPos.y + 300, 50 };
+	Ene_Hit = { ScreenPos.x,ScreenPos.y, 50 };
 
-	//Print <<U"敵の座標" << ScreenPos;
-	//Print << U"敵の攻撃カウント" << shootCount;
+	Print <<U"敵のマップ上の座標" << MapPos;
+	Print << U"敵のスクリーン上の座標" << ScreenPos;
+	Print << U"敵のスクリーン上の当たり判定座標" << Ene_Hit;
 }
 
 void Class_Enemy::Attack() {
@@ -99,8 +99,8 @@ void Class_Enemy::Knockback(bool _IsAttack, Circle* _AttackHitPos) {
 		
 		for (int i = 0; i < 5; i++) {
 			//斜辺の計算
-			double lengthX= _AttackHitPos[i].x - ScreenPos.x-400;
-			double lengthY = _AttackHitPos[i].y - ScreenPos.y-300;
+			double lengthX= _AttackHitPos[i].x - ScreenPos.x;
+			double lengthY = _AttackHitPos[i].y - ScreenPos.y;
 			double hypotenuse = hypot(lengthX, lengthY);
 			//斬撃に当たった時
 			if (hypotenuse <= _AttackHitPos[i].r + Ene_Hit.r&& InvincibleCount==0) {

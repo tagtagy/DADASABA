@@ -7,6 +7,9 @@
 
 void Main()
 {
+
+	Scene::SetResizeMode(ResizeMode::Keep);
+
 	//画面サイズ変更(フル)
 	//Window::SetFullscreen(true);
 

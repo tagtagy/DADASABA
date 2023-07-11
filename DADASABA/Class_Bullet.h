@@ -7,7 +7,7 @@ public:
 	//初期化
 	void set(Vec2 MyPos, Vec2 TargetPos);
 	//動き
-	void Move(Vec2 MyPos, Vec2 TargetPos);
+	void Move(Vec2 _MainCamera, double deltatime);
 	//衝突処理
 	void BulletHiter(Circle TargetHit){if (BulletHit.intersects(TargetHit))Disable();};
 	
@@ -43,6 +43,8 @@ private:
 	//有効時間
 	const double BulletValidTime = 1;
 	double BulletValidCount=0;
+	//デルタタイム
+	double delta_time = 0;
 	//当たり判定
 	Circle BulletHit{0,0,0};
 	//有効か？

@@ -2,7 +2,7 @@
 #include "Class_Enemy.h"
 //敵の最大数
 enum {
-	enemyMax = 10
+	enemyMax = 2
 };
 class Class_EnemyCanon
 {
@@ -12,8 +12,10 @@ public:
 	//出現
 	//ターゲットの座標、ターゲットの当たり判定
 	//プレイヤーが斬撃の攻撃しているか、攻撃の当たり判定
+	//カメラの座標、デルタタイム
 	void appearance(Vec2 _TargetPos, Circle _TargetHit,
-					bool _IsAttack, Circle* _AttackHitPos);
+					bool _IsAttack, Circle* _AttackHitPos,
+	                Vec2 _MainCamera,double deltatime);
 	//描画
 	void Draw()const;
 private:
@@ -26,7 +28,8 @@ private:
 private:
 	//ターゲットの座標
 	Vec2 TargetPos;
-
+	//デルタタイム
+	double delta_time=0;
 	//出現タイミングのカウント
 	const double appearanceTime = 1;
 	double appearanceCount = 0;

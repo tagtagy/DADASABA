@@ -27,7 +27,38 @@ Game::Game(const InitData& init)
 void Game::update()
 {
 	ClearPrint();
-	
+
+	Print << U"カメラの座標"<< MainCamera;
+
+	deltatime=Scene::DeltaTime();
+
+	//カメラターゲットがプレイヤーだった時
+	if (CameraTarget == Player) {
+		//ターゲット位置+描画したいスクリーン上の位置
+		MainCamera = player->playerPos() - Vec2{ 400,300 };
+	}
+	//カメラの自由移動(デバック用)
+	else if (CameraTarget == freeCanon) {
+		//カメラの移動
+		if (KeyJ.pressed())MainCamera.x -= 100 * deltatime;
+		if (KeyL.pressed())MainCamera.x += 100 * deltatime;
+		if (KeyI.pressed())MainCamera.y -= 100 * deltatime;
+		if (KeyK.pressed())MainCamera.y += 100 * deltatime;
+	}
+
+	//背景
+	for (int i = 0; i < 9; i++) {
+		int x = i % 3;
+		int y = i / 3;
+
+		int Posx = MainCamera.x / 800;
+		int Posy = MainCamera.y / 600;
+
+		BackMapPos[i] = { 800 * Posx + 800 * x - 800,600 * Posy + 600 * y - 600 };
+		ScreenPos[i]= BackMapPos[i]- MainCamera;
+		Back_groundRect[i] = { ScreenPos[i],800,600 };
+	}
+
 	//Yで縮小、Uでフルサイズ
 	if (KeyY.pressed())
 	{
@@ -43,11 +74,11 @@ void Game::update()
 
 	
 
-	if (KeyE.down())
+	/*if (KeyE.down())
 	{
 		changeScene(State::GameOver);
 	}
-	if (KeyC.down());
+	if (KeyC.down());*/
 
 	//円形のカウントダウン
 	angle -= countDown * Scene::DeltaTime();
@@ -58,13 +89,18 @@ void Game::update()
 
 
 	//プレイヤーのボタン感知
-	player->button();
+	player->button(deltatime);
 	//プレイヤーの動き
 	player->move();
+	player->SetMainCamera(MainCamera);
+
+	
+
 
 	//敵の出現
 	enemyCanon->appearance(player->playerPos(), player->getPlayerHit(),
-		                   player->IsAttack_during(), player->AttackHitPos());
+		                   player->IsAttack_during(), player->AttackHitPos(),
+		                   MainCamera, deltatime);
 
 	//プレイヤーのエイム
 	player->attack_aim();
@@ -82,7 +118,7 @@ void Game::update()
 		//有効な時
 		if (item[i]->getIsValid()) {
 			//描画位置の更新
-			item[i]->MapPos(player->playerPos(), player->getPlayerHit_Item());
+			item[i]->MapPos(player->playerPos(), player->getPlayerHit_Item(), MainCamera);
 			//当たり判定
 			item[i]->hitPlayerHit(player->getPlayerHit_Item());
 			if (item[i]->getIsDestroy()) {
@@ -95,7 +131,8 @@ void Game::update()
 	//アイテム
 	player->itemBuff();
 
-
+	
+	
 }
 
 void Game::draw() const
@@ -103,6 +140,9 @@ void Game::draw() const
 	
 	// 背景色を 黄緑 に設定
 	Scene::SetBackground(ColorF{ 0, 1, 0 });
+
+	for (int i = 0; i < 9; i++)
+		Back_groundRect[i](Back_ground).draw();
 
 	Circle{ countDCircleX,countDCircleY,countDCircleSize + 1 }
 	.drawPie(0_deg, -angle, ColorF{ 0, 0, 1 });

@@ -10,7 +10,7 @@ Class_player::Class_player() {
 }
 
 //ボタン
-void Class_player::button() {
+void Class_player::button(double deltatime) {
 	//マウスの位置
 	mousePos = Cursor::Pos();
 
@@ -44,10 +44,10 @@ void Class_player::button() {
 		avoid_count = avoid_time;
 		afterimage_emergence = 0;
 		//正規化
-		avoid_speed = normalization_calculate(mousePos.x - 400, mousePos.y - 300, { 0,0 }, (speed + 800) * delta_time);
+		avoid_speed = normalization_calculate(mousePos.x - ScreenPos.x, mousePos.y - ScreenPos.y, { 0,0 }, (speed + 800) * delta_time);
 	}
 	//共有のデルタタイム
-	delta_time = Scene::DeltaTime();
+	delta_time = deltatime;
 }
 //動き
 void Class_player::move() {
@@ -61,8 +61,17 @@ void Class_player::move() {
 
 	//攻撃行動
 	if (attack_button)attack();
-	
+
+	//スクリーン用に座標変換
+	ScreenPos = playerMapPos-Camera ;
+	playerHit.x = ScreenPos.x;
+	playerHit.y = ScreenPos.y;
+
+	playerHit_Item.x= ScreenPos.x;
+	playerHit_Item.y = ScreenPos.y;
+
 	Print <<U"マップ上のプレイヤー座標" << playerMapPos;
+	Print << U"スクリーン上のプレイヤー座標" << ScreenPos;
 	Print << U"プレイヤーからのマウスの角度" << int(angle_attack_mark * (180/3.14))<<U"°";
 	Print << U"攻撃マーカー座標" << player_attack_markPos;
 	Print << U"回避の方角" << avoid_speed;
@@ -124,43 +133,43 @@ void Class_player::afterimage_delete() {
 	}
 	afterimage_emergence += delta_time;
 	//残像の位置更新
-	for (int i = 0; i < afterimageMax; i++)afterimageScreenPos[i] = afterimageMapPos[i] - playerMapPos + Vec2{ 400,300 };
+	for (int i = 0; i < afterimageMax; i++)afterimageScreenPos[i] = afterimageMapPos[i] - playerMapPos + ScreenPos;
 
 }
 //攻撃の狙い
 void Class_player::attack_aim() {
 	//アニメーションの位置
-	attack_avoid = angle_calculate(W_AttackM_Pos.x - 400, W_AttackM_Pos.y - 300, true);
+	attack_avoid = angle_calculate(W_AttackM_Pos.x - ScreenPos.x, W_AttackM_Pos.y - ScreenPos.y, true);
 	attack_avoid *= (180 / 3.14);
 	attack_avoid += 130;
 	attack_avoid *= (3.14 / 180);
-	attack_direction = normalization_calculate(W_AttackM_Pos.x - 400, W_AttackM_Pos.y - 300, { 400,300 }, 40);
+	attack_direction = normalization_calculate(W_AttackM_Pos.x - ScreenPos.x, W_AttackM_Pos.y - ScreenPos.y, ScreenPos, 40);
 
 	//角度の計算
-	angle_attack_mark = angle_calculate(mousePos.x - 400, mousePos.y - 300,true);
+	angle_attack_mark = angle_calculate(mousePos.x - ScreenPos.x, mousePos.y - ScreenPos.y,true);
 	//正規化
-	player_attack_markPos = normalization_calculate(mousePos.x - 400, mousePos.y - 300,{400,300},50);
+	player_attack_markPos = normalization_calculate(mousePos.x - ScreenPos.x, mousePos.y - ScreenPos.y, ScreenPos,50);
 	//攻撃のマーカー位置
 	player_attack_mark = { player_attack_markPos ,10 };
 
 	//斬撃の当たり判定
 	//中心
-	SlashingPos = normalization_calculate(W_AttackM_Pos.x - 400, W_AttackM_Pos.y - 300, { 400,300 }, 50);
+	SlashingPos = normalization_calculate(W_AttackM_Pos.x - ScreenPos.x, W_AttackM_Pos.y - ScreenPos.y, ScreenPos, 50);
 	Slashing[2] = { SlashingPos.x  ,SlashingPos.y,25 };
 
 	//中心に追従
 	//右端
-	SlashingPos=angle_vector_transformation(W_AttackM_Pos.x - 400, W_AttackM_Pos.y - 300, -50);
-	Slashing[0] = { SlashingPos.x *50 + 400  ,SlashingPos.y *50 + 300 ,15 };
+	SlashingPos=angle_vector_transformation(W_AttackM_Pos.x - ScreenPos.x, W_AttackM_Pos.y - ScreenPos.y, -50);
+	Slashing[0] = { SlashingPos.x *50 + ScreenPos.x  ,SlashingPos.y *50 + ScreenPos.y ,15 };
 	//右中
-	SlashingPos = angle_vector_transformation(W_AttackM_Pos.x - 400, W_AttackM_Pos.y - 300, -25);
-	Slashing[1] = { SlashingPos.x * 50 + 400  ,SlashingPos.y * 50 + 300 ,20 };
+	SlashingPos = angle_vector_transformation(W_AttackM_Pos.x - ScreenPos.x, W_AttackM_Pos.y - ScreenPos.y, -25);
+	Slashing[1] = { SlashingPos.x * 50 + ScreenPos.x  ,SlashingPos.y * 50 + ScreenPos.y ,20 };
 	//左中
-	SlashingPos = angle_vector_transformation(W_AttackM_Pos.x - 400, W_AttackM_Pos.y - 300, 25);
-	Slashing[3] = { SlashingPos.x * 50 + 400  ,SlashingPos.y * 50 + 300 ,20 };
+	SlashingPos = angle_vector_transformation(W_AttackM_Pos.x - ScreenPos.x, W_AttackM_Pos.y - ScreenPos.y, 25);
+	Slashing[3] = { SlashingPos.x * 50 + ScreenPos.x  ,SlashingPos.y * 50 + ScreenPos.y ,20 };
 	//左端
-	SlashingPos = angle_vector_transformation(W_AttackM_Pos.x - 400, W_AttackM_Pos.y - 300, 50);
-	Slashing[4] = { SlashingPos.x * 50 + 400  ,SlashingPos.y * 50 + 300 ,15 };
+	SlashingPos = angle_vector_transformation(W_AttackM_Pos.x - ScreenPos.x, W_AttackM_Pos.y - ScreenPos.y, 50);
+	Slashing[4] = { SlashingPos.x * 50 + ScreenPos.x  ,SlashingPos.y * 50 + ScreenPos.y ,15 };
 }
 
 //攻撃

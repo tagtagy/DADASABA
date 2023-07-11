@@ -19,13 +19,13 @@ void Class_Item::draw() const{
 	itemHit(itemRedTexture[itemRedTextureNo]).draw();
 }
 
-void Class_Item::MapPos(Vec2 _playerPos, Circle _playerHit) {
+void Class_Item::MapPos(Vec2 _playerPos, Circle _playerHit, Vec2 _MainCamera) {
 	//アイテムの座標更新
-	itemHit = { itemPos.x - _playerPos.x, itemPos.y - _playerPos.y,itemSize };
+	itemHit = { itemPos.x - _MainCamera.x, itemPos.y - _MainCamera.y,itemSize };
 
 	if (toPlayer) {
 		count++;
-		Vec2 pos = { _playerPos.x + 400 - itemPos.x , _playerPos.y + 300 - itemPos.y };
+		Vec2 pos = { _playerPos.x - itemPos.x , _playerPos.y - itemPos.y };
 		float length = sqrt(pos.x * pos.x + pos.y * pos.y);
 		float normalX = pos.x / length;
 		float normalY = pos.y / length;

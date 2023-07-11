@@ -10,7 +10,7 @@ public:
 	//スポーンしたときの初期値を設定
 	void init(Vec2 _itemPos);
 	//マップの座標を更新
-	void MapPos(Vec2 _playerPos, Circle _playerHit);
+	void MapPos(Vec2 _playerPos, Circle _playerHit,Vec2 _MainCamera);
 	//描画
 	void draw() const;
 	//プレイヤーとの当たり判定
