@@ -3,7 +3,6 @@
 #include "Class_player.h"
 #include "Class_Enemy.h"
 #include "Class_EnemyCanon.h"
-#include "Class_Item.h"
 #include "Class_Timer.h"
 
 enum {
@@ -11,7 +10,6 @@ enum {
 	fullScreen,
 	Player,
 	Boss,
-	maxItemNum = 100,//アイテムの最大数
 
 };
 
@@ -28,8 +26,6 @@ public:
 
 	void draw() const override;
 
-	void SpawnItem(Vec2 _enemyPos);
-
 private:
 	// 接続されているモニタの情報一覧を取得
 	const Array<MonitorInfo> monitors = System::EnumerateMonitors();
@@ -45,8 +41,6 @@ private:
 	Class_player* player = nullptr;
 	//敵のキャノン
 	Class_EnemyCanon* enemyCanon = nullptr;
-	//アイテム
-	Class_Item* item[maxItemNum] = { nullptr };
 
 	//カメラ位置
 	Vec2 MainCamera{ 0,0 };

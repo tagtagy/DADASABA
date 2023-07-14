@@ -15,7 +15,7 @@ Class_EnemyCanon::Class_EnemyCanon() {
 //プレイヤーが斬撃の攻撃しているか、攻撃の当たり判定
 void Class_EnemyCanon::appearance(Vec2 _TargetPos, Circle _TargetHit,
 					              bool _IsAttack, Circle* _AttackHitPos,
-					              Vec2 _MainCamera, double deltatime) {
+					              Vec2 _MainCamera, double deltatime, Circle _TargetHit_Item) {
 	//ターゲットの設定
 	TargetPos = _TargetPos;
 	delta_time = deltatime;
@@ -37,9 +37,14 @@ void Class_EnemyCanon::appearance(Vec2 _TargetPos, Circle _TargetHit,
 			enemy[i]->Move(_MainCamera, deltatime);
 			//敵がプレイヤーの斬撃に当たった時
 			enemy[i]->Knockback(_IsAttack, _AttackHitPos);
+
+			if (enemy[i]->getIsDead()) {
+				createItem.SpawnItem(enemy[i]->getEnemyPos());
+			}
 		}
 	}
 
+	createItem.UpDate(_TargetPos, _TargetHit_Item, _MainCamera);
 }
 
 void Class_EnemyCanon::Draw()const {
@@ -47,6 +52,7 @@ void Class_EnemyCanon::Draw()const {
 	for (int i = 0; i < enemyMax; i++)
 		if (enemy[i]->Getvalid())enemy[i]->Draw();
 
+	createItem.Draw();
 }
 //ボス出現
 void Class_EnemyCanon::Boss_appearance() {

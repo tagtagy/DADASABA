@@ -32,6 +32,10 @@ public:
 	bool Getvalid() { return isValid; }
 	void Setvalid(bool valid) { isValid = valid; }
 	int EnemyHp() { return HP; }
+
+	bool getIsDead() { return isDead; }
+
+	Vec2 getEnemyPos() { return MapPos; }
 private:
 	//正規化の計算
 	//底辺,高さ,中心座標,回転の半径
@@ -80,5 +84,8 @@ private:
 	//発射するタイミング
 	const double shootTime = 2;
 	double shootCount = 0;
+
+	//倒されたらtrue
+	bool isDead = false;
 };
 

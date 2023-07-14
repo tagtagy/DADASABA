@@ -231,9 +231,8 @@ void Class_player::draw() const {
 }
 
 //獲得したアイテム数を加算
-void Class_player::addItemCount() {
-	getItemCount++;
-	if (getItemCount % 5 == 0) {
+void Class_player::startBuff() {
+	if (getItemCount != 0 && getItemCount % 5 == 0) {
 		buffFlag = true;
 	}
 }

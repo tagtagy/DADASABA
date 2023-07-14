@@ -6,22 +6,13 @@ Game::~Game() {
 
 	if (enemyCanon != nullptr)delete enemyCanon;
 
-	for (int i = 0; i < maxItemNum; i++) {
-		if (item[i] != nullptr) delete item[i];
-	}
 }
 
 Game::Game(const InitData& init)
 	: IScene{ init }
 {
-	
-	for (int i = 0; i < maxItemNum; i++) {
-		item[i] = new Class_Item();
-
-	}
 	player = new Class_player;
 	enemyCanon = new Class_EnemyCanon;
-	SpawnItem({ 0,0 });
 }
 
 void Game::update()
@@ -89,47 +80,21 @@ void Game::update()
 	player->move();
 	player->SetMainCamera(MainCamera);
 
-	
-
-
 	//敵の出現
 	enemyCanon->appearance(player->playerPos(), player->getPlayerHit(),
 		                   player->IsAttack_during(), player->AttackHitPos(),
-		                   MainCamera, deltatime);
+		                   MainCamera, deltatime, player->getPlayerHit_Item());
 	//タイマーの取得
 	enemyCanon->SetAngleTimer(timer.GetTimerCount());
 	Print << timer.GetTimerCount();
 	//プレイヤーのエイム
 	player->attack_aim();
 
-	//デバッグ用
-	if (KeyI.down()) {
-		int rX = Random(-1000, 1000);
-		int rY = Random(-1000, 1000);
-		//マップ上の座標に出るように変更しました
-		SpawnItem({ rX,rY });
-	}
-
-	//全ての要素にアクセス
-	for (int i = 0; i < maxItemNum; i++) {
-		//有効な時
-		if (item[i]->getIsValid()) {
-			//描画位置の更新
-			item[i]->MapPos(player->playerPos(), player->getPlayerHit_Item(), MainCamera);
-			//当たり判定
-			item[i]->hitPlayerHit(player->getPlayerHit_Item());
-			if (item[i]->getIsDestroy()) {
-				player->addItemCount();
-				item[i]->setIsValid(false);
-			}
-		}
-	}
-
 	//アイテム
+	player->setItemCount(enemyCanon->addCountGet());
+	player->startBuff();
 	player->itemBuff();
 
-	
-	
 }
 
 void Game::draw() const
@@ -147,25 +112,7 @@ void Game::draw() const
 
 	player->draw();
 	
-	for (int i = 0; i < maxItemNum; i++) {
-		if (item[i]->getIsValid()) {
-			item[i]->draw();
-		}
-	}
 	//敵の描画
 	enemyCanon->Draw();
 
-	
-	
-}
-
-void Game::SpawnItem(Vec2 _enemyPos) {
-	for (int i = 0; i < maxItemNum; i++) {
-		if (!item[i]->getIsValid()) {
-			//初期位置を設定（playerの位置を足して調整）
-			item[i]->init(_enemyPos);
-			item[i]->setIsValid(true);
-			i = maxItemNum;
-		}
-	}
 }

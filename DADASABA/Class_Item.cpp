@@ -5,7 +5,7 @@
 
 void Class_Item::init(Vec2 _itemPos) {
 	//アイテムの位置設定
-	itemPos = _itemPos + Vec2(400, 300);
+	itemPos = _itemPos;
 	//出現する時に何のアイテムになるか決める
 	int a = Random(1);
 	itemRedTextureNo = a;

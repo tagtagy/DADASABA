@@ -30,7 +30,7 @@ public:
 	//描画
 	void draw() const;
 	//獲得したアイテム数を加算
-	void addItemCount();
+	void startBuff();
 	//アイテムの効果
 	void itemBuff();
 
@@ -47,6 +47,8 @@ public:
 	//攻撃しているかの受け渡し
 	bool IsAttack_during() { return SlashingHit; }
 	Circle* AttackHitPos() { return Slashing; }
+
+	void setItemCount(int _addItemCount) { getItemCount = _addItemCount; }
 private:
 	//通常移動
 	void normal_move();

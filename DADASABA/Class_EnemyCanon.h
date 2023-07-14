@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "Class_Enemy.h"
+#include "Class_CreateItem.h"
 //敵の最大数
 enum {
 	enemyMax = 10
@@ -15,12 +16,14 @@ public:
 	//カメラの座標、デルタタイム
 	void appearance(Vec2 _TargetPos, Circle _TargetHit,
 					bool _IsAttack, Circle* _AttackHitPos,
-	                Vec2 _MainCamera,double deltatime);
+	                Vec2 _MainCamera,double deltatime, Circle _TargetHit_Item);
 	//描画
 	void Draw()const;
 
 	void SetAngleTimer(int angleTimer) { angleTime = angleTimer; }
 	bool GetBossLive() { return isBossLive; }
+
+	int addCountGet() { return createItem.getAddCount(); }
 private:
 	//ボス出現
 	void Boss_appearance();
@@ -46,5 +49,7 @@ private:
 	double appearanceCount = 0;
 	//敵
 	Class_Enemy* enemy[enemyMax];
+
+	Class_CreateItem createItem;
 };
 

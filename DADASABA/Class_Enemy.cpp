@@ -42,6 +42,7 @@ void Class_Enemy::set(Vec2 pos, int EnemyType) {
 		bullet_type = normalBullet2;
 	}
 
+	isDead = false;
 }
 //ターゲットの設定
 void Class_Enemy::Target_input(Vec2 TargetPos, Circle TargetHit) {
@@ -123,7 +124,10 @@ void Class_Enemy::Knockback(bool _IsAttack, Circle* _AttackHitPos) {
 				//無敵でなければダメージを食らう
 				HP -= 5;
 				//HPが0以下なら死亡
-				if (HP <= 0)isValid = false;
+				if (HP <= 0) {
+					isValid = false;
+					isDead = true;
+				}
 				//ノックバックの方向計算
 				MapPos += normalization_calculate(targetPos.x - MapPos.x, targetPos.y - MapPos.y, { 0,0 }, 100) * -1;
 				InvincibleCount = InvincibleTime;
