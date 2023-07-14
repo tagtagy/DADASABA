@@ -7,7 +7,9 @@ enum {
 	normalEnemy1,
 	normalEnemy2,
 	normalEnemy3,
+	normalEnemy4,
 	bossEnemy,
+	EnemytypeMax,
 	bulletMax=4//最大の弾丸量
 };
 class Class_Enemy
@@ -42,12 +44,15 @@ private:
 	Vec2 normalization_calculate(double base, double tall, Vec2 centerPos, double range);
 private:
 	//敵テクスチャ
-	const Texture EnemyTexture[4]{
+	const Texture EnemyTexture[EnemytypeMax]{
 		Texture{U"SOZAI/enemy/Jam_2023_No2_enemy_kokekiti_4.png"},
 		Texture{U"SOZAI/enemy/Jam_2023_No2_enemy_nekomaru_9.png"},
 		Texture{U"SOZAI/enemy/Jam_2023_tino.png"},
+		Texture{U"SOZAI/enemy/Jam_2023_Watabe.png"},
 		Texture{U"SOZAI/enemy/Enemy_ChocolateMonkey05.png"},
 	};
+	//敵のサイズ
+	int EnemySize[2] = { 50,100 };
 	//描画する敵のナンバー
 	int EnemyTextureNo = 0;
 	//スクリーン上の座標
@@ -75,7 +80,7 @@ private:
 	bool isValid = false;
 	//ステータス/////////////////////////////////////////
 	//HP
-	int MaxHP[4] = {10,10,10,10};
+	int MaxHP[EnemytypeMax] = {10,10,10,10,10};
 	int HP = 0;
 	//弾丸/////////////////////////////////////////////
 	Class_Bullet* bullet[bulletMax];

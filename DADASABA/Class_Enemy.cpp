@@ -23,13 +23,6 @@ void Class_Enemy::set(Vec2 pos, int EnemyType) {
 	//有効化
 	isValid = true;
 	EnemyTextureNo = EnemyType;
-	if (EnemyType == 0) {
-		//出現する時に何の敵になるか決める
-		EnemyTextureNo = Random(2);
-	}
-	else if (EnemyType == bossEnemy) {
-		EnemyTextureNo = 3;
-	}
 	
 	//体力設定
 	HP = MaxHP[EnemyTextureNo];
@@ -85,9 +78,14 @@ void Class_Enemy::Move(Vec2 _MainCamera, double deltatime) {
 	}
 	//画面上の座標に変換
 	ScreenPos =   MapPos- _MainCamera;
-	//座標更新
-	Ene_Hit = { ScreenPos.x,ScreenPos.y, 50 };
-
+	if (EnemyTextureNo == bossEnemy) {
+		//座標更新
+		Ene_Hit = { ScreenPos.x,ScreenPos.y, EnemySize[1] };
+	}
+	else {
+		//座標更新
+		Ene_Hit = { ScreenPos.x,ScreenPos.y, EnemySize[0] };
+	}
 	//Print <<U"敵のマップ上の座標" << MapPos;
 	//Print << U"敵のスクリーン上の座標" << ScreenPos;
 	//Print << U"敵のスクリーン上の当たり判定座標" << Ene_Hit;
@@ -149,7 +147,7 @@ void Class_Enemy::Knockback(bool _IsAttack, Circle* _AttackHitPos) {
 
 void Class_Enemy::Draw() const{
 	//敵の描画
-	Ene_Hit(EnemyTexture[EnemyTextureNo]).draw(ColorF{1,0,0,1});
+	Ene_Hit(EnemyTexture[EnemyTextureNo]).draw();
 	//弾丸の描画
 	for (int i=0; i < bulletMax; i++) {
 		bullet[i]->Draw();

@@ -75,21 +75,12 @@ void Class_EnemyCanon::random_appearance() {
 		//敵の出現
 		for (int i = 0; i < enemyMax; i++) {
 			if (enemy[i]->Getvalid() == false) {
-				int C=Random(2);
+				int C=Random(3);
 
-				int a = Random(1);
-				int b = Random(1);
-				if (b == 0)b = -1;
-				//縦方向から来る敵
-				if (a) {
-					double r = Random(800);
-					enemy[i]->set({ r + TargetPos.x, 600 * b + TargetPos.y }, C);
-				}
-				//横方向から来る敵
-				else{
-					double r = Random(800);
-					enemy[i]->set({ 800 * b + TargetPos.x,r + TargetPos.y }, C);
-				}
+				double x = Random(-700,700);
+				double y = Random(-400,400);
+				enemy[i]->set({ x , y }, C);
+				
 
 				i = enemyMax;
 			}
