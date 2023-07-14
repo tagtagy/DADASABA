@@ -78,8 +78,10 @@ void Game::update()
 	player->button(deltatime);
 	//プレイヤーの動き
 	player->move();
+	//カメラ取得
 	player->SetMainCamera(MainCamera);
-
+	//アニメーション
+	player->animation();
 	//敵の出現
 	enemyCanon->appearance(player->playerPos(), player->getPlayerHit(),
 		                   player->IsAttack_during(), player->AttackHitPos(),

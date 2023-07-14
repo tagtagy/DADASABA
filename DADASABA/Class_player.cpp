@@ -198,9 +198,18 @@ void Class_player::attack() {
 }
 //アニメーション
 void Class_player::animation() {
-
-
-
+	//歩きアニメーション
+	if (moveX != 0|| moveY != 0) {
+		animTime+= delta_time;
+		if (animTime >= animTimeMax) {
+			animTime -= animTimeMax;
+			animCount++;
+			if (animCount > 1)animCount = 0;
+		}
+	}
+	else {
+		animCount = 0;
+	}
 }
 //描画
 void Class_player::draw() const {

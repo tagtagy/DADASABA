@@ -149,12 +149,12 @@ private:
 	Vec2 ScreenPos;
 	//プレイヤーのサイズ
 	int playerSize = 30;
-
+	//////////////////////////////////////////////////////
 	//プレイヤーのアニメーション
 	int animCount = 0;
 	//プレイヤーのアニメーションタイム
 	double animTime = 0;
-	const double animTimeMax = 0.4;
+	const double animTimeMax = 0.1;
 
 	//攻撃の当たり判定//////////////////////////////////
 	//斬撃

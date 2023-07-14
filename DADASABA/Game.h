@@ -45,7 +45,7 @@ private:
 	//カメラ位置
 	Vec2 MainCamera{ 0,0 };
 	//カメラの追従するモード
-	int CameraTarget = Player;
+	int CameraTarget = fullScreen;
 
 	//デルタタイム
 	double deltatime=0;
