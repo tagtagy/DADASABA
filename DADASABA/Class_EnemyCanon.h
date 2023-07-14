@@ -2,7 +2,7 @@
 #include "Class_Enemy.h"
 //敵の最大数
 enum {
-	enemyMax = 2
+	enemyMax = 10
 };
 class Class_EnemyCanon
 {
@@ -18,6 +18,9 @@ public:
 	                Vec2 _MainCamera,double deltatime);
 	//描画
 	void Draw()const;
+
+	void SetAngleTimer(int angleTimer) { angleTime = angleTimer; }
+	bool GetBossLive() { return isBossLive; }
 private:
 	//ボス出現
 	void Boss_appearance();
@@ -30,6 +33,12 @@ private:
 private:
 	//ターゲットの座標
 	Vec2 TargetPos;
+	//タイマーの割合
+	int angleTime = 360;
+	//ボス戦かどうか
+	bool isBossFight = false;
+	//ボスが生きているか
+	bool isBossLive = true;
 	//デルタタイム
 	double delta_time=0;
 	//出現タイミングのカウント

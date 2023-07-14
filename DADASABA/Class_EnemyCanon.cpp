@@ -19,11 +19,15 @@ void Class_EnemyCanon::appearance(Vec2 _TargetPos, Circle _TargetHit,
 	//ターゲットの設定
 	TargetPos = _TargetPos;
 	delta_time = deltatime;
-	//ランダム出現
-	random_appearance();
-
-	//ボス出現
-	//Boss_appearance();
+	if (angleTime > 0) {
+		//ランダム出現
+		random_appearance();
+	}
+	else {
+		//ボス出現
+		if(!isBossFight)Boss_appearance();
+		if (enemy[0]->EnemyHp() <= 0)isBossLive = false;
+	}
 
 	//敵の動き
 	for (int i = 0; i < enemyMax; i++) {
@@ -52,8 +56,9 @@ void Class_EnemyCanon::Boss_appearance() {
 		}
 	}
 	if (enemy[0]->Getvalid() == false)
-	enemy[0]->set({ 1537/2,865 /2}, bossEnemy);
-
+	enemy[0]->set({ 0,0}, bossEnemy);
+	//ボス戦開始
+	isBossFight = true;
 }
 //ランダム出現
 void Class_EnemyCanon::random_appearance() {

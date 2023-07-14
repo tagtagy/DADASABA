@@ -7,6 +7,7 @@ public:
 
 	void draw() const;
 
+	int GetTimerCount() { return int(angle * (180 / 3.14)); }
 private:
 	//円形のカウントダウン
 	double angle = 360_deg;

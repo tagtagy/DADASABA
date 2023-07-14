@@ -75,11 +75,10 @@ void Game::update()
 
 	
 
-	/*if (KeyE.down())
+	if (enemyCanon->GetBossLive()==false)
 	{
 		changeScene(State::GameOver);
 	}
-	if (KeyC.down());*/
 
 	//円形のカウントダウン
 	timer.CountDown();
@@ -97,7 +96,9 @@ void Game::update()
 	enemyCanon->appearance(player->playerPos(), player->getPlayerHit(),
 		                   player->IsAttack_during(), player->AttackHitPos(),
 		                   MainCamera, deltatime);
-
+	//タイマーの取得
+	enemyCanon->SetAngleTimer(timer.GetTimerCount());
+	Print << timer.GetTimerCount();
 	//プレイヤーのエイム
 	player->attack_aim();
 

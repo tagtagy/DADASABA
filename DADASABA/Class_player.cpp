@@ -274,7 +274,7 @@ double Class_player::angle_calculate(double base, double tall, bool isRadian) {
 	}
 	else return angle;
 }
-//特定のものを中心にずらした角度からベクトルへの変換
+//特定のものを中心にして、そこからずらした角度からベクトルへの変換
 //中心にする座標、ずらす角度
 Vec2 Class_player::angle_vector_transformation(double base, double tall, double avoid) {
 

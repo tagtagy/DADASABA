@@ -31,6 +31,7 @@ public:
 	//有効かどうかの提示
 	bool Getvalid() { return isValid; }
 	void Setvalid(bool valid) { isValid = valid; }
+	int EnemyHp() { return HP; }
 private:
 	//正規化の計算
 	//底辺,高さ,中心座標,回転の半径

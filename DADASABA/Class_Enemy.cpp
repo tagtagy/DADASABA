@@ -87,9 +87,9 @@ void Class_Enemy::Move(Vec2 _MainCamera, double deltatime) {
 	//座標更新
 	Ene_Hit = { ScreenPos.x,ScreenPos.y, 50 };
 
-	Print <<U"敵のマップ上の座標" << MapPos;
-	Print << U"敵のスクリーン上の座標" << ScreenPos;
-	Print << U"敵のスクリーン上の当たり判定座標" << Ene_Hit;
+	//Print <<U"敵のマップ上の座標" << MapPos;
+	//Print << U"敵のスクリーン上の座標" << ScreenPos;
+	//Print << U"敵のスクリーン上の当たり判定座標" << Ene_Hit;
 }
 
 void Class_Enemy::Attack() {
