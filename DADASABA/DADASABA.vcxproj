@@ -118,6 +118,7 @@
     <ClCompile Include="Class_EnemyCanon.cpp" />
     <ClCompile Include="Class_Item.cpp" />
     <ClCompile Include="Class_player.cpp" />
+    <ClCompile Include="Class_Timer.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameOver.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -328,6 +329,7 @@
     <ClInclude Include="Class_EnemyCanon.h" />
     <ClInclude Include="Class_Item.h" />
     <ClInclude Include="Class_player.h" />
+    <ClInclude Include="Class_Timer.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameOver.h" />

@@ -82,12 +82,7 @@ void Game::update()
 	if (KeyC.down());*/
 
 	//円形のカウントダウン
-	angle -= countDown * Scene::DeltaTime();
-	if (angle <= 0)
-	{
-		angle = 0;
-	}
-
+	timer.CountDown();
 
 	//プレイヤーのボタン感知
 	player->button(deltatime);
@@ -145,10 +140,8 @@ void Game::draw() const
 	//背景
 	Back_ground.resized(1537).drawAt(ScreenPos);
 
-	Circle{ countDCircleX,countDCircleY,countDCircleSize + 1 }
-	.drawPie(0_deg, -angle, ColorF{ 0, 0, 1 });
-
-	Circle{ countDCircleX,countDCircleY,countDCircleSize }.drawFrame(0, countDCircleFrame);
+	//円形のカウントダウン
+	timer.draw();
 		
 
 	player->draw();
