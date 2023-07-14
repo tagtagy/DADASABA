@@ -1,11 +1,16 @@
 ﻿#pragma once
 # include <cmath>
+enum {
+	normalBullet1,
+	normalBullet2,
+	bossBullet,
+};
 class Class_Bullet
 {
 public:
 	Class_Bullet();
 	//初期化
-	void set(Vec2 MyPos, Vec2 TargetPos);
+	void set(Vec2 MyPos, Vec2 TargetPos,int bulletType);
 	//動き
 	void Move(Vec2 _MainCamera, double deltatime);
 	//衝突処理
@@ -26,10 +31,13 @@ private:
 	Vec2 normalization_calculate(double base, double tall, Vec2 centerPos, double range);
 private:
 	//弾のテクスチャ
-	const Texture BulletTexture[2]{
-		Texture{U"SOZAI/UI/INUNIKUCHUU1.png"},
-		Texture{U"SOZAI/UI/INUNIKUCHUU2.png"},
+	const Texture BulletTexture[3]{
+		Texture{U"SOZAI/attack/INUNIKUCHUU1.png"},
+		Texture{U"SOZAI/attack/INUNIKUCHUU2.png"},
+		Texture{U"SOZAI/attack/Tabaco.png"},
 	};
+	//弾の種類
+	int bullet_type;
 	//移動方向座標
 	Vec2 directionPos={0,0};
 	//弾丸のスピード

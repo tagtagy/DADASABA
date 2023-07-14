@@ -19,6 +19,8 @@ public:
 	//描画
 	void Draw()const;
 private:
+	//ボス出現
+	void Boss_appearance();
 	//ランダム出現
 	void random_appearance();
 	//籠目出現

@@ -21,9 +21,13 @@ void Class_EnemyCanon::appearance(Vec2 _TargetPos, Circle _TargetHit,
 	delta_time = deltatime;
 	//ランダム出現
 	random_appearance();
+
+	//ボス出現
+	//Boss_appearance();
+
 	//敵の動き
 	for (int i = 0; i < enemyMax; i++) {
-		if (enemy[i]->valid()) {
+		if (enemy[i]->Getvalid()) {
 			//敵のターゲットの座標取得
 			enemy[i]->Target_input(_TargetPos, _TargetHit);
 			enemy[i]->Move(_MainCamera, deltatime);
@@ -37,10 +41,20 @@ void Class_EnemyCanon::appearance(Vec2 _TargetPos, Circle _TargetHit,
 void Class_EnemyCanon::Draw()const {
 	//敵の描画
 	for (int i = 0; i < enemyMax; i++)
-		if (enemy[i]->valid())enemy[i]->Draw();
+		if (enemy[i]->Getvalid())enemy[i]->Draw();
 
 }
+//ボス出現
+void Class_EnemyCanon::Boss_appearance() {
+	for (int i = 0; i < enemyMax; i++) {
+		if (enemy[i]->Getvalid() == true) {
+			enemy[i]->Setvalid(false);
+		}
+	}
+	if (enemy[0]->Getvalid() == false)
+	enemy[0]->set({ 1537/2,865 /2}, bossEnemy);
 
+}
 //ランダム出現
 void Class_EnemyCanon::random_appearance() {
 	
@@ -49,19 +63,21 @@ void Class_EnemyCanon::random_appearance() {
 		appearanceCount -= appearanceTime;
 		//敵の出現
 		for (int i = 0; i < enemyMax; i++) {
-			if (enemy[i]->valid() == false) {
+			if (enemy[i]->Getvalid() == false) {
+				int C=Random(2);
+
 				int a = Random(1);
 				int b = Random(1);
 				if (b == 0)b = -1;
 				//縦方向から来る敵
 				if (a) {
 					double r = Random(800);
-					enemy[i]->set({ r + TargetPos.x, 600 * b + TargetPos.y });
+					enemy[i]->set({ r + TargetPos.x, 600 * b + TargetPos.y }, C);
 				}
 				//横方向から来る敵
 				else{
 					double r = Random(800);
-					enemy[i]->set({ 800 * b + TargetPos.x,r + TargetPos.y });
+					enemy[i]->set({ 800 * b + TargetPos.x,r + TargetPos.y }, C);
 				}
 
 				i = enemyMax;

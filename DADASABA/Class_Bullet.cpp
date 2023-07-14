@@ -7,7 +7,9 @@ Class_Bullet::Class_Bullet() {
 
 }
 
-void Class_Bullet::set(Vec2 MyPos, Vec2 TargetPos) {
+void Class_Bullet::set(Vec2 MyPos, Vec2 TargetPos, int bulletType) {
+	//弾の設定
+	bullet_type = bulletType;
 	//出現位置の設定
 	BulletPos = MyPos;
 	//移動方向の設定
@@ -52,7 +54,7 @@ void Class_Bullet::Draw()const {
 
 	if (isvalid) {
 		//BulletHit.draw();
-		BulletTexture[0].resized(40).rotated(Scene::Time() * 90_deg).drawAt(BulletHit.x, BulletHit.y);
+		BulletTexture[bullet_type].resized(40).rotated(Scene::Time() * 90_deg).drawAt(BulletHit.x, BulletHit.y);
 	}
 }
 

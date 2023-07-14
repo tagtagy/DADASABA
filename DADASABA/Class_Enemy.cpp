@@ -17,15 +17,31 @@ Class_Enemy::Class_Enemy() {
 	
 }
 //セット
-void Class_Enemy::set(Vec2 pos) {
+void Class_Enemy::set(Vec2 pos, int EnemyType) {
 	//座標の設定
 	MapPos = pos;
 	//有効化
 	isValid = true;
-	//出現する時に何の敵になるか決める
-	int a = Random(2);
-	EnemyTextureNo = a;
-	HP = MaxHP[a];
+	EnemyTextureNo = EnemyType;
+	if (EnemyType == 0) {
+		//出現する時に何の敵になるか決める
+		EnemyTextureNo = Random(2);
+	}
+	else if (EnemyType == bossEnemy) {
+		EnemyTextureNo = 3;
+	}
+	
+	//体力設定
+	HP = MaxHP[EnemyTextureNo];
+	if (EnemyTextureNo > 1) {
+		//ノーマル1タイプの弾丸
+		bullet_type = normalBullet1;
+	}
+	else if (EnemyTextureNo == 2) {
+		//ノーマル2タイプの弾丸
+		bullet_type = normalBullet2;
+	}
+
 }
 //ターゲットの設定
 void Class_Enemy::Target_input(Vec2 TargetPos, Circle TargetHit) {
@@ -82,7 +98,7 @@ void Class_Enemy::Attack() {
 		shootCount -= shootTime;
 		for (int i=0; i < bulletMax; i++) {
 			if (!bullet[i]->valid()) {
-				bullet[i]->set(MapPos, { targetPos.x ,targetPos.y });
+				bullet[i]->set(MapPos, { targetPos.x ,targetPos.y }, bullet_type);
 				i = bulletMax;
 			}
 		}
