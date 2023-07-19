@@ -165,10 +165,23 @@ private:
 
 	//アイテム//////////////////////////////////////////
 	//バフの経過時間を保存
-	double t = 0;
+	double buffTime = 0;
 	//現在のアイテム獲得数
 	int getItemCount = 0;
 	bool buffFlag = false;
+
+	//画像
+	//HP回復
+	const Texture playerTexture_HPKaifuku{ U"SOZAI/UI/UI_HpKaifuku.png" };
+	//攻撃UP
+	const Texture playerTexture_KougekiUp{ U"SOZAI/UI/UI_KougekiUp.png" };
+	//防御UP
+	const Texture playerTexture_BougyoUp{ U"SOZAI/UI/UI_BougyoUp.png" };
+
+	Vec2 buffTexPos;
+	bool kindBuff[3] = { false };
+	double buffDrawTime = 0;
+	int buffCount = 0;
 };
 
 
