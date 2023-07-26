@@ -182,6 +182,8 @@ private:
 	bool kindBuff[3] = { false };
 	double buffDrawTime = 0;
 	int buffCount = 0;
+	float buffTexAlpha = 0;
+	float buffTexPosYDiff = 40;
 };
 
 

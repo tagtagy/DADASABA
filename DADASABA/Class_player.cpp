@@ -70,7 +70,16 @@ void Class_player::move() {
 	playerHit_Item.x= ScreenPos.x;
 	playerHit_Item.y = ScreenPos.y;
 
-	buffTexPos = ScreenPos;
+	buffTexPos.x = ScreenPos.x;
+	buffTexPos.y = ScreenPos.y + buffTexPosYDiff;
+	if (kindBuff[0] || kindBuff[1] || kindBuff[2]) {
+		if (buffTexPos.y > ScreenPos.y) {
+			buffTexPosYDiff -= 0.5f;
+		}
+	}
+	else {
+		buffTexPosYDiff = 40;
+	}
 
 	Print <<U"マップ上のプレイヤー座標" << playerMapPos;
 	Print << U"スクリーン上のプレイヤー座標" << ScreenPos;
@@ -240,15 +249,15 @@ void Class_player::draw() const {
 	
 	if (kindBuff[0]) {
 		//攻撃UP
-		playerTexture_KougekiUp.resized(200).drawAt(buffTexPos);
+		playerTexture_KougekiUp.resized(200).drawAt(buffTexPos, ColorF{ 1,1,1,buffTexAlpha });
 	}
 	else if (kindBuff[1]) {
 		//HP回復
-		playerTexture_HPKaifuku.resized(200).drawAt(buffTexPos);
+		playerTexture_HPKaifuku.resized(200).drawAt(buffTexPos, ColorF{ 1,1,1,buffTexAlpha });
 	}
 	else if (kindBuff[2]) {
 		//防御UP
-		playerTexture_BougyoUp.resized(200).drawAt(buffTexPos);
+		playerTexture_BougyoUp.resized(200).drawAt(buffTexPos, ColorF{ 1,1,1,buffTexAlpha });
 	}
 }
 
@@ -290,10 +299,14 @@ void Class_player::itemBuff() {
 	}
 	if (kindBuff[0] || kindBuff[1] || kindBuff[2]) {
 		buffDrawTime += Scene::DeltaTime();
+		if (buffTexAlpha < 1) {
+			buffTexAlpha+=0.01;
+		}
 		if (buffDrawTime > 1) {
 			for (int i = 0; i < 3; i++) {
 				kindBuff[i] = false;
 				buffDrawTime = 0;
+				buffTexAlpha = 0;
 			}
 		}
 	}
