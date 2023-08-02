@@ -168,9 +168,6 @@
     <ClCompile Include="GameOver.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Class_Enemy.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Class_Item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -846,9 +843,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameOver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Class_Enemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Class_Item.h">

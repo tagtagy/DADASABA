@@ -33,7 +33,7 @@ void Class_EnemyCanon::appearance(Vec2 _TargetPos, Circle _TargetHit,
 
 	//敵の動き
 	for (int i = 0; i < enemyMax; i++) {
-		if (isBossLive)i = enemyMax;
+		if (isBossFight)i = enemyMax;
 		if (enemy[i]->Getvalid()) {
 			//敵のターゲットの座標取得
 			enemy[i]->Target_input(_TargetPos, _TargetHit);

@@ -1,7 +1,6 @@
 ﻿# pragma once
 # include "Common.h"
 #include "Class_player.h"
-#include "Class_Enemy.h"
 #include "Class_EnemyCanon.h"
 #include "Class_Timer.h"
 

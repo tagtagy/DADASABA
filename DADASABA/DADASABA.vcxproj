@@ -115,7 +115,6 @@
   <ItemGroup>
     <ClCompile Include="Class_Bullet.cpp" />
     <ClCompile Include="Class_CreateItem.cpp" />
-    <ClCompile Include="Class_Enemy.cpp" />
     <ClCompile Include="Class_EnemyCanon.cpp" />
     <ClCompile Include="Class_Item.cpp" />
     <ClCompile Include="Class_player.cpp" />
@@ -330,7 +329,6 @@
   <ItemGroup>
     <ClInclude Include="Class_Bullet.h" />
     <ClInclude Include="Class_CreateItem.h" />
-    <ClInclude Include="Class_Enemy.h" />
     <ClInclude Include="Class_EnemyCanon.h" />
     <ClInclude Include="Class_Item.h" />
     <ClInclude Include="Class_player.h" />
