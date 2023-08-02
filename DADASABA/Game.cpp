@@ -97,6 +97,8 @@ void Game::update()
 	player->startBuff();
 	player->itemBuff();
 
+	//背景枠の位置
+	Back_ground_frame_sticker={ ScreenPos.x - 1850 / 2,ScreenPos.y - 1200 / 2 ,1850,1200 };
 }
 
 void Game::draw() const
@@ -107,6 +109,8 @@ void Game::draw() const
 
 	//背景
 	Back_ground.resized(1537).drawAt(ScreenPos);
+	//背景枠
+	Back_ground_frame_sticker(Back_ground_frame).draw();
 
 	//円形のカウントダウン
 	timer.draw();

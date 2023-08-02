@@ -21,6 +21,10 @@ public:
 
 	void Draw()const;
 private:
+	//通常弾
+	void NormalBullet();
+	//範囲攻撃
+	void RangeBullet();
 	//有効時間のカウント
 	void ValidTimer();
 	//弾の無効化
@@ -38,6 +42,7 @@ private:
 	};
 	//弾の種類
 	int bullet_type;
+	//通常弾/////////////////////////////////////////
 	//移動方向座標
 	Vec2 directionPos={0,0};
 	//弾丸のスピード
@@ -51,6 +56,16 @@ private:
 	//有効時間
 	const double BulletValidTime = 1;
 	double BulletValidCount=0;
+	//範囲攻撃//////////////////////////////////////////////
+	//攻撃場所
+	Vec2 AttackRangePos;
+	//攻撃チャージ
+	int AttackRangeSize = 0;
+	const int AttackRangeSizeMax = 100;
+	//攻撃範囲表示
+	Circle AttackRangeMark;
+
+	////////////////////////////////////////////////////////
 	//デルタタイム
 	double delta_time = 0;
 	//当たり判定

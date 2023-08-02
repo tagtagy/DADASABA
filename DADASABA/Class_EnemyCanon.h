@@ -1,5 +1,7 @@
 ﻿#pragma once
-#include "Class_Enemy.h"
+#include "P_Enemy.h"
+#include "C_E_Normal.h"
+#include "C_E_Boss.h"
 #include "Class_CreateItem.h"
 //敵の最大数
 enum {
@@ -48,7 +50,7 @@ private:
 	const double appearanceTime = 1;
 	double appearanceCount = 0;
 	//敵
-	Class_Enemy* enemy[enemyMax];
+	P_Enemy* enemy[enemyMax+1] = { nullptr };
 
 	Class_CreateItem createItem;
 };

@@ -1,24 +1,15 @@
 ﻿#pragma once
-# include "Common.h"
-#include "Class_Bullet.h"
-# include <cmath>
-/*
-enum {
-	normalEnemy1,
-	normalEnemy2,
-	normalEnemy3,
-	normalEnemy4,
-	bossEnemy,
-	EnemytypeMax,
-	bulletMax=4//最大の弾丸量
-};
-class Class_Enemy
+#ifndef _C_E_BOSS_H_
+#define _C_E_BOSS_H_
+#include "P_Enemy.h"
+class C_E_Boss :public P_Enemy
 {
+
 public:
-	~Class_Enemy();
-	Class_Enemy();
+	~C_E_Boss();
+	C_E_Boss();
 	//セット
-	void set(Vec2 pos,int EnemyType);
+	void set(Vec2 pos, int EnemyType);
 	//ターゲットの設定
 	void Target_input(Vec2 TargetPos, Circle TargetHit);
 	//動き
@@ -26,7 +17,7 @@ public:
 	//攻撃
 	void Attack();
 	//ノックバック
-	void Knockback(bool _IsAttack, Circle*_AttackHitPos);
+	void Knockback(bool _IsAttack, Circle* _AttackHitPos);
 	//描画
 	void Draw()const;
 
@@ -39,22 +30,14 @@ public:
 
 	Vec2 getEnemyPos() { return MapPos; }
 private:
-	//正規化の計算
-	//底辺,高さ,中心座標,回転の半径
-	Vec2 normalization_calculate(double base, double tall, Vec2 centerPos, double range);
+	//範囲攻撃
+	void RangeBullet();
+
 private:
 	//敵テクスチャ
-	const Texture EnemyTexture[EnemytypeMax]{
-		Texture{U"SOZAI/enemy/Jam_2023_No2_enemy_kokekiti_4.png"},
-		Texture{U"SOZAI/enemy/Jam_2023_No2_enemy_nekomaru_9.png"},
-		Texture{U"SOZAI/enemy/Jam_2023_tino.png"},
-		Texture{U"SOZAI/enemy/Jam_2023_Watabe.png"},
-		Texture{U"SOZAI/enemy/Enemy_ChocolateMonkey05.png"},
-	};
+	const Texture EnemyTexture{ U"SOZAI/enemy/Enemy_ChocolateMonkey05.png" };
 	//敵のサイズ
-	int EnemySize[2] = { 50,100 };
-	//描画する敵のナンバー
-	int EnemyTextureNo = 0;
+	int EnemySize= 100;
 	//スクリーン上の座標
 	Vec2 ScreenPos;
 	//マップ上の座標
@@ -80,7 +63,7 @@ private:
 	bool isValid = false;
 	//ステータス/////////////////////////////////////////
 	//HP
-	int MaxHP[EnemytypeMax] = {10,10,10,10,10};
+	int MaxHP = 10;
 	int HP = 0;
 	//弾丸/////////////////////////////////////////////
 	Class_Bullet* bullet[bulletMax];
@@ -89,9 +72,13 @@ private:
 	//発射するタイミング
 	const double shootTime = 2;
 	double shootCount = 0;
+	//範囲制限
+	Rect AttackRange;
 
 	//倒されたらtrue
 	bool isDead = false;
+
 };
 
-*/
+
+#endif

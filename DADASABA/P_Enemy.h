@@ -1,60 +1,52 @@
 ﻿#pragma once
+#ifndef _P_ENEMY_H_
+#define _P_ENEMY_H_
 # include "Common.h"
 #include "Class_Bullet.h"
 # include <cmath>
-/*
+
 enum {
 	normalEnemy1,
 	normalEnemy2,
 	normalEnemy3,
 	normalEnemy4,
-	bossEnemy,
 	EnemytypeMax,
-	bulletMax=4//最大の弾丸量
+	bulletMax = 4//最大の弾丸量
 };
-class Class_Enemy
+class P_Enemy
 {
 public:
-	~Class_Enemy();
-	Class_Enemy();
+
 	//セット
-	void set(Vec2 pos,int EnemyType);
+	virtual void set(Vec2 pos, int EnemyType)=0;
 	//ターゲットの設定
-	void Target_input(Vec2 TargetPos, Circle TargetHit);
+	virtual void Target_input(Vec2 TargetPos, Circle TargetHit) = 0;
 	//動き
-	void Move(Vec2 _MainCamera, double deltatime);
+	virtual void Move(Vec2 _MainCamera, double deltatime) = 0;
 	//攻撃
-	void Attack();
+	virtual void Attack() = 0;
 	//ノックバック
-	void Knockback(bool _IsAttack, Circle*_AttackHitPos);
+	virtual void Knockback(bool _IsAttack, Circle* _AttackHitPos) = 0;
 	//描画
-	void Draw()const;
+	virtual void Draw()const = 0;
 
 	//有効かどうかの提示
-	bool Getvalid() { return isValid; }
-	void Setvalid(bool valid) { isValid = valid; }
-	int EnemyHp() { return HP; }
+	virtual bool Getvalid() = 0;
+	virtual void Setvalid(bool valid) = 0;
+	virtual int EnemyHp() = 0;
 
-	bool getIsDead() { return isDead; }
+	virtual bool getIsDead() = 0;
 
-	Vec2 getEnemyPos() { return MapPos; }
-private:
+	virtual Vec2 getEnemyPos() = 0;
+
 	//正規化の計算
 	//底辺,高さ,中心座標,回転の半径
-	Vec2 normalization_calculate(double base, double tall, Vec2 centerPos, double range);
+	virtual Vec2 normalization_calculate(double base, double tall, Vec2 centerPos, double range);
 private:
 	//敵テクスチャ
-	const Texture EnemyTexture[EnemytypeMax]{
-		Texture{U"SOZAI/enemy/Jam_2023_No2_enemy_kokekiti_4.png"},
-		Texture{U"SOZAI/enemy/Jam_2023_No2_enemy_nekomaru_9.png"},
-		Texture{U"SOZAI/enemy/Jam_2023_tino.png"},
-		Texture{U"SOZAI/enemy/Jam_2023_Watabe.png"},
-		Texture{U"SOZAI/enemy/Enemy_ChocolateMonkey05.png"},
-	};
+	const Texture EnemyTexture;
 	//敵のサイズ
-	int EnemySize[2] = { 50,100 };
-	//描画する敵のナンバー
-	int EnemyTextureNo = 0;
+	int EnemySize = 100;
 	//スクリーン上の座標
 	Vec2 ScreenPos;
 	//マップ上の座標
@@ -80,7 +72,7 @@ private:
 	bool isValid = false;
 	//ステータス/////////////////////////////////////////
 	//HP
-	int MaxHP[EnemytypeMax] = {10,10,10,10,10};
+	int MaxHP = 10;
 	int HP = 0;
 	//弾丸/////////////////////////////////////////////
 	Class_Bullet* bullet[bulletMax];
@@ -89,9 +81,12 @@ private:
 	//発射するタイミング
 	const double shootTime = 2;
 	double shootCount = 0;
+	//範囲制限
+	Rect AttackRange;
 
 	//倒されたらtrue
 	bool isDead = false;
 };
 
-*/
+
+#endif

@@ -25,16 +25,40 @@ void Class_Bullet::Move(Vec2 _MainCamera,double deltatime) {
 
 	//デルタタイム
 	delta_time = deltatime;
-
-		//移動
-	BulletPos += directionPos * delta_time;
-
+	if (bullet_type == normalBullet1) {
+		//通常攻撃
+		NormalBullet();
+	}
+	else if (bullet_type == bossBullet) {
+		//範囲攻撃
+		RangeBullet();
+	}
 
 	//スクリーン上位置の設定
 	BulletHit.x = BulletPos.x - _MainCamera.x;
 	BulletHit.y = BulletPos.y - _MainCamera.y;
 
 	ValidTimer();
+
+}
+
+//通常弾
+void Class_Bullet::NormalBullet() {
+
+	//移動
+	BulletPos += directionPos * delta_time;
+
+}
+//範囲攻撃
+void Class_Bullet::RangeBullet() {
+	//攻撃位置設定
+	AttackRangePos = BulletPos;
+
+	AttackRangeSize += delta_time * 10;
+	//攻撃マーカーの設定
+	AttackRangeMark = { AttackRangePos ,AttackRangeSize };
+	//マックスになったら消去
+	if (AttackRangeSize >= AttackRangeSizeMax) Disable();
 
 }
 //有効時間のカウント
@@ -53,8 +77,15 @@ void Class_Bullet::Disable() {
 void Class_Bullet::Draw()const {
 
 	if (isvalid) {
-		//BulletHit.draw();
-		BulletTexture[bullet_type].resized(40).rotated(Scene::Time() * 90_deg).drawAt(BulletHit.x, BulletHit.y);
+		if (bullet_type == normalBullet1) {
+			//BulletHit.draw();
+			BulletTexture[bullet_type].resized(40).rotated(Scene::Time() * 90_deg).drawAt(BulletHit.x, BulletHit.y);
+		}
+		else if (bullet_type == bossBullet) {
+			//範囲攻撃
+			AttackRangeMark.draw(Palette::Red);
+			Circle{ AttackRangeMark.x,AttackRangeMark.y,AttackRangeSizeMax }.drawFrame(3, 3, Palette::Orange);
+		}
 	}
 }
 

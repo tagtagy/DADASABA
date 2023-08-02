@@ -1,54 +1,45 @@
 ﻿#include "stdafx.h"
-#include "Class_Enemy.h"
-/*
-Class_Enemy::~Class_Enemy() {
+#include "C_E_Boss.h"
+C_E_Boss::~C_E_Boss() {
 
 	for (int i = 0; i < bulletMax; i++)
 		if (bullet[i] != nullptr)delete bullet[i];
 
 }
 
-Class_Enemy::Class_Enemy() {
+C_E_Boss::C_E_Boss() {
 
 	MapPos = { 0,0 };
 	ScreenPos = { 0,0 };
 	targetHit = { 0,0,0 };
-	
-	for (int i=0; i < bulletMax; i++) bullet[i]=new Class_Bullet;
-	
+
+	for (int i = 0; i < bulletMax; i++) bullet[i] = new Class_Bullet();
+
 }
 //セット
-void Class_Enemy::set(Vec2 pos, int EnemyType) {
+void C_E_Boss::set(Vec2 pos, int EnemyType) {
 	//座標の設定
 	MapPos = pos;
 	//有効化
 	isValid = true;
-	EnemyTextureNo = EnemyType;
-	
+
 	//体力設定
-	HP = MaxHP[EnemyTextureNo];
-	if (EnemyTextureNo > 1) {
-		//ノーマル1タイプの弾丸
-		bullet_type = normalBullet1;
-	}
-	else if (EnemyTextureNo == 2) {
-		//ノーマル2タイプの弾丸
-		bullet_type = normalBullet2;
-	}
+	HP = MaxHP;
+	
+	bullet_type = normalBullet2;
+	
 
 	isDead = false;
 }
 //ターゲットの設定
-void Class_Enemy::Target_input(Vec2 TargetPos, Circle TargetHit) {
+void C_E_Boss::Target_input(Vec2 TargetPos, Circle TargetHit) {
 
 	targetPos = TargetPos;
 	targetHit = TargetHit;
 }
-void Class_Enemy::Move(Vec2 _MainCamera, double deltatime) {
+void C_E_Boss::Move(Vec2 _MainCamera, double deltatime) {
 	speed = Scene::DeltaTime() * 30;
 	if (ismove) {
-		//射撃
-		Attack();
 		//移動
 		if (MapPos.x > targetPos.x)
 		{
@@ -71,55 +62,71 @@ void Class_Enemy::Move(Vec2 _MainCamera, double deltatime) {
 		}
 	}
 	//弾丸の移動
-	for (int i=0; i < bulletMax; i++) {
+	for (int i = 0; i < bulletMax; i++) {
 		if (bullet[i]->valid()) {
 			bullet[i]->Move(_MainCamera, deltatime);
 			bullet[i]->BulletHiter(targetHit);
 		}
 	}
 	//画面上の座標に変換
-	ScreenPos =   MapPos- _MainCamera;
-	if (EnemyTextureNo == bossEnemy) {
+	ScreenPos = MapPos - _MainCamera;
+	
 		//座標更新
-		Ene_Hit = { ScreenPos.x,ScreenPos.y, EnemySize[1] };
-	}
-	else {
-		//座標更新
-		Ene_Hit = { ScreenPos.x,ScreenPos.y, EnemySize[0] };
-	}
+	Ene_Hit = { ScreenPos.x,ScreenPos.y, EnemySize };
+
 	//Print <<U"敵のマップ上の座標" << MapPos;
 	//Print << U"敵のスクリーン上の座標" << ScreenPos;
 	//Print << U"敵のスクリーン上の当たり判定座標" << Ene_Hit;
 }
 
-void Class_Enemy::Attack() {
+void C_E_Boss::Attack() {
 	//射撃
 	if (shootCount >= shootTime) {
 		shootCount -= shootTime;
-		for (int i=0; i < bulletMax; i++) {
-			if (!bullet[i]->valid()) {
-				bullet[i]->set(MapPos, { targetPos.x ,targetPos.y }, bullet_type);
-				i = bulletMax;
-			}
-		}
+		
+		RangeBullet();
+		
 	}
 	//射撃間隔のカウント
 	shootCount += Scene::DeltaTime();
 
 }
+//範囲攻撃
+void C_E_Boss::RangeBullet() {
+	for (int i = 0; i < 4; i++) {
+		if (!bullet[i]->valid()) {
+			//爆破の中心位置
+			Vec2 pos;
+			pos.x = Random(400);
+			pos.y = Random(400);
+			int x = 1;
+			int y = 1;
+
+			if (i == 1)x = -1;
+			else if (i == 2)y = -1;
+			else if (i == 3) {
+				x = -1;
+				y = -1;
+			}
+
+			//範囲攻撃
+			bullet[i]->set({ Ene_Hit.x + pos.x * x,Ene_Hit.y + pos.y * y }, { 0,0 }, bossBullet);
+		}
+	}
+}
 //ノックバック
-void Class_Enemy::Knockback(bool _IsAttack, Circle* _AttackHitPos) {
+void C_E_Boss::Knockback(bool _IsAttack, Circle* _AttackHitPos) {
 
 	//斬撃に当たったか
 	if (_IsAttack) {
-		
+
 		for (int i = 0; i < 5; i++) {
 			//斜辺の計算
-			double lengthX= _AttackHitPos[i].x - ScreenPos.x;
+			double lengthX = _AttackHitPos[i].x - ScreenPos.x;
 			double lengthY = _AttackHitPos[i].y - ScreenPos.y;
 			double hypotenuse = hypot(lengthX, lengthY);
 			//斬撃に当たった時
-			if (hypotenuse <= _AttackHitPos[i].r + Ene_Hit.r&& InvincibleCount==0) {
+			if (hypotenuse <= _AttackHitPos[i].r + Ene_Hit.r && InvincibleCount == 0) {
 				//無敵でなければダメージを食らう
 				HP -= 5;
 				//HPが0以下なら死亡
@@ -143,31 +150,14 @@ void Class_Enemy::Knockback(bool _IsAttack, Circle* _AttackHitPos) {
 		ismove = true;
 
 	}
-	
+
 }
 
-void Class_Enemy::Draw() const{
+void C_E_Boss::Draw() const {
 	//敵の描画
-	Ene_Hit(EnemyTexture[EnemyTextureNo]).draw();
+	Ene_Hit(EnemyTexture).draw();
 	//弾丸の描画
-	for (int i=0; i < bulletMax; i++) {
+	for (int i = 0; i < bulletMax; i++) {
 		bullet[i]->Draw();
 	}
 }
-
-//正規化の計算
-//底辺,高さ,中心座標,回転の半径
-Vec2 Class_Enemy::normalization_calculate(double base, double tall, Vec2 centerPos, double range) {
-	if (base == 0)return{ 10,0 };
-	else {
-		//斜辺の計算
-		double hypotenuse = hypot(base, tall);
-		//底辺の正規化
-		double base_Normalization = base / hypotenuse;
-		//高さの正規化
-		double tall_Normalization = tall / hypotenuse;
-
-		return  { base_Normalization * range + centerPos.x, tall_Normalization * range + centerPos.y };
-	}
-}
-*/

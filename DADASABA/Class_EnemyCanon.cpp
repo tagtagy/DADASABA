@@ -3,12 +3,14 @@
 
 Class_EnemyCanon::~Class_EnemyCanon() {
 
-	for (int i = 0; i < enemyMax; i++)
+	for (int i = 0; i < enemyMax+1; i++)
 		if (enemy[i] != nullptr)delete enemy[i];
 
 }
+
 Class_EnemyCanon::Class_EnemyCanon() {
-	for (int i = 0; i < enemyMax; i++)enemy[i] = new Class_Enemy;
+	for (int i = 0; i < enemyMax; i++)enemy[i] = new C_E_Normal();
+	enemy[enemyMax] = new C_E_Boss();
 }
 
 //出現
@@ -26,11 +28,12 @@ void Class_EnemyCanon::appearance(Vec2 _TargetPos, Circle _TargetHit,
 	else {
 		//ボス出現
 		if(!isBossFight)Boss_appearance();
-		if (enemy[0]->EnemyHp() <= 0)isBossLive = false;
+		if (enemy[enemyMax]->EnemyHp() <= 0)isBossLive = false;
 	}
 
 	//敵の動き
 	for (int i = 0; i < enemyMax; i++) {
+		if (isBossLive)i = enemyMax;
 		if (enemy[i]->Getvalid()) {
 			//敵のターゲットの座標取得
 			enemy[i]->Target_input(_TargetPos, _TargetHit);
@@ -52,17 +55,20 @@ void Class_EnemyCanon::Draw()const {
 	for (int i = 0; i < enemyMax; i++)
 		if (enemy[i]->Getvalid())enemy[i]->Draw();
 
+	if (enemy[enemyMax]->Getvalid())enemy[enemyMax]->Draw();
+
 	createItem.Draw();
 }
 //ボス出現
 void Class_EnemyCanon::Boss_appearance() {
+	//通常の敵を消す
 	for (int i = 0; i < enemyMax; i++) {
 		if (enemy[i]->Getvalid() == true) {
 			enemy[i]->Setvalid(false);
 		}
 	}
-	if (enemy[0]->Getvalid() == false)
-	enemy[0]->set({ 0,0}, bossEnemy);
+	//ボスの出現
+	enemy[enemyMax]->set({ 0,0 }, 0);
 	//ボス戦開始
 	isBossFight = true;
 }
@@ -76,7 +82,6 @@ void Class_EnemyCanon::random_appearance() {
 		for (int i = 0; i < enemyMax; i++) {
 			if (enemy[i]->Getvalid() == false) {
 				int C=Random(3);
-
 				double x = Random(-700,700);
 				double y = Random(-400,400);
 				enemy[i]->set({ x , y }, C);
@@ -87,7 +92,7 @@ void Class_EnemyCanon::random_appearance() {
 		}
 
 	}
-
+	
 	appearanceCount += delta_time;
 }
 //籠目出現

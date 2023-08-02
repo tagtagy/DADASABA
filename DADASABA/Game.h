@@ -32,6 +32,9 @@ private:
 
 	//背景
 	const Texture Back_ground{ U"SOZAI/background/haikei_rokugoukann_12.png" };
+	//背景枠
+	const Texture Back_ground_frame{ U"SOZAI/background/waku.png" };
+	RectF Back_ground_frame_sticker;
 	//背景のマップ上の位置
 	Vec2 BackMapPos{0,0};
 	//背景のスクリーン上の位置
