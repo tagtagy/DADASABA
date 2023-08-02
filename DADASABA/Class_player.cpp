@@ -70,6 +70,17 @@ void Class_player::move() {
 	playerHit_Item.x= ScreenPos.x;
 	playerHit_Item.y = ScreenPos.y;
 
+	buffTexPos.x = ScreenPos.x;
+	buffTexPos.y = ScreenPos.y + buffTexPosYDiff;
+	if (kindBuff[0] || kindBuff[1] || kindBuff[2]) {
+		if (buffTexPos.y > ScreenPos.y) {
+			buffTexPosYDiff -= 0.5f;
+		}
+	}
+	else {
+		buffTexPosYDiff = 40;
+	}
+
 	Print <<U"マップ上のプレイヤー座標" << playerMapPos;
 	Print << U"スクリーン上のプレイヤー座標" << ScreenPos;
 	Print << U"プレイヤーからのマウスの角度" << int(angle_attack_mark * (180/3.14))<<U"°";
@@ -236,13 +247,37 @@ void Class_player::draw() const {
 	//if(SlashingHit)
 	//for (int i = 0; i < 5; i++) Slashing[i].draw();
 	
-
+	if (kindBuff[0]) {
+		//攻撃UP
+		playerTexture_KougekiUp.resized(200).drawAt(buffTexPos, ColorF{ 1,1,1,buffTexAlpha });
+	}
+	else if (kindBuff[1]) {
+		//HP回復
+		playerTexture_HPKaifuku.resized(200).drawAt(buffTexPos, ColorF{ 1,1,1,buffTexAlpha });
+	}
+	else if (kindBuff[2]) {
+		//防御UP
+		playerTexture_BougyoUp.resized(200).drawAt(buffTexPos, ColorF{ 1,1,1,buffTexAlpha });
+	}
 }
 
 //獲得したアイテム数を加算
 void Class_player::startBuff() {
-	if (getItemCount != 0 && getItemCount % 5 == 0) {
+	if (getItemCount != 0 && getItemCount % 5 == 0 && buffCount == 0) {
 		buffFlag = true;
+		int r = Random(2);
+		if (r == 0) {
+			kindBuff[0] = true;
+		}
+		else if (r == 1) {
+			kindBuff[1] = true;
+		}
+		else {
+			kindBuff[2] = true;
+		}
+	}
+	if (getItemCount % 5 != 0) {
+		buffCount = 0;
 	}
 }
 //アイテムの効果
@@ -250,15 +285,29 @@ void Class_player::itemBuff() {
 	Print << U"アイテム獲得数" << getItemCount;
 	Print << U"バフのフラグ" << buffFlag;
 	if (buffFlag) {
+		//1回のみの処理にする場合はすぐにbuffFlagをfalse
+		buffCount++;
 		// 経過時間を加算
-		t += Scene::DeltaTime();
-
+		buffTime += Scene::DeltaTime();
 		//効果
-		playerHit_Item = { 400,300,50 };
-		if (t > 5) {
+		playerHit_Item = { ScreenPos,50 };
+		if (buffTime > 5) {
+			buffTime = 0;
+			playerHit_Item = { 400, 300,playerSize };
 			buffFlag = false;
-			t = 0;
-			playerHit_Item = { 400,300,playerSize };
+		}
+	}
+	if (kindBuff[0] || kindBuff[1] || kindBuff[2]) {
+		buffDrawTime += Scene::DeltaTime();
+		if (buffTexAlpha < 1) {
+			buffTexAlpha+=0.01;
+		}
+		if (buffDrawTime > 1) {
+			for (int i = 0; i < 3; i++) {
+				kindBuff[i] = false;
+				buffDrawTime = 0;
+				buffTexAlpha = 0;
+			}
 		}
 	}
 }
