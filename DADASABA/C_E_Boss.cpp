@@ -39,6 +39,8 @@ void C_E_Boss::Target_input(Vec2 TargetPos, Circle TargetHit) {
 }
 void C_E_Boss::Move(Vec2 _MainCamera, double deltatime) {
 	speed = Scene::DeltaTime() * 30;
+
+	Attack();
 	if (ismove) {
 		//移動
 		if (MapPos.x > targetPos.x)
@@ -110,7 +112,7 @@ void C_E_Boss::RangeBullet() {
 			}
 
 			//範囲攻撃
-			bullet[i]->set({ Ene_Hit.x + pos.x * x,Ene_Hit.y + pos.y * y }, { 0,0 }, bossBullet);
+			bullet[i]->set({ Ene_Hit.x + pos.x * x,Ene_Hit.y + pos.y * y }, { 0,0 }, rangeBullet);
 		}
 	}
 }

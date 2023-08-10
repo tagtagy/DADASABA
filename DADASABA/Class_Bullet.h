@@ -4,6 +4,7 @@ enum {
 	normalBullet1,
 	normalBullet2,
 	bossBullet,
+	rangeBullet,
 };
 class Class_Bullet
 {
@@ -60,7 +61,7 @@ private:
 	//攻撃場所
 	Vec2 AttackRangePos;
 	//攻撃チャージ
-	int AttackRangeSize = 0;
+	double AttackRangeSize = 0;
 	const int AttackRangeSizeMax = 100;
 	//攻撃範囲表示
 	Circle AttackRangeMark;

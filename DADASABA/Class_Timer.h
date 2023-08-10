@@ -15,6 +15,6 @@ private:
 	double countDCircleY = 100;
 	double countDCircleSize = 100;
 	double countDCircleFrame = 3;
-	double countDown = 0.105;
+	double countDown = 0.105*10;
 };
 
