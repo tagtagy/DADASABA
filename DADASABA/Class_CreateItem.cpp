@@ -14,7 +14,7 @@ Class_CreateItem::~Class_CreateItem() {
 	}
 }
 
-void Class_CreateItem::UpDate(Vec2 _playerPos, Circle _playerHit_Item, Vec2 _MainCamera) {
+void Class_CreateItem::UpDate(Vec2 _playerPos, Circle _playerHit_Item, Vec2 _MainCamera, double _deltaTime) {
 	//デバッグ用
 	if (KeyI.down()) {
 		int rX = Random(-1000, 1000);
@@ -28,7 +28,7 @@ void Class_CreateItem::UpDate(Vec2 _playerPos, Circle _playerHit_Item, Vec2 _Mai
 		//有効な時
 		if (item[i]->getIsValid()) {
 			//描画位置の更新
-			item[i]->MapPos(_playerPos, _playerHit_Item, _MainCamera);
+			item[i]->MapPos(_playerPos, _playerHit_Item, _MainCamera, _deltaTime);
 			//当たり判定
 			item[i]->hitPlayerHit(_playerHit_Item);
 			if (item[i]->getIsDestroy()) {

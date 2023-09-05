@@ -47,7 +47,7 @@ void Class_EnemyCanon::appearance(Vec2 _TargetPos, Circle _TargetHit,
 		}
 	}
 
-	createItem.UpDate(_TargetPos, _TargetHit_Item, _MainCamera);
+	createItem.UpDate(_TargetPos, _TargetHit_Item, _MainCamera, deltatime);
 }
 
 void Class_EnemyCanon::Draw()const {

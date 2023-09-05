@@ -19,7 +19,7 @@ void Class_Item::draw() const{
 	itemHit(itemRedTexture[itemRedTextureNo]).draw();
 }
 
-void Class_Item::MapPos(Vec2 _playerPos, Circle _playerHit, Vec2 _MainCamera) {
+void Class_Item::MapPos(Vec2 _playerPos, Circle _playerHit, Vec2 _MainCamera, double _deltaTime) {
 	//アイテムの座標更新
 	itemHit = { itemPos.x - _MainCamera.x, itemPos.y - _MainCamera.y,itemSize };
 
@@ -30,12 +30,12 @@ void Class_Item::MapPos(Vec2 _playerPos, Circle _playerHit, Vec2 _MainCamera) {
 		float normalX = pos.x / length;
 		float normalY = pos.y / length;
 		if (count < 50) {
-			itemPos.x -= normalX * 3;
-			itemPos.y -= normalY * 3;
+			itemPos.x -= normalX * 300 * _deltaTime;
+			itemPos.y -= normalY * 300 * _deltaTime;
 		}
 		else {
-			itemPos.x += normalX * 3;
-			itemPos.y += normalY * 3;
+			itemPos.x += normalX *  300 * _deltaTime;
+			itemPos.y += normalY *  300 * _deltaTime;
 			if (itemHit.intersects(_playerHit)) {
 				isDestroy = true;
 				toPlayer = false;
