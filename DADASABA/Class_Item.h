@@ -41,5 +41,7 @@ private:
 	bool IsValid = false;
 
 	int count = 0;
+
+	
 };
 

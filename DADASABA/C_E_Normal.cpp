@@ -97,6 +97,8 @@ void C_E_Normal::NormalBullet() {
 		for (int i = 0; i < bulletMax; i++) {
 			if (!bullet[i]->valid()) {
 				bullet[i]->set(MapPos, { targetPos.x ,targetPos.y }, bullet_type);
+				//攻撃SE
+				Attack_SE.play();
 				i = bulletMax;
 			}
 		}

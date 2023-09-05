@@ -34,7 +34,8 @@ void Class_player::button(double deltatime) {
 		avoid_count = false;
 		//攻撃場所の決定
 		W_AttackM_Pos = mousePos;
-		
+		//攻撃
+		Attack_SE.play();
 	}
 
 	//回避
@@ -187,7 +188,6 @@ void Class_player::attack_aim() {
 	SlashingPos = angle_vector_transformation(W_AttackM_Pos.x - ScreenPos.x, W_AttackM_Pos.y - ScreenPos.y, 50);
 	Slashing[4] = { SlashingPos.x * 50 + ScreenPos.x  ,SlashingPos.y * 50 + ScreenPos.y ,15 };
 }
-
 //攻撃
 void Class_player::attack() {
 	attack_count -= delta_time;

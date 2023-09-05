@@ -23,5 +23,9 @@ private:
 	Class_Item* item[maxItemNum] = { nullptr };
 
 	int addCount = 0;
+
+	//SE///////////////////////////////////////
+	//アイテム取得
+	const Audio itemHit_SE{ U"SOZAI/SE/取得01.mp3" };
 };
 

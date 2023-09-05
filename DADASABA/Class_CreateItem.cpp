@@ -34,6 +34,8 @@ void Class_CreateItem::UpDate(Vec2 _playerPos, Circle _playerHit_Item, Vec2 _Mai
 			if (item[i]->getIsDestroy()) {
 				addCount++;
 				item[i]->setIsValid(false);
+				//アイテム取得SE
+				itemHit_SE.play();
 			}
 		}
 	}

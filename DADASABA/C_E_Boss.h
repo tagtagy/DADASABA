@@ -63,7 +63,7 @@ private:
 	bool isValid = false;
 	//ステータス/////////////////////////////////////////
 	//HP
-	int MaxHP = 10;
+	int MaxHP = 100;
 	int HP = 0;
 	//弾丸/////////////////////////////////////////////
 	Class_Bullet* bullet[bulletMax];
@@ -77,7 +77,9 @@ private:
 
 	//倒されたらtrue
 	bool isDead = false;
-
+	//SE////////////////////////////////////////////////
+	//攻撃
+	const Audio Attack_SE{ U"SOZAI/SE/気弾.mp3" };
 };
 
 

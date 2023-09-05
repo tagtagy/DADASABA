@@ -184,6 +184,11 @@ private:
 	int buffCount = 0;
 	float buffTexAlpha = 0;
 	float buffTexPosYDiff = 40;
+
+	//SE//////////////////////////////////////////////////////////////////////
+	//斬撃
+	const Audio Attack_SE{ U"SOZAI/SE/剣の素振り1.mp3" };
+
 };
 
 
