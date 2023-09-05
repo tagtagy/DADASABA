@@ -10,7 +10,7 @@ public:
 
 	~Class_CreateItem();
 
-	void UpDate(Vec2 _playerPos, Circle _playerHit_Item, Vec2 _MainCamera);
+	void UpDate(Vec2 _playerPos, Circle _playerHit_Item, Vec2 _MainCamera, double _deltaTime);
 
 	void Draw() const;
 
