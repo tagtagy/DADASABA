@@ -34,6 +34,8 @@ void Class_player::button(double deltatime) {
 		avoid_count = false;
 		//攻撃場所の決定
 		W_AttackM_Pos = mousePos;
+
+		Attack_SE.stop();
 		//攻撃
 		Attack_SE.play();
 	}

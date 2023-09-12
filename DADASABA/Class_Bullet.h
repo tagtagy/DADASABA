@@ -55,7 +55,7 @@ private:
 	//マップ上の座標
 	Vec2 BulletPos={0,0};
 	//有効時間
-	const double BulletValidTime = 1;
+	const double BulletValidTime = 2;
 	double BulletValidCount=0;
 	//範囲攻撃//////////////////////////////////////////////
 	//攻撃場所

@@ -25,9 +25,11 @@ void Class_Bullet::set(Vec2 MyPos, Vec2 TargetPos, int bulletType) {
 //動き
 void Class_Bullet::Move(Vec2 _MainCamera,double deltatime) {
 
+	Print << BulletPos;
+
 	//デルタタイム
 	delta_time = deltatime;
-	if (bullet_type == bossBullet) {
+	if (bullet_type <= bossBullet) {
 		//通常攻撃
 		NormalBullet();
 	}
@@ -46,7 +48,7 @@ void Class_Bullet::Move(Vec2 _MainCamera,double deltatime) {
 
 //通常弾
 void Class_Bullet::NormalBullet() {
-
+	
 	//移動
 	BulletPos += directionPos * delta_time;
 
@@ -54,7 +56,8 @@ void Class_Bullet::NormalBullet() {
 //範囲攻撃
 void Class_Bullet::RangeBullet() {
 	//攻撃位置設定
-	AttackRangePos = BulletPos;
+	AttackRangePos.x = BulletHit.x;
+	AttackRangePos.y = BulletHit.y;
 
 	AttackRangeSize += 50 * delta_time;
 
@@ -66,7 +69,7 @@ void Class_Bullet::RangeBullet() {
 }
 //有効時間のカウント
 void Class_Bullet::ValidTimer() {
-	if (bullet_type == bossBullet) {
+	if (bullet_type <= bossBullet) {
 		if (BulletValidCount > BulletValidTime) Disable();
 
 		BulletValidCount += delta_time;
@@ -81,9 +84,13 @@ void Class_Bullet::Disable() {
 void Class_Bullet::Draw()const {
 
 	if (isvalid) {
-		if (bullet_type == bossBullet) {
+		if (bullet_type <= normalBullet2) {
 			//BulletHit.draw();
 			BulletTexture[bullet_type].resized(40).rotated(Scene::Time() * 90_deg).drawAt(BulletHit.x, BulletHit.y);
+		}
+		else if (bullet_type == bossBullet) {
+			//BulletHit.draw();
+			BulletTexture[bullet_type].resized(60).rotated(Scene::Time() * 90_deg).drawAt(BulletHit.x, BulletHit.y);
 		}
 		else if (bullet_type == rangeBullet) {
 			//範囲攻撃

@@ -35,6 +35,7 @@ void Class_CreateItem::UpDate(Vec2 _playerPos, Circle _playerHit_Item, Vec2 _Mai
 				addCount++;
 				item[i]->setIsValid(false);
 				//アイテム取得SE
+				itemHit_SE.setVolume(0.2);
 				itemHit_SE.play();
 			}
 		}

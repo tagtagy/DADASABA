@@ -84,7 +84,7 @@ private:
 	bool isDead = false;
 	//SE////////////////////////////////////////////////
 	//攻撃
-	const Audio Attack_SE{ U"SOZAI/SE/剣の素振り1.mp3" };
+	const Audio Attack_SE{ U"SOZAI/SE/ボタン音02.mp3" };
 };
 
 

@@ -112,7 +112,7 @@ void C_E_Boss::RangeBullet() {
 			}
 
 			//範囲攻撃
-			bullet[i]->set({ Ene_Hit.x + pos.x * x,Ene_Hit.y + pos.y * y }, { 0,0 }, rangeBullet);
+			bullet[i]->set({ MapPos.x + pos.x * x,MapPos.y + pos.y * y }, { 0,0 }, rangeBullet);
 		}
 	}
 }
