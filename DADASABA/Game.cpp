@@ -20,7 +20,7 @@ void Game::update()
 {
 	ClearPrint();
 
-	Print << U"カメラの座標" << MainCamera;
+	//Print << U"カメラの座標" << MainCamera;
 	for (const auto& monitor : monitors)
 		Print << monitor.displayRect;
 	deltatime = Scene::DeltaTime();

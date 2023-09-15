@@ -84,13 +84,13 @@ void Class_player::move() {
 		buffTexPosYDiff = 40;
 	}
 
-	Print <<U"マップ上のプレイヤー座標" << playerMapPos;
-	Print << U"スクリーン上のプレイヤー座標" << ScreenPos;
-	Print << U"プレイヤーからのマウスの角度" << int(angle_attack_mark * (180/3.14))<<U"°";
-	Print << U"攻撃マーカー座標" << player_attack_markPos;
-	Print << U"回避の方角" << avoid_speed;
-	Print << U"回避の時間" << avoid_count;
-	Print << U"HP" << HP;
+	//Print <<U"マップ上のプレイヤー座標" << playerMapPos;
+	//Print << U"スクリーン上のプレイヤー座標" << ScreenPos;
+	//Print << U"プレイヤーからのマウスの角度" << int(angle_attack_mark * (180/3.14))<<U"°";
+	//Print << U"攻撃マーカー座標" << player_attack_markPos;
+	//Print << U"回避の方角" << avoid_speed;
+	//Print << U"回避の時間" << avoid_count;
+	//Print << U"HP" << HP;
 }
 //通常移動
 void Class_player::normal_move() {
