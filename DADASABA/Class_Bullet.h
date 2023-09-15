@@ -15,7 +15,7 @@ public:
 	//動き
 	void Move(Vec2 _MainCamera, double deltatime);
 	//衝突処理
-	void BulletHiter(){Disable();}
+	void BulletHiter(){if(enemyPos.intersects(BulletHit))Disable();}
 	
 	//有効かどうかの提示
 	bool valid() { return isvalid; }
@@ -72,7 +72,7 @@ private:
 	//デルタタイム
 	double delta_time = 0;
 	//当たり判定
-	Circle BulletHit = { 0,0,0 };
+	Circle BulletHit;
 	//有効か？
 	bool isvalid =false;
 };

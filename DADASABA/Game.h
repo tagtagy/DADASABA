@@ -1,4 +1,5 @@
 ﻿# pragma once
+#include <cmath>
 # include "Common.h"
 #include "Class_player.h"
 #include "Class_EnemyCanon.h"

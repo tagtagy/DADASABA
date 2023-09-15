@@ -91,7 +91,13 @@ void Game::update()
 	//プレイヤーと弾丸の接触
 	for (int i = 0; i < enemyMax+1; i++) {
 		for (int j = 0; j < bulletMax; j++) {
-			if (enemyCanon->enemy[i]->bullet[j]->Bullet_Hit().intersects(player->getPlayerHit())) {
+
+			Circle a = enemyCanon->enemy[i]->bullet[j]->Bullet_Hit();
+			Circle b = player->getPlayerHit();
+
+			double z = hypot(a.x - b.x, a.y - b.y);
+			//Print << z;
+			if (z >= (a.r + b.r) / 2&& enemyCanon->enemy[i]->bullet[j]->valid()) {
 
 				player->Damage(5);
 				enemyCanon->enemy[i]->bullet[j]->BulletHiter();

@@ -232,7 +232,7 @@ void Class_player::animation() {
 //描画
 void Class_player::draw() const {
 	//プレイヤーの当たり判定アイテム用
-	playerHit_Item.draw(ColorF{ 0 });
+	//playerHit_Item.draw(ColorF{ 0 });
 	//プレイヤーの当たり判定
 	playerHit.draw(ColorF{ 1 });
 

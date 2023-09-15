@@ -4,7 +4,7 @@
 Class_Bullet::Class_Bullet() {
 	
 	//弾のサイズ設定
-	BulletHit = { 0,0,BulletSize };
+	BulletHit.r = BulletSize;
 
 }
 
@@ -26,7 +26,7 @@ void Class_Bullet::set(Vec2 MyPos, Vec2 TargetPos, int bulletType) {
 //動き
 void Class_Bullet::Move(Vec2 _MainCamera,double deltatime) {
 
-	Print << BulletPos;
+	
 
 	//デルタタイム
 	delta_time = deltatime;
@@ -42,7 +42,7 @@ void Class_Bullet::Move(Vec2 _MainCamera,double deltatime) {
 	//スクリーン上位置の設定
 	BulletHit.x = BulletPos.x - _MainCamera.x;
 	BulletHit.y = BulletPos.y - _MainCamera.y;
-
+	Print << BulletHit;
 	ValidTimer();
 
 }
@@ -83,7 +83,7 @@ void Class_Bullet::Disable() {
 	
 }
 void Class_Bullet::Draw()const {
-	Print << BulletHit;
+	//Print << BulletHit;
 	if (isvalid) {
 		if (bullet_type <= normalBullet2) {
 			//BulletHit.draw();
