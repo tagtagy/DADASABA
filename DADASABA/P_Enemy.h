@@ -42,6 +42,8 @@ public:
 	//正規化の計算
 	//底辺,高さ,中心座標,回転の半径
 	virtual Vec2 normalization_calculate(double base, double tall, Vec2 centerPos, double range);
+
+	Class_Bullet* bullet[bulletMax];
 private:
 	//敵テクスチャ
 	const Texture EnemyTexture;
@@ -75,7 +77,7 @@ private:
 	int MaxHP = 10;
 	int HP = 0;
 	//弾丸/////////////////////////////////////////////
-	Class_Bullet* bullet[bulletMax];
+	
 	//弾の種類
 	int bullet_type = normalBullet1;
 	//発射するタイミング

@@ -11,6 +11,7 @@ Game::~Game() {
 Game::Game(const InitData& init)
 	: IScene{ init }
 {
+	getData().HP = getData().MaxHP;
 	player = new Class_player;
 	enemyCanon = new Class_EnemyCanon;
 }
@@ -86,6 +87,14 @@ void Game::update()
 	enemyCanon->appearance(player->playerPos(), player->getPlayerHit(),
 		                   player->IsAttack_during(), player->AttackHitPos(),
 		                   MainCamera, deltatime, player->getPlayerHit_Item());
+
+	//プレイヤーと弾丸の接触
+	if (enemyCanon->enemy[0]->bullet[0]->hit()) {
+
+		player->Damage(5);
+		enemyCanon->enemy[0]->bullet[0]->OFF_hit();
+	}
+
 	//タイマーの取得
 	enemyCanon->SetAngleTimer(timer.GetTimerCount());
 	Print << timer.GetTimerCount();

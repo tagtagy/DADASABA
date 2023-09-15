@@ -15,10 +15,14 @@ public:
 	//動き
 	void Move(Vec2 _MainCamera, double deltatime);
 	//衝突処理
-	void BulletHiter(Circle TargetHit){if (BulletHit.intersects(TargetHit))Disable();};
+	void BulletHiter(Circle TargetHit){if (BulletHit.intersects(TargetHit))Disable(); Hit = true;}
 	
 	//有効かどうかの提示
-	bool valid() { return isvalid; };
+	bool valid() { return isvalid; }
+	//プレイヤーに当たったか
+	void OFF_hit() { Hit = false; }
+	bool hit() { return Hit; }
+	
 
 	void Draw()const;
 private:
@@ -70,8 +74,9 @@ private:
 	//デルタタイム
 	double delta_time = 0;
 	//当たり判定
-	Circle BulletHit{0,0,0};
+	Circle BulletHit = { 0,0,0 };
 	//有効か？
 	bool isvalid =false;
+	bool Hit = false;
 };
 

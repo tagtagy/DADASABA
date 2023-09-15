@@ -13,8 +13,10 @@ C_E_Normal::C_E_Normal() {
 	ScreenPos = { 0,0 };
 	targetHit = { 0,0,0 };
 
-	for (int i = 0; i < bulletMax; i++) bullet[i] = new Class_Bullet();
-
+	for (int i = 0; i < bulletMax; i++)
+	{
+		bullet[i] = new Class_Bullet();
+	}
 }
 //セット
 void C_E_Normal::set(Vec2 pos, int EnemyType) {

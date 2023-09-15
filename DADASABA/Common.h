@@ -22,6 +22,10 @@ struct GameData
 
 	// ハイスコア
 	Array<int32> highScores = { 50, 40, 30, 20, 10 };
+
+	//ステータス//////////////////////////////////////////////////////////////////
+	int HP = 100;
+	int MaxHP = 100;
 };
 
 using App = SceneManager<State, GameData>;

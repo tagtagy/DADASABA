@@ -26,6 +26,9 @@ public:
 	bool GetBossLive() { return isBossLive; }
 
 	int addCountGet() { return createItem.getAddCount(); }
+
+	//敵
+	P_Enemy* enemy[enemyMax + 1] = { nullptr };
 private:
 	//ボス出現
 	void Boss_appearance();
@@ -49,8 +52,7 @@ private:
 	//出現タイミングのカウント
 	const double appearanceTime = 1;
 	double appearanceCount = 0;
-	//敵
-	P_Enemy* enemy[enemyMax+1] = { nullptr };
+	
 
 	Class_CreateItem createItem;
 };

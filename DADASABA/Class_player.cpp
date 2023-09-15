@@ -90,6 +90,7 @@ void Class_player::move() {
 	Print << U"攻撃マーカー座標" << player_attack_markPos;
 	Print << U"回避の方角" << avoid_speed;
 	Print << U"回避の時間" << avoid_count;
+	Print << U"HP" << HP;
 }
 //通常移動
 void Class_player::normal_move() {
@@ -100,6 +101,10 @@ void Class_player::normal_move() {
 	double y = speed * moveY * delta_time;
 	//縦移動
 	if (-865 /2 < playerMapPos.y + y && playerMapPos.y + y < 865 / 2) playerMapPos.y += y;
+}
+//ダメージ
+void Class_player::Damage(int _Damage) {
+	HP -= _Damage;
 }
 //回避移動
 void Class_player::avoid_move() {

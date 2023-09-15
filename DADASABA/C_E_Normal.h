@@ -28,6 +28,8 @@ public:
 	bool getIsDead() { return isDead; }
 
 	Vec2 getEnemyPos() { return MapPos; }
+
+	Class_Bullet* bullet[bulletMax];
 private:
 
 	//通常攻撃
@@ -73,7 +75,7 @@ private:
 	int MaxHP[EnemytypeMax] = { 10,10,10,10};
 	int HP = 0;
 	//弾丸/////////////////////////////////////////////
-	Class_Bullet* bullet[bulletMax];
+	
 	//弾の種類
 	int bullet_type = normalBullet1;
 	//発射するタイミング

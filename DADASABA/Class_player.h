@@ -25,6 +25,8 @@ public:
 	void attack_aim();
 	//攻撃
 	void attack();
+	//ダメージ
+	void Damage(int _Damage);
 	//アニメーション
 	void animation();
 	//描画
@@ -79,6 +81,9 @@ private:
 	Vec2 Camera;
 	//デルタタイム
 	double delta_time;
+	//ステータス//////////////////////////////////////////////////////////////////
+	int HP = 100;
+	int MaxHP = 100;
 	//攻撃関連////////////////////////////////////////////////////////////
 	//攻撃ボタン
 	bool attack_button=false;

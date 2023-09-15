@@ -2,8 +2,9 @@
 #include "Class_Bullet.h"
 
 Class_Bullet::Class_Bullet() {
+	
 	//弾のサイズ設定
-	BulletHit.r = BulletSize;
+	BulletHit = { 0,0,BulletSize };
 
 }
 
