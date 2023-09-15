@@ -83,7 +83,7 @@ void Class_Bullet::Disable() {
 	
 }
 void Class_Bullet::Draw()const {
-
+	Print << BulletHit;
 	if (isvalid) {
 		if (bullet_type <= normalBullet2) {
 			//BulletHit.draw();

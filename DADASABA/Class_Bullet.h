@@ -15,14 +15,12 @@ public:
 	//動き
 	void Move(Vec2 _MainCamera, double deltatime);
 	//衝突処理
-	void BulletHiter(Circle TargetHit){if (BulletHit.intersects(TargetHit))Disable(); Hit = true;}
+	void BulletHiter(){Disable();}
 	
 	//有効かどうかの提示
 	bool valid() { return isvalid; }
-	//プレイヤーに当たったか
-	void OFF_hit() { Hit = false; }
-	bool hit() { return Hit; }
 	
+	Circle Bullet_Hit() { return BulletHit; }
 
 	void Draw()const;
 private:
@@ -51,7 +49,7 @@ private:
 	//移動方向座標
 	Vec2 directionPos={0,0};
 	//弾丸のスピード
-	const double spped = 100;
+	const double spped = 200;
 	//当たり判定サイズ
 	const int BulletSize = 10;
 	//プレイヤーの座標
@@ -77,6 +75,5 @@ private:
 	Circle BulletHit = { 0,0,0 };
 	//有効か？
 	bool isvalid =false;
-	bool Hit = false;
 };
 

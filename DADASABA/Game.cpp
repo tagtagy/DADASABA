@@ -89,12 +89,15 @@ void Game::update()
 		                   MainCamera, deltatime, player->getPlayerHit_Item());
 
 	//プレイヤーと弾丸の接触
-	if (enemyCanon->enemy[0]->bullet[0]->hit()) {
+	for (int i = 0; i < enemyMax+1; i++) {
+		for (int j = 0; j < bulletMax; j++) {
+			if (enemyCanon->enemy[i]->bullet[j]->Bullet_Hit().intersects(player->getPlayerHit())) {
 
-		player->Damage(5);
-		enemyCanon->enemy[0]->bullet[0]->OFF_hit();
+				player->Damage(5);
+				enemyCanon->enemy[i]->bullet[j]->BulletHiter();
+			}
+		}
 	}
-
 	//タイマーの取得
 	enemyCanon->SetAngleTimer(timer.GetTimerCount());
 	Print << timer.GetTimerCount();

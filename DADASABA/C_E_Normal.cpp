@@ -75,7 +75,7 @@ void C_E_Normal::Move(Vec2 _MainCamera, double deltatime) {
 	for (int i = 0; i < bulletMax; i++) {
 		if (bullet[i]->valid()) {
 			bullet[i]->Move(_MainCamera, deltatime);
-			bullet[i]->BulletHiter(targetHit);
+			
 		}
 	}
 	//画面上の座標に変換

@@ -9,8 +9,18 @@ Class_EnemyCanon::~Class_EnemyCanon() {
 }
 
 Class_EnemyCanon::Class_EnemyCanon() {
-	for (int i = 0; i < enemyMax; i++)enemy[i] = new C_E_Normal();
+	for (int i = 0; i < enemyMax; i++) {
+		enemy[i] = new C_E_Normal();
+		for (int j = 0; j < bulletMax; j++)
+		{
+			enemy[i]->bullet[j] = new Class_Bullet();
+		}
+	}
 	enemy[enemyMax] = new C_E_Boss();
+	for (int j = 0; j < bulletMax; j++)
+	{
+		enemy[enemyMax]->bullet[j] = new Class_Bullet();
+	}
 }
 
 //出現
