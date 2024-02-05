@@ -22,7 +22,7 @@ void Game::update()
 
 	//Print << U"カメラの座標" << MainCamera;
 	for (const auto& monitor : monitors)
-		Print << monitor.displayRect;
+	//	Print << monitor.displayRect;
 	deltatime = Scene::DeltaTime();
 
 	//カメラターゲットがプレイヤーだった時
@@ -106,7 +106,7 @@ void Game::update()
 	}
 	//タイマーの取得
 	enemyCanon->SetAngleTimer(timer.GetTimerCount());
-	Print << timer.GetTimerCount();
+	//Print << timer.GetTimerCount();
 	//プレイヤーのエイム
 	player->attack_aim();
 
