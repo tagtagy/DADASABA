@@ -44,9 +44,9 @@ public:
 	virtual Vec2 normalization_calculate(double base, double tall, Vec2 centerPos, double range);
 
 	Class_Bullet* bullet[bulletMax];
-private:
-	//敵テクスチャ
-	const Texture EnemyTexture;
+protected:
+	//敵のテクスチャ
+	Array <Texture> EnemyTexture;
 	//敵のサイズ
 	int EnemySize = 100;
 	//スクリーン上の座標
@@ -74,7 +74,7 @@ private:
 	bool isValid = false;
 	//ステータス/////////////////////////////////////////
 	//HP
-	int MaxHP = 10;
+	Array<int> MaxHP;
 	int HP = 0;
 	//弾丸/////////////////////////////////////////////
 	

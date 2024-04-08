@@ -3,7 +3,7 @@
 
 Class_CreateItem::Class_CreateItem() {
 	for (int i = 0; i < maxItemNum; i++) {
-		item[i] = new Class_Item();
+		item[i] = new Class_Item;
 
 	}
 }

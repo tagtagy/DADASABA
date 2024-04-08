@@ -8,9 +8,20 @@ C_E_Boss::~C_E_Boss() {
 }
 
 C_E_Boss::C_E_Boss() {
+	//敵テクスチャ
+	EnemyTexture << Texture{ U"SOZAI/enemy/Enemy_ChocolateMonkey05.png" };
+	//敵のサイズ
+	EnemySize = 100;
 
+	//HP
+	for (int i = 0; i < EnemyTexture.size() - 1; i++)MaxHP << 10;
+	//動けるか
+	ismove = true;
+	//マップ上の座標
 	MapPos = { 0,0 };
+	//スクリーン上の座標
 	ScreenPos = { 0,0 };
+	//ターゲットの座標
 	targetHit = { 0,0,0 };
 
 	for (int i = 0; i < bulletMax; i++) bullet[i] = new Class_Bullet();
@@ -24,7 +35,7 @@ void C_E_Boss::set(Vec2 pos, int EnemyType) {
 	isValid = true;
 
 	//体力設定
-	HP = MaxHP;
+	HP = MaxHP.front();
 	
 	bullet_type = normalBullet2;
 	
@@ -157,7 +168,7 @@ void C_E_Boss::Knockback(bool _IsAttack, Circle* _AttackHitPos) {
 
 void C_E_Boss::Draw() const {
 	//敵の描画
-	Ene_Hit(EnemyTexture).draw();
+	Ene_Hit(EnemyTexture.front()).draw();
 	//弾丸の描画
 	for (int i = 0; i < bulletMax; i++) {
 		bullet[i]->Draw();

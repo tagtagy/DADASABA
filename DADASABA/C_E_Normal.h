@@ -36,43 +36,10 @@ private:
 	void NormalBullet();
 
 private:
-	//敵テクスチャ
-	const Texture EnemyTexture[EnemytypeMax]{
-		Texture{U"SOZAI/enemy/Jam_2023_No2_enemy_kokekiti_4.png"},
-		Texture{U"SOZAI/enemy/Jam_2023_No2_enemy_nekomaru_9.png"},
-		Texture{U"SOZAI/enemy/Jam_2023_tino.png"},
-		Texture{U"SOZAI/enemy/Jam_2023_Watabe.png"},
-	};
-	//敵のサイズ
-	int EnemySize =  50;
 	//描画する敵のナンバー
 	int EnemyTextureNo = 0;
-	//スクリーン上の座標
-	Vec2 ScreenPos;
-	//マップ上の座標
-	Vec2 MapPos;
-	//ターゲットの座標
-	Vec2 targetPos;
-	//ターゲットの当たり判定
-	Circle targetHit;
-	//スピード
-	double speed;
-	//動けるか
-	bool ismove = true;
-	//当たり判定
-	Circle Ene_Hit;
-	//攻撃が当たったか
-	bool IsAttackHit = false;
-	//無敵時間
-	double InvincibleCount = 0;
-	const double InvincibleTime = 1;
-	//デルタタイム
-	double delta_time = 0;
-	//有効か？
-	bool isValid = false;
+	
 	//ステータス/////////////////////////////////////////
-	//HP
-	int MaxHP[EnemytypeMax] = { 10,10,10,10};
 	int HP = 0;
 	//弾丸/////////////////////////////////////////////
 	

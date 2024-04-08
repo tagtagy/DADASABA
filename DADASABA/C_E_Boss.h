@@ -36,36 +36,8 @@ private:
 	void RangeBullet();
 
 private:
-	//敵テクスチャ
-	const Texture EnemyTexture{ U"SOZAI/enemy/Enemy_ChocolateMonkey05.png" };
-	//敵のサイズ
-	int EnemySize= 100;
-	//スクリーン上の座標
-	Vec2 ScreenPos;
-	//マップ上の座標
-	Vec2 MapPos;
-	//ターゲットの座標
-	Vec2 targetPos;
-	//ターゲットの当たり判定
-	Circle targetHit;
-	//スピード
-	double speed;
-	//動けるか
-	bool ismove = true;
-	//当たり判定
-	Circle Ene_Hit;
-	//攻撃が当たったか
-	bool IsAttackHit = false;
-	//無敵時間
-	double InvincibleCount = 0;
-	const double InvincibleTime = 1;
-	//デルタタイム
-	double delta_time = 0;
-	//有効か？
-	bool isValid = false;
+	
 	//ステータス/////////////////////////////////////////
-	//HP
-	int MaxHP = 100;
 	int HP = 0;
 	//弾丸/////////////////////////////////////////////
 	

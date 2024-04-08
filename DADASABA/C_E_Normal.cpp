@@ -8,9 +8,22 @@ C_E_Normal::~C_E_Normal() {
 }
 
 C_E_Normal::C_E_Normal() {
-
+	//敵のテクスチャ
+	EnemyTexture << Texture{ U"SOZAI/enemy/Jam_2023_No2_enemy_kokekiti_4.png" };
+	EnemyTexture << Texture{ U"SOZAI/enemy/Jam_2023_No2_enemy_nekomaru_9.png" };
+	EnemyTexture << Texture{ U"SOZAI/enemy/Jam_2023_tino.png" };
+	EnemyTexture << Texture{ U"SOZAI/enemy/Jam_2023_Watabe.png" };
+	//敵のサイズ
+	EnemySize = 50;
+	//HP
+	for (int i = 0; i < EnemyTexture.size()-1; i++)MaxHP << 10;
+	//動けるか
+	ismove = true;
+	//マップ上の座標
 	MapPos = { 0,0 };
+	//スクリーン上の座標
 	ScreenPos = { 0,0 };
+	//ターゲットの座標
 	targetHit = { 0,0,0 };
 
 	for (int i = 0; i < bulletMax; i++)
