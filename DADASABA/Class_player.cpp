@@ -289,8 +289,8 @@ void Class_player::startBuff() {
 }
 //アイテムの効果
 void Class_player::itemBuff() {
-	Print << U"アイテム獲得数" << getItemCount;
-	Print << U"バフのフラグ" << buffFlag;
+	//Print << U"アイテム獲得数" << getItemCount;
+	//Print << U"バフのフラグ" << buffFlag;
 	if (buffFlag) {
 		//1回のみの処理にする場合はすぐにbuffFlagをfalse
 		buffCount++;

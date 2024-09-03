@@ -42,7 +42,7 @@ void Class_Bullet::Move(Vec2 _MainCamera,double deltatime) {
 	//スクリーン上位置の設定
 	BulletHit.x = BulletPos.x - _MainCamera.x;
 	BulletHit.y = BulletPos.y - _MainCamera.y;
-	Print << BulletHit;
+	
 	ValidTimer();
 
 }
