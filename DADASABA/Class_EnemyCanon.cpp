@@ -91,7 +91,7 @@ void Class_EnemyCanon::random_appearance() {
 		//敵の出現
 		for (int i = 0; i < enemyMax; i++) {
 			if (enemy[i]->Getvalid() == false) {
-				int C=Random(3);
+				int C=Random(0,2);
 				double x = Random(-700,700);
 				double y = Random(-400,400);
 				enemy[i]->set({ x , y }, C);
